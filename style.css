@@ -1,0 +1,96 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    min-height: 100vh;
+    font-size: 14px; /* Reducimos el tamaño global de la fuente */
+}
+
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 20px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 100;
+    background-color: aquamarine;/*Esto es por ahorita para probar */
+}
+
+.box-logo {
+    background-color: orange;
+    width: 250px;
+    height: 150px;
+    /*position: absolute; Para que sobresalga */
+    top: -20px; 
+    left: 20px; 
+    z-index: 101; 
+}
+
+
+.logo {
+    font-size: 20px;
+    text-decoration: none;
+    font-weight: 900;
+    display: flex;
+    justify-content: center;
+    right: 0px;
+    color: #fff;
+}
+
+
+
+.navbar {
+    display: flex;
+    align-items: center;
+    position: relative; 
+    right: 0; 
+}
+
+.navbar a {
+    font-size: 16px;
+    color: black;
+    font-weight: 500;
+    text-decoration: none;
+    margin-left: 40px;
+    position: relative;
+}
+
+.navbar a::before {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: #fff;
+    transition: width 0.3s ease;
+}
+
+.navbar a:hover::before {
+    width: 100%;
+}
+
+.nav-icon {
+    height: 20px;
+    width: 20px;
+    margin-left: 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    transition: background-color 0.3s ease;
+}
+
+
+.nav-icon:hover {
+    background-color: yellow; 
+
+}
+
+
