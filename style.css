@@ -7,7 +7,7 @@
 
 body {
     min-height: 100vh;
-    font-size: 14px; /* Reducimos el tamaño global de la fuente */
+    font-size: 14px;
 }
 
 .header {
@@ -15,53 +15,44 @@ body {
     top: 0;
     left: 0;
     width: 100%;
-    padding: 20px 20px;
     display: flex;
-    justify-content: space-between;
     align-items: center;
     z-index: 100;
-    background-color: aquamarine;/*Esto es por ahorita para probar */
 }
 
 .box-logo {
     background-color: orange;
-    width: 250px;
-    height: 150px;
-    /*position: absolute; Para que sobresalga */
-    top: -20px; 
-    left: 20px; 
-    z-index: 101; 
-}
-
-
-.logo {
-    font-size: 20px;
-    text-decoration: none;
-    font-weight: 900;
+    width: 205px;
+    height: 100px;
     display: flex;
     justify-content: center;
-    right: 0px;
-    color: #fff;
+    align-items: center;
+    margin-left: 370px; 
 }
 
-
+.logo {
+    font-size: 25px;
+    font-weight: bold;
+    text-decoration: none;
+    font-weight: 900;
+    color: #fff;
+}
 
 .navbar {
     display: flex;
     align-items: center;
-    position: relative; 
-    right: 0; 
+    margin-left: 400px;
+    padding-bottom: 10px;
 }
 
 .navbar a {
-    font-size: 16px;
+    font-size: 18px;
     color: black;
     font-weight: 500;
     text-decoration: none;
     margin-left: 40px;
     position: relative;
 }
-
 .navbar a::before {
     content: '';
     position: absolute;
@@ -69,7 +60,7 @@ body {
     left: 0;
     width: 0;
     height: 2px;
-    background: #fff;
+    background: orange;
     transition: width 0.3s ease;
 }
 
@@ -78,19 +69,37 @@ body {
 }
 
 .nav-icon {
-    height: 20px;
-    width: 20px;
-    margin-left: 20px;
+    height: 25px;
+    width: 25px;
+    margin-left: 25px;
     cursor: pointer;
     display: flex;
     align-items: center;
     transition: background-color 0.3s ease;
 }
 
-
 .nav-icon:hover {
-    background-color: yellow; 
-
+    background-color: yellow;
 }
+
+.MainImage {
+    margin-top: 80px; 
+    padding: 0 20px; 
+    width: 100%;
+    max-width: 1800px; 
+    height: 700px; 
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    overflow: hidden;
+}
+
+.MainImage img {
+    width: 100%; 
+    height: 100%; 
+    object-fit: cover; 
+}
+
+
 
 
