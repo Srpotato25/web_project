@@ -15,12 +15,12 @@
             <a href="#" class="logo">TRIPSTER</a>
         </div>
         <nav class="navbar">
-            <a href="#">Home</a>
-            <a href="#">Destinations</a>
+            <a href="#" class="active">Home</a>
+            <a href="#">Destinations <i class="fa-solid fa-angle-down"></i></a>
             <a href="#">Tours</a>
             <a href="#">Contact</a>
-            <img src="/asset/search.png" alt="Search" class="nav-icon">
-            <img src="/asset/Login.png" alt="Login" class="nav-icon" id="form-open">
+            <i class="fa-solid fa-magnifying-glass nav-icon"></i>
+            <i class="fa-solid fa-user nav-icon" id="form-open"></i>
         </nav>
     </header>
 
@@ -37,7 +37,7 @@
                     <div class="input_box">
                         <i class="fa-solid fa-lock"></i>
                         <input type="password" placeholder="Enter your password" required>
-                        <i class="fa-regular fa-eye-slash"></i>
+                        <!--<i class="fa-regular fa-eye-slash"></i>-->
                     </div>
     
                     <div class="option_field">
@@ -52,24 +52,23 @@
                     <div class="login_signup">Don't have an account? <a href="#" id="signup">Sign Up</a></div> 
                 </form>
             </div>
+            <!--REGISTER FORM-->
             <div class="form signup_form">
                 <form action="#">
                     <h2>Register</h2>
                     <div class="input_box">
                         <i class="fa-regular fa-envelope"></i>
-                        <input type="email" placeholder="Add your email" required>
+                        <input type="email" placeholder="Add your email" required> 
                     </div>
-    
                     <div class="input_box">
                         <i class="fa-solid fa-lock"></i>
                         <input type="password" placeholder="Add your password" required>
-                        <i class="fa-regular fa-eye-slash"></i>
+                        <!--<i class="fa-regular fa-eye-slash"></i>-->
                     </div>
-    
                     <div class="input_box">
                         <i class="fa-solid fa-lock"></i>
                         <input type="password" placeholder="Confirm password" required>
-                        <i class="fa-regular fa-eye-slash"></i>
+                        <!--<i class="fa-regular fa-eye-slash"></i>-->
                     </div>
     
                     <button class="button">Register</button>
@@ -78,14 +77,21 @@
             </div>
         </div>
     </section>
+    
 
     <div class="MainImage">
         <img src="./asset/main.png" alt="Chayote">
+        <div class="imagetext">
+            <h3>From $80</h3>
+            <p>Full day</p>
+            <h1>Welcome<br>San Jose</h1>
+            <p>Discover Chepe at night</p>
+            <button>Read more</button>
+        </div>      
     </div>
 
     <script src="script.js"></script>
 </body>
 </html>
-
 
 

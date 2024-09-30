@@ -33,13 +33,31 @@ pwShowHide.forEach((icon) => {
 // Cambiar a registro
 signupBtn.addEventListener("click", (e) => {
     e.preventDefault();
-    formContainer.querySelector('.login-form').classList.remove('active'); // Ocultar el formulario de inicio de sesión
-    formContainer.querySelector('.signup_form').classList.add('active'); // Mostrar el formulario de registro
+    formContainer.querySelector('.login-form').classList.remove('active');
+    formContainer.querySelector('.signup_form').classList.add('active');
 });
 
 // Cambiar a inicio de sesión
 loginBtn.addEventListener("click", (e) => {
     e.preventDefault();
-    formContainer.querySelector('.signup_form').classList.remove('active'); // Ocultar el formulario de registro
-    formContainer.querySelector('.login-form').classList.add('active'); // Mostrar el formulario de inicio de sesión
+    formContainer.querySelector('.signup_form').classList.remove('active');
+    formContainer.querySelector('.login-form').classList.add('active');
+});
+
+
+document.addEventListener('DOMContentLoaded', function() {
+    const homeSection = document.querySelector('.home');
+    const navLinks = document.querySelectorAll('.navbar a');
+
+    window.addEventListener('scroll', function() {
+        const homeTop = homeSection.offsetTop;
+        const homeHeight = homeSection.offsetHeight;
+        const scrollPosition = window.scrollY;
+
+        // Si el usuario está en la sección Home, activamos el enlace Home
+        if (scrollPosition >= homeTop && scrollPosition < (homeTop + homeHeight)) {
+            navLinks.forEach(link => link.classList.remove('active'));
+            document.querySelector('.navbar a[href="#"]').classList.add('active');
+        }
+    });
 });
