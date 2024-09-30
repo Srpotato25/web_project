@@ -127,11 +127,76 @@ a {
     /*background: rgba(0, 0, 0, 0.5); Valorar si lo dejamos*/
 }
 
+.home {
+    position: relative;
+    height: 7vh;
+    width: 100%;
+}
+
+.MainImage {
+    position: relative;
+    max-width: 100%; 
+    padding: 20px; 
+    margin: 0 auto; 
+    height: 90vh; 
+    margin-top: 0px; 
+}
+
+.MainImage img{
+    width: 100%; 
+    height: 100%; 
+    object-fit: cover;
+}
+
+.imagetext {
+    position: absolute; 
+    top: 50%;
+    left: 20%; 
+    transform: translate(-50%, -50%);
+    color: white;
+    text-align: left;
+    padding: 20px;
+    border-radius: 10px;
+    /*background: rgba(0, 0, 0, 0.5); Valorar si lo dejamos*/
+}
+
+
 .imagetext h3 {
     font-size: 30px;
     margin-bottom: 10px;
     color: orange;
     margin-bottom: -1px;
+
+}
+
+.imagetext p {
+    font-size: 20px;
+    margin-bottom: 20px;
+}
+
+.imagetext h1 {
+    font-size: 80px;
+    margin-bottom: 10px;
+    font-weight: 700;
+    margin-bottom: 25px;
+}
+
+.imagetext button {
+    padding: 10px 20px;
+    background-color: orange;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    cursor: pointer;
+    font-size: 20px;
+    font-weight: 600;
+    transition: background-color 0.3s ease, color 0.3s ease; 
+}
+
+.imagetext button:hover {
+    background-color: #fff; 
+    color: orange; 
+
 }
 
 .imagetext p {
