@@ -43,3 +43,21 @@ loginBtn.addEventListener("click", (e) => {
     formContainer.querySelector('.signup_form').classList.remove('active'); // Ocultar el formulario de registro
     formContainer.querySelector('.login-form').classList.add('active'); // Mostrar el formulario de inicio de sesión
 });
+
+
+document.addEventListener('DOMContentLoaded', function() {
+    const homeSection = document.querySelector('.home');
+    const navLinks = document.querySelectorAll('.navbar a');
+
+    window.addEventListener('scroll', function() {
+        const homeTop = homeSection.offsetTop;
+        const homeHeight = homeSection.offsetHeight;
+        const scrollPosition = window.scrollY;
+
+        // Si el usuario está en la sección Home, activamos el enlace Home
+        if (scrollPosition >= homeTop && scrollPosition < (homeTop + homeHeight)) {
+            navLinks.forEach(link => link.classList.remove('active')); // Elimina active de todos
+            document.querySelector('.navbar a[href="#"]').classList.add('active'); // Añade active a Home
+        }
+    });
+});
