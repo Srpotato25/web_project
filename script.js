@@ -60,4 +60,3 @@ document.addEventListener('DOMContentLoaded', function() {
             document.querySelector('.navbar a[href="#"]').classList.add('active');
         }
     });
-});
