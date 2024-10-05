@@ -1,3 +1,38 @@
+
+//Conexion Base de datos Firebase
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.0/firebase-app.js";
+import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.14.0/firebase-analytics.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyAowxVHvpmYoluiKnn_M5NMaku9EqcqPDk",
+  authDomain: "web-project-f0c9c.firebaseapp.com",
+  projectId: "web-project-f0c9c",
+  storageBucket: "web-project-f0c9c.appspot.com",
+  messagingSenderId: "1025383417170",
+  appId: "1:1025383417170:web:51d30811a47a97ae6a268b",
+  measurementId: "G-DG1EX6H6PQ"
+};
+
+const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
+
+// Puedes agregar más código aquí
+console.log("Firebase ha sido inicializado correctamente.");
+
+
+//Entradas
+
+const email = document.getElementById('email').value; 
+const password = document.getElementById('password').value; 
+//submit button 
+const submit = document.getElementById('submit'); 
+submit.addEventListener("click", function (event){
+    event.preventDefault()
+    alert
+})
+
+
+//Login
 const formOpenBtn = document.querySelector("#form-open"),
     home = document.querySelector(".home"),
     formContainer = document.querySelector(".form_container"),

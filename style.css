@@ -39,6 +39,7 @@ a {
     font-size: 25px;
     font-weight: 900;
     color: #fff;
+    text-decoration: none;
 }
 
 .navbar {
@@ -60,7 +61,7 @@ a {
 .navbar a::before {
     content: '';
     position: absolute;
-    top: 215%;
+    top: 170%;
     left: 0;
     width: 0;
     height: 4px;
@@ -74,7 +75,7 @@ a {
 
 .navbar a.active::before {
     width: 100%; 
-    top: 215%; 
+    top: 170%; 
 }
 
 .navbar a.active {
@@ -94,6 +95,25 @@ a {
 .nav-icon:hover {
     color: orange;
 }
+
+
+.image-with-text {
+    display: flex;
+    font-size: 20px;
+  }
+  .image-with-text img {
+    width: 60vh;
+    margin-right: 50px;
+    padding-left: 20px;
+    padding-top: 20px;
+}
+.dropdown-menu {
+    width:650px;
+    height: 200px;
+    background: #fff;
+  }
+
+/*Imagen and login*/
 
 .home {
     position: relative;
@@ -262,3 +282,19 @@ transform: rotate(-45deg);
     }
 }
 
+/* Custom scrollbar styles */
+::-webkit-scrollbar {
+    width: 10px; /* width of the entire scrollbar */
+    }
+    
+    ::-webkit-scrollbar-track {
+    background: #fff; /* color of the tracking area */
+    }
+    
+    ::-webkit-scrollbar-thumb {
+    background: orange; /* color of the scroll thumb */
+    }
+    
+    ::-webkit-scrollbar-thumb:hover {
+    background: #fff; /* color of the scroll thumb on hover */
+    }
