@@ -22,7 +22,12 @@ a {
     display: flex;
     align-items: center;
     padding: 0 20px;
+    transition: top 0.3s ease-in-out; /* Animación suave */
     
+}
+
+.hidden {
+    top: -100px; /* Oculta el navbar moviéndolo hacia arriba */
 }
 
 .box-logo {
@@ -187,47 +192,61 @@ a {
 
 /*gallery*/
 
-.Gallery h3 {
-    text-align: left;
-    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    font-size: 50px; color: orange; font-weight: bolder;
-    margin-left: 20px; margin-top: 20px; 
-}
+.tittle-container {
+    padding: 20px;
+    text-align: center;
+  }
+  
+  .title-seccion {
+    text-align: center;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 50px;
+    color: black;
+    font-weight: bolder;
+    margin-top: 70px;
+  }
+  .tittle-container p {
+    margin-top: 25px ;
+    margin-bottom: 25px;
+  }
+   
+  .orange-line-wrapper {
+    margin-top: 30px;
+  }
+  
+  .orange-line {
+    height: 6px;
+    width: 50px;
+    background-color: orange;
+    margin: -3px auto;
+    margin-bottom: 20px;
+  }
 
 .Gallery {
-    max-width: 1200px; margin: 0 auto; display: grid;
+    padding: 20px;
+    margin: 0 auto;
+    display: grid;
     grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: 250px; grid-gap: 20px; 
-    padding: 100px 0;
+    grid-template-rows: 250px;
+    grid-gap: 20px;
 }
+
 
 .Event img {
     width: 100%;
     height: 100%;
-    object-fit: cover; /* Las imágenes se ajustan a sus contenedores */
+    object-fit: cover;
 }
 
-/* Estilos para diferentes tamaños de imagen */
 .Event:nth-child(1) {
-    grid-column-start: span 2; /* Ocupa 2 columnas */
+    grid-column-start: span 2;
 }
+
 .Event:nth-child(4) {
-    grid-column-start: span 2; 
+    grid-column-start: span 2;
 }
 
-@media(max-width:991px) {
 
-    .Gallery {
-        padding: 30px;
-        grid-template-columns: repeat(1, 1fr);
-    }
-    .Event:nth-child(1) {
-        grid-column-start: span 1;
-    }
-    .Event:nth-child(4) {
-        grid-column-start: span 1;
-    }
-}
 
 
 /*carrosuel*/

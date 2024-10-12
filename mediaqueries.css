@@ -12,3 +12,18 @@
         margin-left: 300px;
     }
     }*/
+
+
+
+    @media(max-width:991px) {
+        .Gallery {
+            padding: 30px;
+            grid-template-columns: repeat(1, 1fr);
+        }
+        .Event:nth-child(1) {
+            grid-column-start: span 1;
+        }
+        .Event:nth-child(4) {
+            grid-column-start: span 1;
+        }
+    }
