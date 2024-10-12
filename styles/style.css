@@ -1,3 +1,6 @@
+@import "/styles/login.css";
+@import "/styles/mediaqueries.css";
+
 * {
     margin: 0;
     padding: 0;

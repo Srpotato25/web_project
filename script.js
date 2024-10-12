@@ -99,11 +99,9 @@ document.addEventListener('DOMContentLoaded', function() {
     window.addEventListener('scroll', function () {
         let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
 
-        // Si el scroll está en la parte superior, muestra el navbar
         if (scrollTop === 0) {
             navbar.classList.remove('hidden');
         } else {
-            // Si el scroll no está en 0, oculta el navbar
             navbar.classList.add('hidden');
         }
     });
