@@ -193,62 +193,144 @@ a {
     color: orange; 
 }
 
-/*gallery*/
+
 
 .tittle-container {
     padding: 20px;
     text-align: center;
-  }
-  
-  .title-seccion {
+}
+
+.title-seccion {
     text-align: center;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     font-size: 50px;
     color: black;
     font-weight: bolder;
     margin-top: 70px;
-  }
-  .tittle-container p {
+}
+
+.tittle-container p {
     margin-top: 25px ;
     margin-bottom: 25px;
-  }
-   
-  .orange-line-wrapper {
+}
+
+.orange-line-wrapper {
     margin-top: 30px;
-  }
-  
-  .orange-line {
+}
+
+.orange-line {
     height: 6px;
     width: 50px;
     background-color: orange;
     margin: -3px auto;
     margin-bottom: 20px;
-  }
+}
 
+
+/* Gallery */
 .Gallery {
     padding: 20px;
     margin: 0 auto;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: 250px;
+    grid-auto-rows: 250px;
     grid-gap: 20px;
+    position: relative;
 }
 
+.Event {
+    position: relative;
+    overflow: hidden;
+    justify-content: space-between;
+    /* Aseguramos que el tamaño del contenedor sea adecuado */
+    width: 100%;
+    height: 100%;
+}
 
 .Event img {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    position: relative;
+    z-index: 1;
 }
 
+.Event h3 {
+    position: absolute;
+    bottom: 60px;
+    color: white;
+    font-size: 24px;
+    font-weight: bold;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+    text-align: center;
+    width: 100%;
+    cursor: pointer;
+    z-index: 2;
+}
+
+.Event .overlay {
+    position: absolute;
+    bottom: 20px;
+    left: 0;
+    width: 100%;
+    z-index: 2;
+}
+
+.Event .box-galery {
+    padding: 10px 20px;
+    background-color: orange;
+    color: white;
+    position: absolute;
+    left: 0; 
+    bottom: 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    transition: transform 0.5s ease;
+    transform: translateX(-100%);
+    z-index: 3;
+    width: 200px;
+    /*align-items: center;
+    justify-content: center; REVISAR SI ALINEAMOS TEXTO*/
+}
+
+.Event:hover .box-galery {
+    transform: translateX(0);
+}
+
+.Event .box-galery p {
+    margin: 0;
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.Event .box-galery h3 {
+    margin: 0;
+    font-size: 25px;
+    font-weight: 900;
+}
+
+
+
+.Event .location {
+    position: absolute;
+    bottom: 0;
+    left: 20px;
+    color: white;
+    font-size: 30px;
+    font-weight: 600;
+    z-index: 3;
+}
+
+
+
 .Event:nth-child(1) {
-    grid-column-start: span 2;
+    grid-column: span 2;
 }
 
 .Event:nth-child(4) {
-    grid-column-start: span 2;
+    grid-column: span 2;
 }
-
 
 
 
