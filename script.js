@@ -158,26 +158,7 @@ document.addEventListener('DOMContentLoaded', function() {
         formContainer.querySelector('.login-form').classList.add('active');
     });
 
-    // Manejo de la navegación activa según el scroll
-    const sections = document.querySelectorAll('section');
-    const navLinks = document.querySelectorAll('.navbar a');
-
-    window.addEventListener('scroll', function() {
-        let scrollPosition = window.scrollY;
-
-        sections.forEach(section => {
-            const sectionTop = section.offsetTop;
-            const sectionHeight = section.offsetHeight;
-
-            if (scrollPosition >= sectionTop && scrollPosition < (sectionTop + sectionHeight)) {
-                navLinks.forEach(link => link.classList.remove('active'));
-                const activeLink = document.querySelector(`.navbar a[href="#${section.id}"]`);
-                if (activeLink) {
-                    activeLink.classList.add('active');
-                }
-            }
-        });
-    });
+    
 
     // Inicializar Swiper
     new Swiper(".card-wrapper", {

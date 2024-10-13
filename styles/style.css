@@ -18,7 +18,7 @@ a {
 }
 
 .header {
-    position: fixed;
+    position: sticky;
     height: 80px;
     width: 100%;
     z-index: 100;
@@ -29,9 +29,6 @@ a {
     
 }
 
-.hidden {
-    top: -100px; /* Oculta el navbar moviéndolo hacia arriba */
-}
 
 .box-logo {
     background-color: orange;
@@ -48,6 +45,7 @@ a {
     font-weight: 900;
     color: #fff;
     text-decoration: none;
+    cursor: auto;
 }
 
 .navbar {
@@ -104,26 +102,6 @@ a {
     color: orange;
 }
 
-/*Dropdown*/
-.image-with-text {
-    display: flex;
-    font-size: 20px;
-    padding-right: 20vh;
-    padding-top: 5vh;
-  }
-  .image-with-text img {
-    width: 60vh;
-    height: 20vh;
-    margin-right: 20px;
-    padding-left: 20px;
-    padding-top: 20px;
-}
-.dropdown-menu {
-    width:650px;
-    height: 200px;
-    background: #fff;
-  }
-
 /*Imagen and login*/
 
 .home {
@@ -138,7 +116,7 @@ a {
     padding: 20px; 
     margin: 0 auto; 
     height: 90vh; 
-    margin-top: 0px; 
+    margin-top: -80px; 
 }
 
 .MainImage img{
