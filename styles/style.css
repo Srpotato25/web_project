@@ -12,7 +12,9 @@ body {
   min-height: 100vh;
   font-size: 14px;
 }
-
+p{
+  font-weight: 300;
+}
 a {
   text-decoration: none;
 }
@@ -301,116 +303,128 @@ a {
   grid-column: span 2;
 }
 
-/*carrosuel*/
 
-.card-wrapper {
-  max-width: 1500px;
-  margin: 0 60px 35px;
-  padding: 20px 10px;
-  overflow: hidden;
-}
-
-.card-list .card-item {
+/* Estilos del carrusel */
+.image-list .image-item {
   list-style: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+  position: relative; 
 }
 
-.card-list .card-item .card-link {
-  user-select: none;
-  display: block;
-  background-color: #cfd1da;
-  padding: 18px;
-  border-radius: 12px;
-  text-decoration: none;
-  box-shadow: 0 10px 10px rgb(0, 0, 0, 0.05);
-  transition: 0.2 ease;
+.image-list .image-item .carousel-image {
+  width: 80%;
+  height: 450px; 
+  object-fit: cover; 
 }
 
-.card-list .card-item .card-link:active {
+.container.swiper {
+  width: 1500px;
+  margin: 0 auto;
+  padding: 20px 10px;
+  overflow: hidden;  
+}
+
+.container.swiper:hover {
   cursor: grabbing;
 }
 
-.card-list .card-item .card-link:hover {
-  transform: translateY(-10px);
+.swiper-wrapper {
+  display: flex;
+  gap: 10px; 
 }
 
-.card-list .card-link .card-image {
-  width: 100%;
-  aspect-ratio: 16 / 9;
-  border-radius: 10px;
-  object-fit: cover;
-}
-
-.card-list .card-link .bagde {
-  color: #5372f0;
-  background: #dde4ff;
-  padding: 8px 16px;
-  font-size: 0.95rem;
-  margin: 16px 0 18px;
-  width: fit-content;
-  border-radius: 50px;
-
-  font-style: normal;
-  font-weight: 600;
-  line-height: 1.5;
-  font-family: "Open Sans", sans-serif;
-  letter-spacing: 0px;
-  text-align: left;
-}
-
-.card-list .card-link .card-title {
-  font-size: 1rem;
-  color: black;
-
-  font-style: normal;
-  font-weight: 400;
-  line-height: 1.5;
-  font-family: "Open Sans", sans-serif;
-  letter-spacing: 0px;
-  text-align: left;
-}
-
-.card-list .card-link .card-button {
-  height: 35px;
-  width: 35px;
-  color: #5372f0;
-  border-radius: 50%;
-  margin: 30px 0 5px;
-  background: none;
-  cursor: pointer;
-  border: 2px solid #5372f0;
-  transform: rotate(-45deg);
-}
-
-.card-list .card-link:hover .card-button {
-  color: #ffff;
-  background: #5372f0;
-}
-
-.card-wrapper .swiper-pagination-bullet {
-  height: 13px;
+.swiper-pagination-bullet {
+  height: 15px;
   width: 13px;
   opacity: 0.5;
   background: black;
 }
 
-.card-wrapper .swiper-pagination-bullet-active {
+.swiper-pagination-bullet-active {
   opacity: 1;
 }
 
-.card-wrapper .swiper-slide-button {
+.swiper-slide-button {
   color: black;
   margin-top: 35px;
+  padding: 0 10px; 
 }
 
-@media screen and (max-width: 768) {
-  .card-wrapper {
-    margin: 0 10px 25px;
-  }
 
-  .card-wrapper .swiper-slide-button {
-    display: none;
-  }
+.image-item h3 {
+  position: absolute;
+  bottom: 60px;
+  color: white;
+  font-size: 24px;
+  font-weight: bold;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+  text-align: left; 
+  width: 100%;
+  cursor: pointer;
+  z-index: 2;
 }
+
+.image-item .overlay {
+  position: absolute;
+  bottom: 25px;
+  left: 30px;
+  width: 100%; 
+  height: auto; 
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start; 
+  align-items: flex-start; 
+  padding: 10px; 
+  box-sizing: border-box; 
+  z-index: 2;
+}
+
+.image-item .box-galery {
+  padding: 2px 60px;
+  background-color: orange;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; 
+  justify-content: flex-start;
+  transition: opacity 0.5s ease, transform 0.5s ease; 
+  z-index: 3;
+  width: auto;
+  opacity: 0; 
+  transform: translateY(20px); 
+}
+
+.image-item:hover .box-galery {
+  opacity: 1; 
+  transform: translateY(0); 
+}
+
+.image-item .box-galery p {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.image-item .box-galery h4 {
+  margin: 0;
+  font-size: 25px;
+  font-weight: 900;
+}
+
+.image-item .location {
+  color: white;
+  font-size: 25px;
+  font-weight: 600;
+  text-align: left;
+  margin-top: 10px;
+  z-index: 3;
+  margin-left: 25px;
+}
+
+
 
 /* Custom scrollbar styles */
 ::-webkit-scrollbar {

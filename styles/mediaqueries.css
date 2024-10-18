@@ -26,4 +26,19 @@
         .Event:nth-child(4) {
             grid-column-start: span 1;
         }
+
     }
+
+    @media screen and (max-width: 768px) {
+  .container.swiper {
+    margin: 0 10px 25px;
+  }
+
+  .swiper-slide-button {
+    display: none;
+  }
+
+  .image-list .image-item .carousel-image {
+    height: 250px; 
+  }
+}

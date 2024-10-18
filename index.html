@@ -15,7 +15,6 @@
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0" />
     <title>Chepe trips</title>
 </head>
-
 <body>
     <header class="header">
         <div class="box-logo">
@@ -31,7 +30,6 @@
                 <i class="fa-solid fa-user nav-icon" id="form-open"></i>
         </nav>
     </header>
-
     <section class="home">
         <div class="form_container">
             <i class="fa-solid fa-xmark form_close"></i>
@@ -217,87 +215,89 @@
 
     <section class="Carossuel">
         <div class="container swiper">
-            <div class="card-wrapper">
-                <ul class="card-list swiper-wrapper">
-                    <li class="card-item swiper-slide">
-                        <a href="#" class="card-link">
-                            <img src="asset/museo-de-los-ninos-costa-rica.jpg" alt="Card image" class="card-image">
-                            <p class="bagde">Museo de los niños</p>
-                            <h2 class="card-title">Descripcion aca</h2>
-                            <button class="card-button material-symbols-rounded">
-                                arrow_forward
-                            </button>
-                        </a>
-                    </li>
-
-                    <li class="card-item swiper-slide">
-                        <a href="#" class="card-link">
-                            <img src="asset/museo-del-jade-costa-rica.jpg" alt="Card image" class="card-image">
-                            <p class="bagde">Museo del Jade</p>
-                            <h2 class="card-title"></h2>
-                            <button class="card-button material-symbols-rounded">
-                                arrow_forward
-                            </button>
-                        </a>
-                    </li>
-
-                    <li class="card-item swiper-slide">
-                        <a href="#" class="card-link">
-                            <img src="asset/museo-nacional.jpg" alt="Card image" class="card-image">
-                            <p class="bagde">Museo Nacional</p>
-                            <h2 class="card-title"></h2>
-                            <button class="card-button material-symbols-rounded">
-                                arrow_forward
-                            </button>
-                        </a>
-                    </li>
-
-                    <li class="card-item swiper-slide">
-                        <a href="#" class="card-link">
-                            <img src="asset/museum-of-contemporary.jpg" alt="Card image" class="card-image">
-                            <p class="bagde">Museo de Arte y Diseño Contemporáneo</p>
-                            <h2 class="card-title"></h2>
-                            <button class="card-button material-symbols-rounded">
-                                arrow_forward
-                            </button>
-                        </a>
-                    </li>
-
-                    <li class="card-item swiper-slide">
-                        <a href="#" class="card-link">
-                            <img src="asset/san-jose-central-market-entrance.jpg" alt="Card image" class="card-image">
-                            <p class="bagde">Mercado Central</p>
-                            <h2 class="card-title"></h2>
-                            <button class="card-button material-symbols-rounded">
-                                arrow_forward
-                            </button>
-                        </a>
-                    </li>
-
-                    <li class="card-item swiper-slide">
-                        <a href="#" class="card-link">
-                            <img src="asset/cruz-alajuelita-sitio-masacre_lncima20160401_0149_9.jpg" alt="Card image"
-                                class="card-image">
-                            <p class="bagde">Cruz de Alajuelita</p>
-                            <h2 class="card-title"></h2>
-                            <button class="card-button material-symbols-rounded">
-                                arrow_forward
-                            </button>
-                        </a>
-                    </li>
-                </ul>
-
-                <!-- If we need pagination -->
-                <div class="swiper-pagination"></div>
-
-                <!-- If we need navigation buttons -->
-                <div class="swiper-slide-button swiper-button-prev"></div>
-                <div class="swiper-slide-button swiper-button-next"></div>
-
-
-            </div>
+            <ul class="image-list swiper-wrapper">
+                <li class="image-item swiper-slide">
+                    <img src="asset/museo-de-los-ninos-costa-rica.jpg" alt="Museo de los niños" class="carousel-image">
+                    <div class="overlay">
+                        <div class="box-galery">
+                            <p>From</p>
+                            <h4>$50</h4>
+                        </div>
+                        <h2 class="location">
+                            <a href="/Views/tours.html" style="text-decoration: none; color: inherit;">Museo de los  niños</a>
+                        </h2>
+                    </div>
+                </li>
+    
+                <li class="image-item swiper-slide">
+                    <img src="asset/museo-del-jade-costa-rica.jpg" alt="Museo del Jade" class="carousel-image">
+                    <div class="overlay">
+                        <div class="box-galery">
+                            <p>From</p>
+                            <h4>$125</h4>
+                        </div>
+                        <h2 class="location">
+                            <a href="/Views/tours.html" style="text-decoration: none; color: inherit;">Museo del Jade</a>
+                        </h2>
+                    </div>
+                </li>
+    
+                <li class="image-item swiper-slide">
+                    <img src="asset/museo-nacional.jpg" alt="Museo Nacional" class="carousel-image">
+                    <div class="overlay">
+                        <div class="box-galery">
+                            <p>From</p>
+                            <h4>$100</h4>
+                        </div>
+                        <h2 class="location">
+                            <a href="/Views/tours.html" style="text-decoration: none; color: inherit;">Museo Nacional</a>
+                        </h2>
+                    </div>
+                </li>
+    
+                <li class="image-item swiper-slide">
+                    <img src="asset/museum-of-contemporary.jpg" alt="Museo de Arte y Diseño Contemporáneo" class="carousel-image">
+                    <div class="overlay">
+                        <div class="box-galery">
+                            <p>From</p>
+                            <h4>$250</h4>
+                        </div>
+                        <h2 class="location">
+                            <a href="/Views/tours.html" style="text-decoration: none; color: inherit;">Museo de Arte Contemporáneo</a>
+                        </h2>
+                    </div>
+                </li>
+    
+                <li class="image-item swiper-slide">
+                    <img src="asset/san-jose-central-market-entrance.jpg" alt="Mercado Central" class="carousel-image">
+                    <div class="overlay">
+                        <div class="box-galery">
+                            <p>From</p>
+                            <h4>$75</h4>
+                        </div>
+                        <h2 class="location">
+                            <a href="/Views/tours.html" style="text-decoration: none; color: inherit;">Mercado Central</a>
+                        </h2>
+                    </div>
+                </li>
+    
+                <li class="image-item swiper-slide">
+                    <img src="asset/cruz-alajuelita-sitio-masacre_lncima20160401_0149_9.jpg" alt="Cruz de Alajuelita" class="carousel-image">
+                    <div class="overlay">
+                        <div class="box-galery">
+                            <p>From</p>
+                            <h4>$200</h4>
+                        </div>
+                        <h2 class="location">
+                            <a href="/Views/tours.html" style="text-decoration: none; color: inherit;">Cruz de Alajuelita</a>
+                        </h2>
+                    </div>
+                </li>
+            </ul>
         </div>
     </section>
+    
+    
 
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script type="module" src="script.js" defer></script>
