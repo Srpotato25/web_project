@@ -19,6 +19,7 @@ a {
   text-decoration: none;
 }
 
+/* Estilos para el header */
 .header {
   position: sticky;
   height: 80px;
@@ -27,9 +28,10 @@ a {
   display: flex;
   align-items: center;
   padding: 0 20px;
-  transition: top 0.3s ease-in-out; /* Animación suave */
+  transition: top 0.3s ease-in-out;
 }
 
+/* Logo */
 .box-logo {
   background-color: orange;
   width: 205px;
@@ -48,6 +50,7 @@ a {
   cursor: auto;
 }
 
+/* Navbar general */
 .navbar {
   display: flex;
   align-items: center;
@@ -64,6 +67,7 @@ a {
   position: relative;
 }
 
+/* Efecto hover en los enlaces principales */
 .navbar a::before {
   content: "";
   position: absolute;
@@ -88,6 +92,7 @@ a {
   color: orange;
 }
 
+/* Estilos para los iconos de navegación */
 .nav-icon {
   height: 15px;
   width: 15px;
@@ -96,12 +101,92 @@ a {
   display: flex;
   align-items: center;
   transition: color 0.3s ease;
+  pointer-events: auto; /* Asegura que el ícono sea interactivo */
 }
 
 .nav-icon:hover {
   color: orange;
 }
 
+/* Icono de usuario específico */
+#form-open {
+  cursor: pointer; /* Asegura que el cursor cambie a pointer al hacer hover */
+}
+
+/* Estilos para el dropdown */
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-menu {
+  display: none;
+  position: absolute;
+  top: 120%; /* Ajusta este valor según lo que necesites */
+  left: 0;
+  background-color: white;
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+  width: 400px;
+  z-index: 200;
+  padding: 20px; /* Espacio dentro del dropdown */
+}
+
+/* Mostrar el menú al hacer hover */
+.dropdown:hover .dropdown-menu {
+  display: block;
+}
+
+/* Cambiar el color del enlace a naranja al pasar el ratón sobre "Destinations" */
+.dropdown:hover > a {
+  color: orange;
+}
+
+/* Contenido del dropdown */
+.dropdown-content {
+  display: flex;
+  padding: 10px; /* Añadir espacio alrededor del contenido */
+}
+
+/* Imagen en el dropdown */
+.dropdown-image {
+  width: 150px;
+  height: auto;
+  margin-right: 20px;
+  padding: 10px; /* Espacio alrededor de la imagen */
+}
+
+/* Estilo para el texto del dropdown */
+.dropdown-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.dropdown-text h2 {
+  margin: 0 0 10px 0;
+  font-size: 18px;
+  color: orange;
+}
+
+.dropdown-text a {
+  color: black;
+  text-decoration: none;
+  margin-bottom: 5px;
+}
+
+/* Cambiar color y subrayado solo dentro del dropdown */
+.dropdown-text a:hover {
+  color: orange;
+  text-decoration: underline;
+}
+
+/* Eliminar el hover en enlaces dentro del dropdown */
+.dropdown-text a::before {
+  content: none;
+}
+
+.dropdown > a::before {
+  top: 210%; 
+}
 /*Imagen and login*/
 
 .home {
