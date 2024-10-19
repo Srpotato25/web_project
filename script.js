@@ -140,7 +140,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Escuchar el evento de envío del formulario de inicio de sesión
     loginForm.addEventListener("submit", function(event) {
-        event.preventDefault(); // Prevenir el comportamiento por defecto del formulario
+        event.preventDefault();
 
         // Obtener los valores de los campos
         const email = document.getElementById('login-email').value.trim(); 
