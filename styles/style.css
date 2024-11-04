@@ -563,6 +563,45 @@ a {
   color: #29353e;
 }
 
+.searchBox {
+  opacity: 0;
+  transform: translateX(20px); 
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 130%;
+  background: #fff;
+  align-items: center;
+  padding: 0 20px;
+  z-index: 1000;
+  pointer-events: none; 
+  transition: opacity 0.5s ease, transform 0.5s ease; 
+}
 
-/* test */
+/* Mostrar la barra de búsqueda con transición suave */
+.searchBox.active {
+  opacity: 1;
+  transform: translateY(0); /* Animación hacia su posición original */
+  pointer-events: auto; /* Permite interacción cuando está visible */
+}
 
+/* Estilos para el input y el ícono */
+.searchBox input {
+  width: 90%;
+  border: none;
+  outline: none;
+  height: 50px;
+  font-size: 1.25rem;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.5);
+}
+
+.searchBox i {
+  cursor: pointer;
+  margin-left: 1px;
+}
+
+.highlight {
+  background-color: yellow;
+  font-weight: bold;
+}

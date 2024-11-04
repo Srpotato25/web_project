@@ -39,8 +39,13 @@
             </div>
             <a href="/Views/tours.html" class="dropdown-toggle">Tours </a>
             <a href="/Views/contacts.html">Contact</a>
-            <i class="fa-solid fa-magnifying-glass nav-icon"></i>
+            <i class="fa-solid fa-magnifying-glass nav-icon" id="searchBtn"></i>
             <i class="fa-solid fa-user nav-icon" id="form-open"></i>
+
+            <div class="searchBox" id="searchBox">
+                <input type="text" placeholder="Search here...">
+                <i class="fa-solid fa-xmark nav-icon" id="closeSearch"></i>
+            </div>
         </nav>
     </header>
     
@@ -133,7 +138,7 @@
     </div>
 
     <section class="Gallery">
-        <div class="Event">
+        <div class="Event searchable">
             <img src="asset/arte.jpg" alt="Exposición de pinturas">
             <div class="overlay">
                 <div class="box-galery">
@@ -232,7 +237,7 @@
     <section class="Carossuel">
         <div class="container swiper">
             <ul class="image-list swiper-wrapper">
-                <li class="image-item swiper-slide">
+                <li class="image-item swiper-slide searchable">
                     <img src="asset/museo-de-los-ninos-costa-rica.jpg" alt="Museo de los niños" class="carousel-image">
                     <div class="overlay">
                         <div class="box-galery">
