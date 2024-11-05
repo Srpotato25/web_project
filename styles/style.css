@@ -240,7 +240,7 @@ a {
   margin-bottom: 25px;
 }
 
-.imagetext button {
+.mainButton {
   padding: 20px 30px;
   background-color: orange;
   border: none;
@@ -251,7 +251,7 @@ a {
   transition: 0.3s ease, color 0.3s ease;
 }
 
-.imagetext button:hover {
+.mainButton:hover {
   background-color: #fff;
   color: orange;
 }
@@ -604,4 +604,41 @@ a {
 .highlight {
   background-color: yellow;
   font-weight: bold;
+}
+
+.event-box{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+/*COREGGGGIR*/
+.event-detail {
+  display: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 80%; /* Ajusta el ancho según sea necesario */
+  max-width: 500px; /* Limita el ancho máximo */
+  padding: 20px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); /* Opcional: sombra para destacar */
+  border-radius: 10px; /* Opcional: bordes redondeados */
+  background-color: #ffffff; /* Fondo blanco o el que prefieras */
+  text-align: center;
+}
+
+
+.event-detail.show {
+    display: block; /* Mostrar cuando tenga la clase "show" */
+}
+
+
+
+
+/* Imagen del evento */
+.event-img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 10px;
+  margin-bottom: 20px;
 }

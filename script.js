@@ -203,27 +203,55 @@ new Swiper(".swiper", {
   },
 });
 
-
 document.addEventListener("DOMContentLoaded", function() {
-  let searchBtn = document.getElementById('searchBtn'); // Botón de búsqueda
-  let closeSearch = document.getElementById('closeSearch'); // Botón para cerrar la barra de búsqueda
-  let searchBox = document.getElementById('searchBox'); // Barra de búsqueda
-  let searchInput = searchBox.querySelector("input"); // Campo de entrada de búsqueda
-  let searchableItems = document.querySelectorAll('.searchable'); // Elementos a buscar
-
-  // Mostrar la barra de búsqueda al hacer clic en el ícono de búsqueda
-  searchBtn.onclick = function() {
-      searchBox.classList.add('active'); // Mostrar la barra de búsqueda
-      searchBtn.style.display = 'none';  // Oculta el botón de búsqueda
-  };
-
-  // Cerrar la barra de búsqueda al hacer clic en el ícono de cerrar
-  closeSearch.onclick = function() {
-      searchBox.classList.remove('active'); // Oculta la barra de búsqueda
-      searchBtn.style.display = 'block';  // Muestra el botón de búsqueda de nuevo
-      searchInput.value = ""; // Limpia el campo de búsqueda
-      clearHighlights(); // Borra los resaltados de la búsqueda anterior
-  };
+  window.onload = loadEventDetails; // Mueve esta línea aquí
 });
+
+function getQueryParams() {
+  const params = new URLSearchParams(window.location.search);
+  return {
+      title: params.get('title'),
+      price: params.get('price'),
+      image: params.get('image'),
+      description: params.get('description') // Agregar descripción
+  };
+}
+
+function loadEventDetails() {
+  const { title, price, image, description } = getQueryParams();
+  
+  // Asignar los valores a los elementos correspondientes
+  document.getElementById('event-title').textContent = title;
+  document.getElementById('event-price').textContent = `Precio: $${price}`;
+  const eventImage = document.getElementById('event-image');
+  eventImage.src = image;
+
+  // Mostrar la descripción
+  const eventDescription = document.createElement('p'); // Crear un nuevo elemento de párrafo para la descripción
+  eventDescription.textContent = description; // Asignar la descripción
+  eventDescription.classList.add('event-description'); // Agregar una clase para estilizar si es necesario
+  document.querySelector('.event-detail').appendChild(eventDescription); // Agregar la descripción al contenedor de detalles
+
+  // Manejo de errores en la carga de la imagen
+  eventImage.onerror = function() {
+      console.error("Error: No se pudo cargar la imagen desde " + image);
+      eventImage.alt = "Imagen no disponible"; // Cambiar el texto alternativo si la imagen no carga
+  };
+}
+
+// Función para realizar la reserva
+function makeBooking() {
+  const date = document.getElementById('booking-date').value;
+  if (date) {
+      alert(`Reserva realizada para el ${date}.`);
+  } else {
+      alert("Por favor, selecciona una fecha.");
+  }
+}
+
+window.onload = loadEventDetails;
+
+eventDetail.classList.add("show");
+
 
 
