@@ -179,6 +179,9 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
+
+
+//
 new Swiper(".swiper", {
   loop: true,
   spaceBetween: 30,
@@ -202,6 +205,26 @@ new Swiper(".swiper", {
     1024: { slidesPerView: 3 },
   },
 });
+
+document.addEventListener("DOMContentLoaded", function() {
+  let searchBtn = document.getElementById('searchBtn'); // Ícono de búsqueda
+  let closeSearch = document.getElementById('closeSearch'); // Ícono de cerrar dentro de searchBox
+  let searchBox = document.getElementById('searchBox'); // Barra de búsqueda
+
+  // Mostrar la barra de búsqueda al hacer clic en el ícono de búsqueda
+  searchBtn.onclick = function() {
+      searchBox.classList.add('active'); // Añade la clase active para mostrar la barra
+      searchBtn.style.display = 'none';  // Oculta el ícono de búsqueda
+  };
+
+  // Cerrar la barra de búsqueda al hacer clic en el ícono de cerrar
+  closeSearch.onclick = function() {
+      searchBox.classList.remove('active'); // Elimina la clase active para ocultar la barra
+      searchBtn.style.display = 'block';  // Muestra el ícono de búsqueda nuevamente
+  };
+});
+
+
 
 document.addEventListener("DOMContentLoaded", function() {
   window.onload = loadEventDetails; // Mueve esta línea aquí
