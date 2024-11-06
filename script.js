@@ -4,7 +4,8 @@ import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.14.0/firebas
 import { 
     getAuth, 
     signInWithEmailAndPassword, 
-    createUserWithEmailAndPassword 
+    createUserWithEmailAndPassword, 
+    signOut 
 } from "https://www.gstatic.com/firebasejs/10.14.0/firebase-auth.js";
 
 // Configuración de Firebase
@@ -25,9 +26,36 @@ const auth = getAuth(app);
 
 console.log("Firebase ha sido inicializado correctamente.");
 
+// Función para manejar el cambio de estado de autenticación
+auth.onAuthStateChanged(user => {
+    const formContainer = document.querySelector(".form_container");
+    const home = document.querySelector(".home");
+
+    if (user) {
+        // Usuario autenticado
+        console.log("Usuario logueado:", user.email);
+
+        // Limpiar formularios si el usuario está logueado
+        const loginForm = document.getElementById('login-form');
+        if (loginForm) loginForm.reset(); // Limpiar formulario de login
+
+        // Cerrar el formulario de login automáticamente
+        if (formContainer) {
+            formContainer.classList.remove("show"); // Ocultar el contenedor del formulario
+        }
+
+        // Opcional: cambiar el estado visual (por ejemplo, mostrar contenido de usuario)
+        home.classList.add("logged-in");
+    } else {
+        // Usuario no autenticado
+        console.log("No hay usuario logueado.");
+        home.classList.remove("logged-in");
+    }
+});
+
 // Escuchar cuando el DOM esté completamente cargado
 document.addEventListener('DOMContentLoaded', function() {
-    
+
     // Seleccionar el formulario de registro
     const signupForm = document.getElementById('signup-form');
     const signupErrorMessageDiv = document.getElementById('signup-error-message'); // Div de error para el formulario de registro
@@ -56,6 +84,13 @@ document.addEventListener('DOMContentLoaded', function() {
               .then((userCredential) => {
                   alert("Cuenta creada correctamente.");
                   signupForm.reset();
+
+                  // Cambiar a login automáticamente
+                  const formContainer = document.querySelector(".form_container");
+                  if (formContainer) {
+                      formContainer.querySelector('.signup_form').classList.remove('active');  // Ocultar signup
+                      formContainer.querySelector('.login-form').classList.add('active');  // Mostrar login
+                  }
               })
               .catch((error) => {
                   let errorMessage;
@@ -150,6 +185,13 @@ document.addEventListener('DOMContentLoaded', function() {
             signInWithEmailAndPassword(auth, email, password)
               .then((userCredential) => {
                   alert("Inicio de sesión exitoso.");
+                  loginForm.reset(); // Limpiar los campos después de un inicio de sesión exitoso
+
+                  // Cerrar el formulario de login
+                  const formContainer = document.querySelector(".form_container");
+                  if (formContainer) {
+                      formContainer.classList.remove("show"); // Ocultar el formulario
+                  }
               })
               .catch((error) => {
                   let errorMessage;
@@ -167,7 +209,24 @@ document.addEventListener('DOMContentLoaded', function() {
               });
         });
     }
+
+    // Cerrar sesión
+    const logoutBtn = document.getElementById('logout-btn');
+    if (logoutBtn) {
+        logoutBtn.addEventListener('click', () => {
+            signOut(auth).then(() => {
+                alert("Has cerrado sesión correctamente.");
+                // Opcional: Redirigir al inicio u otra página
+                window.location.href = '/'; // Redirigir a la página de inicio
+            }).catch((error) => {
+                console.error("Error al cerrar sesión:", error);
+            });
+        });
+    }
 });
+
+
+
 
 
 // Inicialización de Swiper
