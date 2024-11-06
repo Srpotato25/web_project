@@ -67,7 +67,7 @@ a {
   position: relative;
 }
 
-/* Efecto hover en los enlaces principales */
+
 .navbar a::before {
   content: "";
   position: absolute;
@@ -92,7 +92,6 @@ a {
   color: orange;
 }
 
-/* Estilos para los iconos de navegación */
 .nav-icon {
   height: 15px;
   width: 15px;
@@ -101,17 +100,13 @@ a {
   display: flex;
   align-items: center;
   transition: color 0.3s ease;
-  pointer-events: auto; /* Asegura que el ícono sea interactivo */
+  pointer-events: auto; 
 }
 
 .nav-icon:hover {
   color: orange;
 }
 
-/* Icono de usuario específico */
-#form-open {
-  cursor: pointer; /* Asegura que el cursor cambie a pointer al hacer hover */
-}
 
 /* Estilos para el dropdown */
 .dropdown {
@@ -136,7 +131,6 @@ a {
   display: block;
 }
 
-/* Cambiar el color del enlace a naranja al pasar el ratón sobre "Destinations" */
 .dropdown:hover > a {
   color: orange;
 }
@@ -187,8 +181,12 @@ a {
 .dropdown > a::before {
   top: 210%; 
 }
-/*Imagen and login*/
 
+
+
+
+
+/*Inicio con Imagen*/
 .home {
   position: relative;
   height: 7vh;
@@ -219,7 +217,6 @@ a {
   text-align: left;
   padding: 20px;
   border-radius: 10px;
-  /*background: rgba(0, 0, 0, 0.5); Valorar si lo dejamos*/
 }
 .imagetext h3 {
   font-size: 30px;
@@ -255,6 +252,7 @@ a {
   background-color: #fff;
   color: orange;
 }
+
 
 .tittle-container {
   padding: 20px;
@@ -302,7 +300,6 @@ a {
   position: relative;
   overflow: hidden;
   justify-content: space-between;
-  /* Aseguramos que el tamaño del contenedor sea adecuado */
   width: 100%;
   height: 100%;
 }

@@ -30,10 +30,10 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Seleccionar el formulario de registro
     const signupForm = document.getElementById('signup-form');
-    const signupErrorMessageDiv = document.getElementById('signup-error-message');
+    const signupErrorMessageDiv = document.getElementById('signup-error-message'); // Div de error para el formulario de registro
 
     // Escuchar el evento de envío del formulario de registro
-    if (signupForm && signupErrorMessageDiv) {
+    if (signupForm) {
         signupForm.addEventListener("submit", function(event) {
             event.preventDefault();
 
@@ -82,16 +82,18 @@ document.addEventListener('DOMContentLoaded', function() {
           home = document.querySelector(".home"),
           formContainer = document.querySelector(".form_container"),
           formCloseBtn = document.querySelector(".form_close"),
-          signupBtn = document.querySelector("#signup"),
-          loginBtn = document.querySelector("#login"),
+          signupBtn = document.querySelector("#show-signup-form"),  // Este es el botón para mostrar el formulario de registro
+          loginBtn = document.querySelector("#show-login-form"),    // Este es el botón para mostrar el formulario de login
           pwShowHide = document.querySelectorAll(".fa-eye-slash, .fa-eye");
 
+    // Mostrar el formulario al hacer clic en el ícono de usuario
     if (formOpenBtn && home) {
         formOpenBtn.addEventListener("click", () => {
             home.classList.add("show");
         });
     }
 
+    // Cerrar el formulario al hacer clic en el ícono de cerrar
     if (formCloseBtn && home) {
         formCloseBtn.addEventListener("click", () => {
             home.classList.remove("show");
@@ -114,21 +116,21 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Cambiar a registro
+    // Cambiar a registro cuando se hace clic en "Sign Up"
     if (signupBtn && formContainer) {
         signupBtn.addEventListener("click", (e) => {
             e.preventDefault();
-            formContainer.querySelector('.login-form').classList.remove('active');
-            formContainer.querySelector('.signup_form').classList.add('active');
+            formContainer.querySelector('.login-form').classList.remove('active'); // Ocultar login
+            formContainer.querySelector('.signup_form').classList.add('active');  // Mostrar signup
         });
     }
 
-    // Cambiar a inicio de sesión
+    // Cambiar a login cuando se hace clic en "Log In"
     if (loginBtn && formContainer) {
         loginBtn.addEventListener("click", (e) => {
             e.preventDefault();
-            formContainer.querySelector('.signup_form').classList.remove('active');
-            formContainer.querySelector('.login-form').classList.add('active');
+            formContainer.querySelector('.signup_form').classList.remove('active');  // Ocultar signup
+            formContainer.querySelector('.login-form').classList.add('active'); // Mostrar login
         });
     }
 
@@ -136,6 +138,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const loginForm = document.getElementById('login-form');
     const loginErrorMessageDiv = document.getElementById('login-error-message');
 
+    // Iniciar sesión
     if (loginForm && loginErrorMessageDiv) {
         loginForm.addEventListener("submit", function(event) {
             event.preventDefault();
@@ -165,6 +168,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 });
+
 
 // Inicialización de Swiper
 new Swiper(".swiper", {
@@ -253,7 +257,3 @@ function makeBooking() {
         alert("Por favor, selecciona una fecha.");
     }
 }
-
-
-
-

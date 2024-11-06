@@ -49,29 +49,27 @@
 
         </nav>
     </header>
-    
-
 
     <section class="home">
         <div class="form_container">
-            <i class="fa-solid fa-xmark form_close"></i>
-
+            <!-- Botón para cerrar el formulario -->
+            <i class="fa-solid fa-xmark form_close" id="closeLoginBtn"></i>
+    
             <!-- FORMULARIO DE LOGIN -->
             <div class="form login-form active">
-                <form action="#">
+                <form id="login-form" action="#">
                     <h2>Log In</h2>
-
+    
                     <div class="input_box">
                         <i class="fa-regular fa-envelope"></i>
                         <input type="email" placeholder="Enter your email" id="login-email" required>
                     </div>
-
+    
                     <div class="input_box">
                         <i class="fa-solid fa-lock"></i>
                         <input type="password" placeholder="Enter your password" id="login-password" required>
-                        <!--<i class="fa-regular fa-eye-slash"></i>-->
                     </div>
-
+    
                     <div class="option_field">
                         <span class="checkbox">
                             <input type="checkbox" id="check">
@@ -79,43 +77,42 @@
                         </span>
                         <a href="#" class="forgot_pw">Forgot your password?</a>
                     </div>
-
-                    <button class="button">Log In</button>
-                    <div class="login_signup">Don't have an account? <a href="#" id="signup">Sign Up</a></div>
+    
+                    <button class="button" type="submit">Log In</button>
+                    <div class="login_signup">Don't have an account? <a href="#" id="show-signup-form">Sign Up</a></div>
                 </form>
             </div>
-
+    
             <!-- FORMULARIO DE REGISTRO -->
             <div class="form signup_form">
                 <form id="signup-form">
                     <h2>Register</h2>
-
+    
                     <div class="input_box">
                         <i class="fa-regular fa-envelope"></i>
                         <input type="email" id="signup-email" placeholder="Add your email" required>
                     </div>
-
+    
                     <div class="input_box">
                         <i class="fa-solid fa-lock"></i>
                         <input type="password" id="signup-password" placeholder="Add your password" required>
-                        <!--<i class="fa-regular fa-eye-slash"></i>-->
                     </div>
-
+    
                     <div class="input_box">
                         <i class="fa-solid fa-lock"></i>
                         <input type="password" id="confirm-password" placeholder="Confirm password" required>
-                        <!--<i class="fa-regular fa-eye-slash"></i>-->
                     </div>
-
+    
                     <!-- Contenedor para mensajes de error -->
                     <div id="signup-error-message" class="error-message"></div>
-
+    
                     <button id="submit" type="submit" class="button">Register</button>
-                    <div class="login_signup">Already have an account? <a href="#" id="login">Log In</a></div>
+                    <div class="login_signup">Already have an account? <a href="#" id="show-login-form">Log In</a></div>
                 </form>
             </div>
         </div>
     </section>
+    
 
     <!-- MAIN IMAGE SECTION -->
     <div class="MainImage">
@@ -137,7 +134,6 @@
             <div class="orange-line"></div>
         </div>
     </div>
-
     <section class="Gallery">
         <div class="Event searchable">
             <img src="../asset/arte.jpg" alt="Exposición de pinturas">
@@ -224,8 +220,6 @@
             </div>
         </div>
     </section>
-    
-    
 
     <!-- CAROUSEL-->
     <div class="tittle-container">
@@ -235,7 +229,6 @@
             <div class="orange-line"></div>
         </div>
     </div>
-
     <section class="Carossuel">
         <div class="container swiper">
             <ul class="image-list swiper-wrapper">
