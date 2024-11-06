@@ -513,7 +513,7 @@ a {
 
 /* Custom scrollbar styles */
 ::-webkit-scrollbar {
-  width: 10px; /* width of the entire scrollbar */
+  width: 7px; /* width of the entire scrollbar */
 }
 
 ::-webkit-scrollbar-track {
@@ -522,10 +522,6 @@ a {
 
 ::-webkit-scrollbar-thumb {
   background: orange; /* color of the scroll thumb */
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: #fff; /* color of the scroll thumb on hover */
 }
 
 /* ESTILO DEL TEXTO */
@@ -611,6 +607,7 @@ a {
   align-items: center;
   justify-content: center;
 }
+
 /*COREGGGGIR*/
 .event-detail {
   display: none;
@@ -618,7 +615,7 @@ a {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 80%; /* Ajusta el ancho según sea necesario */
+  width: 100%; /* Ajusta el ancho según sea necesario */
   max-width: 500px; /* Limita el ancho máximo */
   padding: 20px;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); /* Opcional: sombra para destacar */
@@ -631,8 +628,6 @@ a {
 .event-detail.show {
     display: block; /* Mostrar cuando tenga la clase "show" */
 }
-
-
 
 
 /* Imagen del evento */
