@@ -1,56 +1,122 @@
-/* Contact Form*/
-
-#contacts {
-    max-width: 800px;
-    margin: 20px auto; 
-    padding: 20px;
-    background-color: #f9f9f9;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-#contacts h2 {
-    text-align:left;
-    color: #333;
-    font-size: 25px;
-    margin-bottom: 1em;
+h1 {
+    font-size: 2em;
     font-weight: bold;
 }
 
-#contactForm {
-    display:flexbox;
-    flex-direction:column;
+section {
+    display: flex;
+    justify-content: space-between;
+    gap: 30px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.information {
+    flex: 1;
+}
+
+.information i.fa {
+    margin-right: 10px;
+    font-size: 20px;
+    vertical-align: middle;
+}
+
+.information p {
+    display: flex;
+    align-items: center;
+}
+
+.contacts {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
     gap: 1em;
 }
 
-#contactForm input[type="text"],
-#contactForm input[type="email"],
-#contactForm textarea {
+.contactForm {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    margin-top: -30px;
+}
+
+.formGroup {
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+}
+
+.contactForm label {
+    font-size: 0.9em;
+
+    margin: 0;
+}
+
+.contactForm input,
+.contactForm textarea {
     width: 100%;
-    padding: 8px;
+    padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
     font-size: 0.9em;
     background-color: #fff;
-    margin-bottom: 10px;
+    margin-bottom: 15px;
+    box-sizing: border-box;
 }
 
-#contactForm textarea {
-    resize: horizontal;
-    min-height: 100px;
+.contactForm textarea {
+    resize: vertical;
+    min-height: 120px;
 }
 
-#contactForm button[type="submit"] {
-    padding: 12px;
+.contactForm button[type="submit"] {
+    padding: 8px 20px;
     background-color: orange;
     color: white;
     border: none;
-    border-radius: 20px;
     font-size: 0.9em;
     cursor: pointer;
     transition: background-color 0.3s;
+    width: auto;
+    min-width: 150px;
+    max-width: 300px;
+    text-align: center;
+    align-self: flex-start;
 }
 
-#contactForm button[type="submit"]:hover {
-    background-color: orange;
+.contactForm button[type="submit"]:hover {
+    background-color: darkorange;
 }
+
+.information,
+.contacts {
+    padding: 0 20px;
+}
+
+.information p,
+.information h4 {
+    margin-bottom: 1em;
+}
+
+.contacts h1 {
+    color: #333;
+    font-size: 2em;
+    margin-bottom: 1em;
+    font-weight: bold;
+}
+
+.information i {
+    margin-right: 10px;
+    font-size: 20px;
+    vertical-align: middle;
+}
+
+.information p {
+    display: flex;
+    align-items: center;
+}
+
+
+
+

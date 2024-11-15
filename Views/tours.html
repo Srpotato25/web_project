@@ -15,16 +15,37 @@
 <body>
     <header class="header">
         <div class="box-logo">
-            <a href="#" class="logo">Chepe trips</a>
+            <a href="" class="logo">Chepe trips</a>
         </div>
         <nav class="navbar navbar-expand-md">
-            <div class="container-fluid">
-                <a href="/index.html">Home</a>
+            <a href="/index.html" >Home</a>
+            <div class="dropdown">
                 <a href="/Views/destinations.html" class="dropdown-toggle">Destinations </a>
-                <a href="/Views/tours.html" class="dropdown-toggle active">Tours </a>
-                <a href="/Views/contacts.html">Contact</a>
-                <i class="fa-solid fa-magnifying-glass nav-icon"></i>
-                <i class="fa-solid fa-user nav-icon" id="form-open"></i>
+                <div class="dropdown-menu">
+                    <div class="dropdown-content">
+                        <img src="/asset/planetario.jpg" alt="Planetario" class="dropdown-image">
+                        <div class="dropdown-text">
+                            <h2>Destinations in San José</h2>
+                            <a href="/Views/destinations.html#carpio">La carpio</a>
+                            <a href="/Views/destinations.html#hatillo">Hatillo </a>
+                            <a href="/Views/destinations.html#leonXIII">Leon XIII</a>
+                            <a href="/Views/destinations.html#desampa">Desampakistan</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <a href="/Views/tours.html" >Tours </a>
+            <a href="/Views/contacts.html">Contact</a>
+            <i class="fa-solid fa-magnifying-glass nav-icon" id="searchBtn"></i>
+            <i class="fa-solid fa-user nav-icon" id="form-open"></i>
+
+            <div class="searchBox" id="searchBox">
+                <input type="text" placeholder="Search here...">
+                <i class="fa-solid fa-xmark nav-icon" id="closeSearch"></i>
+            </div>
+
+            
+
         </nav>
     </header>
 

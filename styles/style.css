@@ -1,16 +1,18 @@
 @import "/styles/login.css";
+@import "/styles/contacts.css";
 @import "/styles/mediaqueries.css";
 
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: Arial, sans-serif;
+  font-family: 'Nunito', sans-serif;
 }
 
 body {
   min-height: 100vh;
   font-size: 14px;
+  font-family: 'Poppins', sans-serif;
 }
 p{
   font-weight: 300;
@@ -138,7 +140,7 @@ a {
 /* Contenido del dropdown */
 .dropdown-content {
   display: flex;
-  padding: 10px; /* Añadir espacio alrededor del contenido */
+  padding: 10px;
 }
 
 /* Imagen en el dropdown */
@@ -146,7 +148,7 @@ a {
   width: 150px;
   height: auto;
   margin-right: 20px;
-  padding: 10px; /* Espacio alrededor de la imagen */
+  padding: 10px;
 }
 
 /* Estilo para el texto del dropdown */
@@ -167,13 +169,11 @@ a {
   margin-bottom: 5px;
 }
 
-/* Cambiar color y subrayado solo dentro del dropdown */
 .dropdown-text a:hover {
   color: orange;
   text-decoration: underline;
 }
 
-/* Eliminar el hover en enlaces dentro del dropdown */
 .dropdown-text a::before {
   content: none;
 }
@@ -181,9 +181,6 @@ a {
 .dropdown > a::before {
   top: 210%; 
 }
-
-
-
 
 
 /*Inicio con Imagen*/
@@ -253,7 +250,7 @@ a {
   color: orange;
 }
 
-
+/*Titulo de Secciones*/
 .tittle-container {
   padding: 20px;
   text-align: center;
@@ -285,7 +282,7 @@ a {
   margin-bottom: 20px;
 }
 
-/* Gallery */
+/* Seccion Gallery */
 .Gallery {
   padding: 20px;
   margin: 0 auto;
@@ -386,7 +383,7 @@ a {
 }
 
 
-/* Estilos del carrusel */
+/*Seccion de Carrosel*/
 .image-list .image-item {
   list-style: none;
   display: flex;
@@ -521,41 +518,8 @@ a {
   background: orange; /* color of the scroll thumb */
 }
 
-/* ESTILO DEL TEXTO */
-.logo,
-.imagetext,
-.title-seccion {
-  font-style: normal;
-  font-weight: 900;
-  line-height: 1.11;
-  font-family: Prompt, sans-serif;
-  letter-spacing: 0px;
-}
 
-.imagetext p,
-.imagetext h3,
-.imagetext button,
-.tittle-container,
-.Event .box-galery,
-.Event .location {
-  font-style: normal;
-  font-weight: 700;
-  line-height: 1.11;
-  font-family: Prompt, sans-serif;
-  letter-spacing: 0px;
-}
-
-.navbar a {
-  font-style: normal;
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 1.5;
-  font-family: "Open Sans", sans-serif;
-  letter-spacing: 0px;
-  text-align: left;
-  color: #29353e;
-}
-
+/*Barra de busqueda*/
 .searchBox {
   opacity: 0;
   transform: translateX(20px); 
@@ -570,39 +534,31 @@ a {
   z-index: 1000;
   pointer-events: none; 
   transition: opacity 0.5s ease, transform 0.5s ease; 
+    display: flex; 
 }
 
-/* Mostrar la barra de búsqueda con transición suave */
+
 .searchBox.active {
   opacity: 1;
-  transform: translateY(0); /* Animación hacia su posición original */
-  pointer-events: auto; /* Permite interacción cuando está visible */
+  transform: translateY(0); 
+  pointer-events: auto; 
 }
 
-/* Estilos para el input y el ícono */
 .searchBox input {
-  width: 90%;
+  width: 100%;
   border: none;
   outline: none;
-  height: 50px;
+  height: 55px;
   font-size: 1.25rem;
   border-bottom: 1px solid rgba(0, 0, 0, 0.5);
 }
 
 .searchBox i {
   cursor: pointer;
-  margin-left: 1px;
+  margin-left: 5px;
 }
 
-.highlight {
-  background-color: yellow;
-  font-weight: bold;
-}
-
-
-
-
-/* Contenedor general */
+/* Vista Event Detail */
 .event-box {
   display: flex;
   flex-direction: column;

@@ -316,3 +316,4 @@ function makeBooking() {
         alert("Por favor, selecciona una fecha.");
     }
 }
+
