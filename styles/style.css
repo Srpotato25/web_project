@@ -558,49 +558,147 @@ a {
   margin-left: 5px;
 }
 
-/* Vista Event Detail */
-.event-box {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 80%; /* Ajusta el ancho según lo necesites */
-  margin: auto;
-}
 
-.imageEvent {
-  display: flex;
-  justify-content: center;
-  width: 120%;
-}
-
-.event-img {
-  width: 100%; /* La imagen ocupará el ancho completo */
-  height: auto; /* Ajuste automático de altura para mantener la proporción */
-}
-
-/* Caja blanca para el contenido de texto y reserva */
-.text-box {
-  background-color: #fff; /* Fondo blanco */
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
-  width: 100%;
-  height: 100;
-  text-align: lef;
-  margin-top: 20px;
-}
-
-.Booking {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-top: 20px;
-}
 
 .mainButton {
   margin-top: 10px;
   padding: 10px 20px;
 }
 
+footer {
+  background-color: #2a343d;
+  width: 100%;
+  margin-top: 3em;
+  padding: 3em 0 2em;
+  position: relative;
+}
 
+.Div__footer {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  justify-content: space-between;
+  align-items: start;
+  width: 80%;
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 0 2em;
+  position: relative;
+  z-index: 1;
+}
+
+.footer-box-logo {
+  background-color: orange;
+  width: 205px;
+  height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: -100px;
+  left: 30px;
+  z-index: 2;
+}
+
+.Div__footer--left {
+  display: grid;
+  grid-template-rows: auto auto auto;
+  margin-top: 60px;
+}
+
+.Text__left {
+  color: #ffffff;
+  font-family: "Open Sans", sans-serif;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 500;
+  letter-spacing: 2px;
+  text-align: left;
+}
+
+.Div__iconos--left {
+  display: flex;
+  align-items: center;
+  gap: 1em;
+  margin-top: 1em;
+}
+
+.Div__iconos--left i {
+  font-size: 2.5em;
+  color: #ddd;
+}
+
+.Div__footer--right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 1em;
+}
+
+.Div__footer--right--tel--correo {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.5em;
+}
+
+.Telefono {
+  font-size: 30px;
+  color: #fff;
+  font-weight: 900;
+  font-family: "Open Sans", sans-serif;
+  text-decoration: none;
+}
+
+.Correo {
+  font-size: 20px;
+  color: #f5ab00;
+  font-family: "Open Sans", sans-serif;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.AdminPortal {
+  font-size: 18px;
+  color: #ffffff;
+  font-family: "Open Sans", sans-serif;
+  font-weight: 400;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.AdminPortal:hover {
+  color: #f5ab00;
+}
+
+.Direccion {
+  color: #c6cacc;
+  font-size: 16px;
+  font-weight: 400;
+  font-family: "Open Sans", sans-serif;
+  text-align: right;
+}
+
+.Div__iconos--right {
+  display: flex;
+  gap: 1em;
+}
+
+.Div__iconos--right i {
+  font-size: 2.5em;
+  color: #ddd;
+}
+
+.FooterCopyright {
+  background-color: #ffffff;
+  color: #2a343d;
+  font-size: 16px;
+  font-family: "Open Sans", sans-serif;
+  text-align: center;
+  padding: 1em 0;
+  margin-top: 0;
+  width: 100%;
+}
+
+.FooterCopyright span {
+  color: #f5b562;
+}

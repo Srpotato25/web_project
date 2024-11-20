@@ -155,25 +155,22 @@
     <script type="text/javascript">
         (function(){
             emailjs.init("4536tFSebj3pPWoVA"); // Reemplaza con tu clave pública
-         
 
-        // Escucha el evento de envío del formulario
         document.getElementById("contactForm").addEventListener("submit", function(e) {
-            e.preventDefault(); // Evita el comportamiento por defecto del formulario
+            e.preventDefault(); 
 
             // Obtén los valores de los campos del formulario
             const name = document.getElementById("name").value;
             const email = document.getElementById("email").value;
             const message = document.getElementById("message").value;
 
-            // Configura los parámetros para la plantilla de EmailJS
+
             const templateParams = {
                 from_name: name,
                 from_email: email,
                 message: message,
             };
 
-            // Envía el correo usando la plantilla configurada
             emailjs.send('service_118kn3f', 'template_w81l0ys', templateParams)
                 .then(function(response) {
                     console.log('Success!', response.status, response.text);
@@ -185,7 +182,6 @@
         });
     })();
     </script>
-
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script type="module" src="/script.js" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"

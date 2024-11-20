@@ -10,14 +10,13 @@ import { getFirestore,setDoc,doc } from "https://www.gstatic.com/firebasejs/10.1
 
 // Configuración de Firebase
 const firebaseConfig = {
-    apiKey: "AIzaSyAowxVHvpmYoluiKnn_M5NMaku9EqcqPDk",
-    authDomain: "web-project-f0c9c.firebaseapp.com",
-    projectId: "web-project-f0c9c",
-    storageBucket: "web-project-f0c9c.appspot.com",
-    messagingSenderId: "1025383417170",
-    appId: "1:1025383417170:web:51d30811a47a97ae6a268b",
-    measurementId: "G-DG1EX6H6PQ"
-};
+    apiKey: "AIzaSyCcueSKiuYzN8fOukLVHwuZL1fgbX_YpWo",
+    authDomain: "web-proyect-51e80.firebaseapp.com",
+    projectId: "web-proyect-51e80",
+    storageBucket: "web-proyect-51e80.firebasestorage.app",
+    messagingSenderId: "750709153779",
+    appId: "1:750709153779:web:5c63c836bee8a6b21fbc86"
+  };
 
 // Escuchar cuando el DOM esté completamente cargado
 document.addEventListener('DOMContentLoaded', function() {
