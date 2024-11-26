@@ -1,0 +1,49 @@
+.h-custom-2 {
+    height: calc(100vh - 50px);
+}
+
+.logo {
+    height: 50px;
+    width: 50px;
+}
+
+#sellerlogin {
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+/* Ajustar la altura del contenedor del carrusel */
+.carousel-container {
+    width: 60%; 
+    max-width: 600px;
+    height: 90%; 
+    margin: 0 auto; 
+}
+
+.carousel-inner {
+    height: 100%; 
+}
+
+.carousel-inner img {
+    height: 100%; 
+    width: 100%;
+    object-fit: cover; 
+}
+
+.right-column {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: transparent;
+}
+
+/* Deshabilitar scroll vertical */
+body, html {
+    overflow: hidden;
+    height: 100%;
+}
+
+.container-fluid {
+    height: 100%;
+}
