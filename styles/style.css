@@ -566,11 +566,13 @@ a {
   padding: 10px 20px;
 }
 
+
+
 footer {
   background-color: #2a343d;
   width: 100%;
   margin-top: 3em;
-  padding: 3em 0 2em;
+  padding: 3em 0 0; /* Ajusta el padding para eliminar el espacio extra en la parte inferior */
   position: relative;
 }
 
@@ -585,6 +587,7 @@ footer {
   padding: 0 2em;
   position: relative;
   z-index: 1;
+  gap: 3em; /* Añadir un pequeño espacio entre las dos columnas */
 }
 
 .footer-box-logo {
@@ -696,14 +699,14 @@ footer {
   font-family: "Open Sans", sans-serif;
   text-align: center;
   padding: 1em 0;
-  margin-top: 0;
+  margin-top: 2em; /* Un poco de espacio adicional para separar de las secciones superiores */
   width: 100%;
+  clear: both; /* Asegura que la línea blanca esté al final */
 }
 
 .FooterCopyright span {
   color: #f5b562;
 }
-
 
 
 /*Elementos del carousel*/
