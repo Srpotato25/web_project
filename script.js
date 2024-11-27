@@ -79,10 +79,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
 
-
-
-
-
     new Swiper(".swiper", {
         loop: true, // Activa el bucle infinito
         spaceBetween: 30,
