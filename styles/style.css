@@ -402,8 +402,8 @@ a {
 
 .container.swiper {
   width: 1500px;
-  margin: 0 auto;
-  padding: 20px 10px;
+  margin: 0 ;
+  padding: 50px 10px;
   overflow: hidden;  
 }
 
@@ -416,22 +416,20 @@ a {
   gap: 10px; 
 }
 
+/* Aumentar el tamaño de las balas y hacerlas naranjas */
 .swiper-pagination-bullet {
-  height: 15px;
-  width: 13px;
-  opacity: 0.5;
-  background: black;
+  width: 15px !important;
+  height: 15px !important;
+  background: orange !important;
+  opacity: 0.5 !important;
 }
 
 .swiper-pagination-bullet-active {
-  opacity: 1;
+  background: orange !important;
+  opacity: 1 !important;
 }
 
-.swiper-slide-button {
-  color: black;
-  margin-top: 35px;
-  padding: 0 10px; 
-}
+
 
 
 .image-item h3 {

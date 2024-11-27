@@ -83,25 +83,30 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
-// Inicialización de Swiper
-new Swiper(".swiper", {
-    loop: true,
-    spaceBetween: 30,
-    pagination: {
-        el: ".swiper-pagination",
-        clickable: true,
-        dynamicBullets: true
-    },
-    navigation: {
-        nextEl: ".swiper-button-next",
-        prevEl: ".swiper-button-prev",
-    },
-    breakpoints: {
-        0: { slidesPerView: 1 },
-        768: { slidesPerView: 2 },
-        1024: { slidesPerView: 3 },
-    },
-});
+    new Swiper(".swiper", {
+        loop: true, // Activa el bucle infinito
+        spaceBetween: 30,
+        
+        pagination: {
+            el: ".swiper-pagination",
+            clickable: true,
+            dynamicBullets: true,
+        },
+        navigation: {
+            nextEl: ".swiper-button-next",
+            prevEl: ".swiper-button-prev",
+        },
+        autoplay: {
+            delay: 3000, // Tiempo entre desplazamientos (en milisegundos)
+            disableOnInteraction: false, // No detener el autoplay si el usuario interactúa
+        },
+        breakpoints: {
+            0: { slidesPerView: 1 },
+            768: { slidesPerView: 2 },
+            1024: { slidesPerView: 3 },
+        },
+    });
+    
 
 
 //Programacion del carousel 
