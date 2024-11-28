@@ -16,12 +16,11 @@ const firebaseConfig = {
   // Referencia al contenedor donde se mostrarán los viajes
   const viajesContainer = document.getElementById("viajesContainer");
   
-  // Cargar viajes desde Firestore
   db.collection("viajes").onSnapshot((querySnapshot) => {
     viajesContainer.innerHTML = ""; // Limpiar el contenedor
   
     querySnapshot.forEach((doc) => {
-      const { titulo, descripcion, precio, actividades, imagenUrl } = doc.data();
+      const { titulo, descripcion, precio, actividades, imagenUrl, categoria } = doc.data();
   
       const actividadesLista = actividades
         .split(/\r?\n|,/) // Separar por saltos de línea o comas
@@ -37,6 +36,7 @@ const firebaseConfig = {
           <div class="card-body">
             <h3 class="card-title">${titulo}</h3>
             <p class="card-text">${descripcion}</p>
+                        <p><strong>Categoría:</strong> ${categoria}</p>
             <p><strong>Precio:</strong> $${precio}</p>
             <p><strong>Actividades:</strong></p>
             <ul>${actividadesLista}</ul>
@@ -47,4 +47,5 @@ const firebaseConfig = {
       viajesContainer.appendChild(viajeDiv);
     });
   });
+  
   

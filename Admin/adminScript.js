@@ -1,11 +1,11 @@
 const firebaseConfig = {
-    apiKey: "AIzaSyAowxVHvpmYoluiKnn_M5NMaku9EqcqPDk",
-    authDomain: "web-project-f0c9c.firebaseapp.com",
-    projectId: "web-project-f0c9c",
-    storageBucket: "web-project-f0c9c.appspot.com",
-    messagingSenderId: "1025383417170",
-    appId: "1:1025383417170:web:51d30811a47a97ae6a268b",
-    measurementId: "G-DG1EX6H6PQ"
+  apiKey: "AIzaSyAowxVHvpmYoluiKnn_M5NMaku9EqcqPDk",
+  authDomain: "web-project-f0c9c.firebaseapp.com",
+  projectId: "web-project-f0c9c",
+  storageBucket: "web-project-f0c9c.appspot.com",
+  messagingSenderId: "1025383417170",
+  appId: "1:1025383417170:web:51d30811a47a97ae6a268b",
+  measurementId: "G-DG1EX6H6PQ"
 };
 
 
@@ -48,13 +48,14 @@ viajeForm.addEventListener("submit", async (e) => {
   const precio = parseFloat(viajeForm.precio.value);
   const actividades = viajeForm.actividades.value.trim();
   const imagenUrl = viajeForm.imagenUrl.value.trim();
+  const categoria = viajeForm.categoria.value; // Obtener el valor de la categoría
 
   if (!imagenUrl || !isValidUrl(imagenUrl)) {
     alert("Por favor, ingresa una URL válida para la imagen.");
     return;
   }
 
-  const viaje = { titulo, descripcion, precio, actividades, imagenUrl };
+  const viaje = { titulo, descripcion, precio, actividades, imagenUrl, categoria }; // Incluir categoría
 
   if (editingId) {
     // Si estamos editando, actualiza el viaje existente
@@ -67,41 +68,51 @@ viajeForm.addEventListener("submit", async (e) => {
 
   viajeForm.reset();
 });
+// Obtén la referencia al contenedor solo si estás en la página adminTours.html
+if (window.location.pathname.endsWith('/Admin/adminTours.html')) {
+  const viajesContainer = document.getElementById("viajesContainer");
 
-// Mostrar todos los viajes almacenados en Firestore
-db.collection("viajes").onSnapshot((querySnapshot) => {
-  viajesContainer.innerHTML = ""; // Limpiar el contenedor
+  // Mostrar todos los viajes almacenados en Firestore
+  db.collection("viajes").onSnapshot((querySnapshot) => {
+    if (viajesContainer) {
+      viajesContainer.innerHTML = ""; // Limpiar el contenedor
 
-  querySnapshot.forEach((doc) => {
-    const { titulo, descripcion, precio, actividades, imagenUrl } = doc.data();
-    const id = doc.id;
+      querySnapshot.forEach((doc) => {
+        const { titulo, descripcion, precio, actividades, imagenUrl, categoria } = doc.data();
+        const id = doc.id;
 
-    const actividadesLista = actividades
-      .split(/\r?\n|,/) // Separar por saltos de línea o comas
-      .map((actividad) => `<li>${actividad.trim()}</li>`)
-      .join("");
+        const actividadesLista = actividades
+          .split(/\r?\n|,/) // Separar por saltos de línea o comas
+          .map((actividad) => `<li>${actividad.trim()}</li>`)
+          .join("");
 
-    const viajeDiv = document.createElement("div");
-    viajeDiv.classList.add("viaje", "col-md-4");
+        const viajeDiv = document.createElement("div");
+        viajeDiv.classList.add("viaje", "col-md-4");
 
-    viajeDiv.innerHTML = `
-      <div class="card h-100">
-        <img src="${imagenUrl}" alt="${titulo}" class="card-img-top" style="max-height: 200px; object-fit: cover;">
-        <div class="card-body">
-          <h3 class="card-title">${titulo}</h3>
-          <p class="card-text">${descripcion}</p>
-          <p><strong>Precio:</strong> $${precio}</p>
-          <p><strong>Actividades:</strong></p>
-          <ul>${actividadesLista}</ul>
-          <button class="btn btn-warning btn-sm mt-2" onclick="startEdit('${id}')">Editar</button>
-          <button class="btn btn-danger btn-sm mt-2" onclick="confirmDelete('${id}')">Eliminar</button>
-        </div>
-      </div>
-    `;
+        viajeDiv.innerHTML = `
+          <div class="card h-100">
+            <img src="${imagenUrl}" alt="${titulo}" class="card-img-top" style="max-height: 200px; object-fit: cover;">
+            <div class="card-body">
+              <h3 class="card-title">${titulo}</h3>
+              <p class="card-text">${descripcion}</p>
+              <p><strong>Precio:</strong> $${precio}</p>
+              <p><strong>Actividades:</strong></p>
+              <ul>${actividadesLista}</ul>
+              <p><strong>Categoría:</strong> ${categoria}</p>
+              <button class="btn btn-warning btn-sm mt-2" onclick="startEdit('${id}')">Editar</button>
+              <button class="btn btn-danger btn-sm mt-2" onclick="confirmDelete('${id}')">Eliminar</button>
+            </div>
+          </div>
+        `;
 
-    viajesContainer.appendChild(viajeDiv);
+        viajesContainer.appendChild(viajeDiv);
+      });
+    } else {
+      console.warn("viajesContainer no está disponible en esta página.");
+    }
   });
-});
+}
+
 
 // Función para empezar a editar un viaje
 function startEdit(id) {
@@ -114,7 +125,7 @@ function startEdit(id) {
         return;
       }
 
-      const { titulo, descripcion, precio, actividades, imagenUrl } = doc.data();
+      const { titulo, descripcion, precio, actividades, imagenUrl, categoria } = doc.data();
 
       // Llenar el formulario con los datos actuales
       viajeForm.titulo.value = titulo;
@@ -122,6 +133,7 @@ function startEdit(id) {
       viajeForm.precio.value = precio;
       viajeForm.actividades.value = actividades;
       viajeForm.imagenUrl.value = imagenUrl;
+      viajeForm.categoria.value = categoria; // Llenar la categoría en el formulario
 
       editingId = id; // Almacenar el ID del viaje que se está editando
     })
@@ -158,7 +170,3 @@ function isValidUrl(string) {
 // Registrar funciones globales
 window.startEdit = startEdit;
 window.confirmDelete = confirmDelete;
-
-
-
-
