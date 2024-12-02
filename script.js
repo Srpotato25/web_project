@@ -1,14 +1,12 @@
 // Importar Firebase
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.0/firebase-app.js";
 import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.14.0/firebase-firestore.js";
-
 import { 
     getAuth, 
     signInWithEmailAndPassword, 
     createUserWithEmailAndPassword,
     signOut 
 } from "https://www.gstatic.com/firebasejs/10.14.0/firebase-auth.js";
-
 
 // Configuración de Firebase
 const firebaseConfig = {
@@ -21,12 +19,10 @@ const firebaseConfig = {
     measurementId: "G-DG1EX6H6PQ"
 };
 
-
 // Inicializar Firebase
 const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);  // Esta es la instancia de Firestore
+const db = getFirestore(app);
 
-// Escuchar cuando el DOM esté completamente cargado
 document.addEventListener('DOMContentLoaded', function() {
 
     // Selección de elementos para la navegación del formulario
@@ -71,127 +67,46 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 
-    // Cerrar sesión
-    const logoutBtn = document.getElementById('logout-btn');
-    if (logoutBtn) {
-        logoutBtn.addEventListener('click', () => {
-            signOut(auth).then(() => {
-                alert("Has cerrado sesión correctamente.");
-                // Opcional: Redirigir al inicio u otra página
-                window.location.href = '/'; // Redirigir a la página de inicio
-            }).catch((error) => {
-                console.error("Error al cerrar sesión:", error);
-            });
-        });
-    }
-
-
-
-document.addEventListener("DOMContentLoaded", function() {
-    const searchBtn = document.getElementById('searchBtn');
-    const closeSearch = document.getElementById('closeSearch');
-    const searchBox = document.getElementById('searchBox');
-
-    if (searchBtn && closeSearch && searchBox) {
-        searchBtn.onclick = function() {
-            searchBox.classList.add('active');
-            searchBtn.style.display = 'none';
-        };
-
-        closeSearch.onclick = function() {
-            searchBox.classList.remove('active');
-            searchBtn.style.display = 'block';
-        };
-    }
-});
-
-// Cargar detalles del evento
-function getQueryParams() {
-    const params = new URLSearchParams(window.location.search);
-    return {
-        title: params.get('title'),
-        price: params.get('price'),
-        image: params.get('image'),
-        description: params.get('description')
-    };
+// Función para obtener elementos aleatorios
+function getRandomItems(array, count) {
+    const shuffled = [...array].sort(() => 0.5 - Math.random());
+    return shuffled.slice(0, count);
 }
 
-function loadEventDetails() {
-    const { title, price, image, description } = getQueryParams();
-
-    const eventTitle = document.getElementById('event-title');
-    const eventPrice = document.getElementById('event-price');
-    const eventImage = document.getElementById('event-image');
-    const eventDetail = document.querySelector('.event-detail');
-
-    if (eventTitle) eventTitle.textContent = title || "Evento sin título";
-    if (eventPrice) eventPrice.textContent = `Precio: $${price || 'No disponible'}`;
-    if (eventImage) {
-        eventImage.src = image || "ruta/imagen-predeterminada.jpg";
-        eventImage.onerror = function() {
-            console.error("Error: No se pudo cargar la imagen desde " + image);
-            eventImage.alt = "Imagen no disponible";
-        };
-    }
-
-    if (eventDetail) {
-        const eventDescription = document.createElement('p');
-        eventDescription.textContent = description || "Descripción no disponible";
-        eventDescription.classList.add('event-description');
-        eventDetail.appendChild(eventDescription);
-    }
-}
-
-// Ejecutar la carga de detalles del evento al cargar la página
-window.onload = loadEventDetails;
-
-// Realizar la reserva
-function makeBooking() {
-    const date = document.getElementById('booking-date').value;
-    if (date) {
-        alert(`Reserva realizada para el ${date}.`);
-    } else {
-        alert("Por favor, selecciona una fecha.");
-    }
-}
 async function loadTours() {
-    // Obtener la referencia a la colección 'viajes' en Firestore
-    const viajesCollection = collection(db, "viajes");
-    
-    // Obtener los documentos de la colección 'viajes'
-    const querySnapshot = await getDocs(viajesCollection);
-
-    // Crear un array para almacenar los documentos
-    const viajesArray = [];
-    
-    // Llenar el array con los datos de los documentos
-    querySnapshot.forEach((doc) => {
-        viajesArray.push(doc.data());
-    });
-
-    // Seleccionar 7 elementos aleatorios del array
-    const selectedTours = getRandomItems(viajesArray, 7);
-
-    // Obtener el contenedor para los elementos del carrusel
     const carouselList = document.querySelector('.swiper-wrapper');
-    
-    // Limpiar el contenedor antes de agregar los elementos
-    carouselList.innerHTML = '';
+    if (!carouselList) return;
 
-    // Agregar los elementos aleatorios al carrusel
+    const viajesCollection = collection(db, "viajes");
+    const querySnapshot = await getDocs(viajesCollection);
+    const viajesArray = querySnapshot.docs.map((doc) => doc.data());
+
+    console.log(viajesArray);  // Agrega este log para verificar que los datos están llegando correctamente.
+
+    const selectedTours = getRandomItems(viajesArray, 7);
+    console.log(selectedTours);  // Verifica que los tours seleccionados están bien formados.
+
+    carouselList.innerHTML = '';  // Limpiar el contenido anterior.
+
     selectedTours.forEach((viaje) => {
         const viajeItem = document.createElement('li');
         viajeItem.classList.add('image-item', 'swiper-slide');
 
+        // Verificar si viaje.actividades es un array o no
+        const activities = Array.isArray(viaje.actividades) ? viaje.actividades.join(', ') : viaje.actividades || '';
+
+        // Asegurarse de que 'fechasDisponibles' esté presente
+        const fechasDisponibles = viaje.fechasDisponibles ? viaje.fechasDisponibles : '';  // Puede ser un array o cadena vacía
+
         viajeItem.innerHTML = `
-            <img src="${viaje.imagenUrl}" alt="${viaje.titulo}" class="carousel-image" >
+            <img src="${viaje.imagenUrl}" alt="${viaje.titulo}" class="carousel-image">
             <div class="overlay">
                 <div class="box-galery">
                     <p>From</p>
                     <h4>$${viaje.precio}</h4>
                 </div>
                 <h2 class="location">
-                    <a href="/Views/tours.html?title=${encodeURIComponent(viaje.titulo)}&price=${viaje.precio}&image=${encodeURIComponent(viaje.imagenUrl)}&description=${encodeURIComponent(viaje.descripcion)}" style="text-decoration: none; color: inherit;">
+                    <a href="/Views/eventDetail.html?title=${encodeURIComponent(viaje.titulo)}&price=${viaje.precio}&image=${encodeURIComponent(viaje.imagenUrl)}&description=${encodeURIComponent(viaje.descripcion)}&category=${encodeURIComponent(viaje.categoria)}&location=${encodeURIComponent(viaje.ubicacion)}&activities=${encodeURIComponent(activities)}&fechasDisponibles=${encodeURIComponent(fechasDisponibles)}" style="text-decoration: none; color: inherit;">
                         ${viaje.titulo}
                     </a>
                 </h2>
@@ -201,109 +116,102 @@ async function loadTours() {
         carouselList.appendChild(viajeItem);
     });
 
-    // Iniciar Swiper después de que los elementos hayan sido añadidos
+    // Configurar Swiper
     new Swiper(".swiper", {
-        loop: true, 
+        loop: true,
         spaceBetween: 30,
-        pagination: {
-            el: ".swiper-pagination",
-            clickable: true,
-            dynamicBullets: true,
-        },
-        navigation: {
-            nextEl: ".swiper-button-next",
-            prevEl: ".swiper-button-prev",
-        },
-        autoplay: {
-            delay: 3000,
-            disableOnInteraction: false,
-        },
-        breakpoints: {
-            0: { slidesPerView: 1 },
-            768: { slidesPerView: 2 },
-            1024: { slidesPerView: 3 },
-        },
+        pagination: { el: ".swiper-pagination", clickable: true, dynamicBullets: true },
+        navigation: { nextEl: ".swiper-button-next", prevEl: ".swiper-button-prev" },
+        autoplay: { delay: 3000, disableOnInteraction: false },
+        breakpoints: { 0: { slidesPerView: 1 }, 768: { slidesPerView: 2 }, 1024: { slidesPerView: 3 } },
     });
 }
+
 
 async function loadGallery() {
-    // Obtener la referencia a la colección 'viajes' en Firestore
-    const viajesCollection = collection(db, "viajes");
-    
-    // Obtener los documentos de la colección 'viajes'
-    const querySnapshot = await getDocs(viajesCollection);
-
-    // Crear un array para almacenar los documentos
-    const viajesArray = [];
-    
-    // Llenar el array con los datos de los documentos
-    querySnapshot.forEach((doc) => {
-        viajesArray.push(doc.data());
-    });
-
-    // Seleccionar 7 elementos aleatorios del array
-    const selectedTours = getRandomItems(viajesArray, 7);
-
-    // Obtener el contenedor para los elementos de la galería
     const gallerySection = document.querySelector('.Gallery');
+    if (!gallerySection) return;
 
-    // Limpiar el contenedor antes de agregar los elementos
-    gallerySection.innerHTML = '';
+    try {
+        const viajesCollection = collection(db, "viajes");
+        const querySnapshot = await getDocs(viajesCollection);
+        const viajesArray = querySnapshot.docs.map((doc) => doc.data());
 
-    // Agregar los elementos aleatorios a la galería
-    selectedTours.forEach((viaje) => {
-        const eventItem = document.createElement('div');
-        eventItem.classList.add('Event', 'searchable');
+        // Verifica los datos obtenidos
+        console.log(viajesArray);
 
-        eventItem.innerHTML = `
-            <img src="${viaje.imagenUrl}" alt="${viaje.titulo}">
-            <div class="overlay">
-                <div class="box-galery">
-                    <p>From</p>
-                    <h4>$${viaje.precio}</h4>
+        const selectedTours = getRandomItems(viajesArray, 7);
+
+        if (selectedTours.length === 0) {
+            console.log('No tours selected');
+            return; // Si no hay tours seleccionados, salir de la función
+        }
+
+        gallerySection.innerHTML = ''; // Limpiar el contenido anterior
+
+        selectedTours.forEach((viaje) => {
+            // Asegurarse de que "actividades" sea un array antes de usar join()
+            const activities = Array.isArray(viaje.actividades) ? viaje.actividades.join(',') : viaje.actividades ? String(viaje.actividades) : '';
+            
+            // Asegurarse de que 'fechasDisponibles' esté presente y sea un array
+            const fechasDisponibles = viaje.fechasDisponibles ? viaje.fechasDisponibles : '';  // Puede ser un array o cadena vacía
+
+            const eventItem = document.createElement('div');
+            eventItem.classList.add('Event', 'searchable');
+
+            eventItem.innerHTML = `
+                <img src="${viaje.imagenUrl}" alt="${viaje.titulo}">
+                <div class="overlay">
+                    <div class="box-galery">
+                        <p>From</p>
+                        <h4>$${viaje.precio}</h4>
+                    </div>
+                    <h2 class="location">
+                        <a href="/Views/eventDetail.html?title=${encodeURIComponent(viaje.titulo)}&price=${viaje.precio}&image=${encodeURIComponent(viaje.imagenUrl)}&description=${encodeURIComponent(viaje.descripcion)}&category=${encodeURIComponent(viaje.categoria)}&location=${encodeURIComponent(viaje.ubicacion)}&activities=${encodeURIComponent(activities)}&fechasDisponibles=${encodeURIComponent(fechasDisponibles)}" style="text-decoration: none; color: inherit;">
+                            ${viaje.titulo}
+                        </a>
+                    </h2>
                 </div>
-                <h2 class="location">
-                    <a href="/Views/eventDetail.html?title=${encodeURIComponent(viaje.titulo)}&price=${viaje.precio}&image=${encodeURIComponent(viaje.imagenUrl)}&description=${encodeURIComponent(viaje.descripcion)}" style="text-decoration: none; color: inherit;">
-                        ${viaje.titulo}
-                    </a>
-                </h2>
-            </div>
-        `;
+            `;
 
-        gallerySection.appendChild(eventItem);
-    });
+            gallerySection.appendChild(eventItem);
+        });
+    } catch (error) {
+        console.error('Error loading gallery:', error);
+    }
 }
 
-// Función para obtener elementos aleatorios de un array
-function getRandomItems(arr, numItems) {
-    const shuffled = [...arr].sort(() => 0.5 - Math.random()); // Barajar el array
-    return shuffled.slice(0, numItems); // Seleccionar los primeros 'numItems' elementos
-}
-async function loadAllTours() {
-    // Obtener la referencia a la colección 'viajes' en Firestore
-    const viajesCollection = collection(db, "viajes");
-
-    // Obtener los documentos de la colección 'viajes'
-    const querySnapshot = await getDocs(viajesCollection);
-
-    // Crear un array para almacenar los documentos
-    const viajesArray = [];
-
-    // Llenar el array con los datos de los documentos
-    querySnapshot.forEach((doc) => {
-        viajesArray.push(doc.data());
-    });
-
-    // Obtener el contenedor para los elementos de las tarjetas
+// Función para cargar todos los tours con filtro de categoría
+// Función para cargar todos los tours con filtro de categoría
+async function loadAllTours(category = "all") {
     const cardsSection = document.querySelector('.cards-section .container');
+    if (!cardsSection) return;
 
-    // Limpiar el contenedor antes de agregar los elementos
+    const viajesCollection = collection(db, "viajes");
+    const querySnapshot = await getDocs(viajesCollection);
+    const viajesArray = querySnapshot.docs.map((doc) => doc.data());
+
+    const filteredTours = category === "all" 
+        ? viajesArray 
+        : viajesArray.filter((viaje) => viaje.categoria === category);
+
     cardsSection.innerHTML = '';
 
-    // Agregar los elementos de los viajes como tarjetas
-    viajesArray.forEach((viaje) => {
+    filteredTours.forEach((viaje) => {
         const cardItem = document.createElement('div');
         cardItem.classList.add('card-item');
+
+        // Asegurarnos de que 'actividades' es un array antes de llamar a .join()
+        let activities = '';
+        if (Array.isArray(viaje.actividades)) {
+            activities = encodeURIComponent(viaje.actividades.join(','));
+        } else if (viaje.actividades) {
+            // Si 'actividades' es un string o algún otro valor, convertirlo a array
+            activities = encodeURIComponent([viaje.actividades].join(','));
+        }
+
+        // Asegurarse de que 'fechasDisponibles' esté presente
+        const fechasDisponibles = viaje.fechasDisponibles ? viaje.fechasDisponibles : '';  // Puede ser un array o cadena vacía
 
         cardItem.innerHTML = `
             <img src="${viaje.imagenUrl}" alt="${viaje.titulo}" class="card-image">
@@ -313,7 +221,7 @@ async function loadAllTours() {
                     <h4>$${viaje.precio}</h4>
                 </div>
                 <h2 class="location">
-                    <a href="/Views/tours.html?title=${encodeURIComponent(viaje.titulo)}&price=${viaje.precio}&image=${encodeURIComponent(viaje.imagenUrl)}&description=${encodeURIComponent(viaje.descripcion)}" style="text-decoration: none; color: inherit;">
+                    <a href="/Views/eventDetail.html?title=${encodeURIComponent(viaje.titulo)}&price=${viaje.precio}&image=${encodeURIComponent(viaje.imagenUrl)}&description=${encodeURIComponent(viaje.descripcion)}&category=${encodeURIComponent(viaje.categoria)}&location=${encodeURIComponent(viaje.ubicacion)}&activities=${activities}&fechasDisponibles=${encodeURIComponent(fechasDisponibles)}" style="text-decoration: none; color: inherit;">
                         ${viaje.titulo}
                     </a>
                 </h2>
@@ -324,7 +232,25 @@ async function loadAllTours() {
     });
 }
 
-// Llamar a la función para cargar todos los viajes
-loadAllTours();
-loadTours();
-loadGallery();
+// Detectar la vista actual y ejecutar las funciones correspondientes
+document.addEventListener('DOMContentLoaded', () => {
+    const galleryExists = document.querySelector('.Gallery');
+    const carouselExists = document.querySelector('.swiper-wrapper');
+    const cardsSectionExists = document.querySelector('.cards-section .container');
+
+    if (galleryExists || carouselExists) {
+        loadTours();
+        loadGallery();
+    }
+    if (cardsSectionExists) {
+        loadAllTours();
+
+        const categoryFilter = document.getElementById('category-filter');
+        if (categoryFilter) {
+            categoryFilter.addEventListener('change', (event) => {
+                const selectedCategory = event.target.value;
+                loadAllTours(selectedCategory);
+            });
+        }
+    }
+});

@@ -35,13 +35,18 @@ db.collection("viajes").onSnapshot((querySnapshot) => {
   viajesContainer.innerHTML = ""; // Limpiar el contenedor
 
   querySnapshot.forEach((doc) => {
-    const { titulo, descripcion, precio, actividades, imagenUrl, categoria } = doc.data();
+    const { titulo, descripcion, precio, actividades, imagenUrl, categoria, ubicacion, fechasDisponibles } = doc.data();
 
     // Generar la lista de actividades
     const actividadesLista = actividades
       .split(/\r?\n|,/) // Separar por saltos de línea o comas
       .map((actividad) => `<li>${actividad.trim()}</li>`)
       .join("");
+
+    // Verificar si fechasDisponibles existe antes de intentar usar split
+    const fechasLista = (fechasDisponibles && fechasDisponibles.split(","))
+      ? fechasDisponibles.split(",").map((fecha) => `<li>${fecha.trim()}</li>`).join("")
+      : "<li>No disponible</li>";  // Si no hay fechas, mostrar un mensaje de "No disponible"
 
     const viajeDiv = document.createElement("div");
     viajeDiv.classList.add("viaje", "col-md-4");
@@ -57,6 +62,9 @@ db.collection("viajes").onSnapshot((querySnapshot) => {
           <p><strong>Precio:</strong> $${precio}</p>
           <p><strong>Actividades:</strong></p>
           <ul>${actividadesLista}</ul>
+          <p><strong>Fechas Disponibles:</strong></p>
+          <ul>${fechasLista}</ul>
+          <p><strong>Ubicación:</strong> <a href="${ubicacion}" target="_blank">Ver en Google Maps</a></p>
           <!-- Botón para eliminar -->
           <button class="btn btn-danger" data-id="${doc.id}" onclick="deleteViaje('${doc.id}')">Eliminar</button>
         </div>
@@ -67,5 +75,3 @@ db.collection("viajes").onSnapshot((querySnapshot) => {
     viajesContainer.appendChild(viajeDiv);
   });
 });
-
-  

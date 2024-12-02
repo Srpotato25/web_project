@@ -1,3 +1,4 @@
+// Configuración de Firebase
 const firebaseConfig = {
   apiKey: "AIzaSyAowxVHvpmYoluiKnn_M5NMaku9EqcqPDk",
   authDomain: "web-project-f0c9c.firebaseapp.com",
@@ -8,16 +9,15 @@ const firebaseConfig = {
   measurementId: "G-DG1EX6H6PQ"
 };
 
-
 // Inicializa Firebase
 firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 
 const viajeForm = document.getElementById("viajeForm");
 const viajesContainer = document.getElementById("viajesContainer");
-let editingId = null; // Controla el viaje que se está editando
+let editingId = null; // Controla si estamos editando un viaje existente
 
-// Función para guardar un nuevo viaje en Firestore
+// Función para guardar un nuevo viaje
 async function addViaje(viaje) {
   try {
     await db.collection("viajes").add(viaje);
@@ -39,6 +39,16 @@ async function updateViaje(id, viaje) {
   }
 }
 
+// Validar si una URL es válida
+function isValidUrl(string) {
+  try {
+    new URL(string);
+    return true;
+  } catch (_) {
+    return false;
+  }
+}
+
 // Manejar el envío del formulario
 viajeForm.addEventListener("submit", async (e) => {
   e.preventDefault();
@@ -48,19 +58,21 @@ viajeForm.addEventListener("submit", async (e) => {
   const precio = parseFloat(viajeForm.precio.value);
   const actividades = viajeForm.actividades.value.trim();
   const imagenUrl = viajeForm.imagenUrl.value.trim();
-  const categoria = viajeForm.categoria.value; // Obtener el valor de la categoría
+  const categoria = viajeForm.categoria.value;
+  const ubicacion = viajeForm.ubicacion.value.trim();
+  const fechasDisponibles = viajeForm.fechasDisponibles.value.trim();
 
-  if (!imagenUrl || !isValidUrl(imagenUrl)) {
-    alert("Por favor, ingresa una URL válida para la imagen.");
+  if (!imagenUrl || !ubicacion || !isValidUrl(imagenUrl) || !isValidUrl(ubicacion)) {
+    alert("Por favor, ingresa URLs válidas para la imagen y la ubicación.");
     return;
   }
 
-  const viaje = { titulo, descripcion, precio, actividades, imagenUrl, categoria }; // Incluir categoría
+  const viaje = { titulo, descripcion, precio, actividades, imagenUrl, categoria, ubicacion, fechasDisponibles };
 
   if (editingId) {
     // Si estamos editando, actualiza el viaje existente
     await updateViaje(editingId, viaje);
-    editingId = null; // Restablecer el ID de edición
+    editingId = null;
   } else {
     // Si no, agrega un nuevo viaje
     await addViaje(viaje);
@@ -68,51 +80,51 @@ viajeForm.addEventListener("submit", async (e) => {
 
   viajeForm.reset();
 });
-// Obtén la referencia al contenedor solo si estás en la página adminTours.html
-if (window.location.pathname.endsWith('/Admin/adminTours.html')) {
-  const viajesContainer = document.getElementById("viajesContainer");
 
-  // Mostrar todos los viajes almacenados en Firestore
-  db.collection("viajes").onSnapshot((querySnapshot) => {
-    if (viajesContainer) {
-      viajesContainer.innerHTML = ""; // Limpiar el contenedor
+// Escuchar cambios en la colección de viajes
+db.collection("viajes").onSnapshot((querySnapshot) => {
+  viajesContainer.innerHTML = ""; // Limpiar el contenedor
 
-      querySnapshot.forEach((doc) => {
-        const { titulo, descripcion, precio, actividades, imagenUrl, categoria } = doc.data();
-        const id = doc.id;
+  querySnapshot.forEach((doc) => {
+    const { titulo, descripcion, precio, actividades, imagenUrl, categoria, ubicacion, fechasDisponibles } = doc.data();
+    const id = doc.id;
 
-        const actividadesLista = actividades
-          .split(/\r?\n|,/) // Separar por saltos de línea o comas
-          .map((actividad) => `<li>${actividad.trim()}</li>`)
-          .join("");
+    // Generar listas para actividades y fechas disponibles
+    const actividadesLista = actividades
+      .split(/\r?\n|,/) 
+      .map((actividad) => `<li>${actividad.trim()}</li>`)
+      .join("");
 
-        const viajeDiv = document.createElement("div");
-        viajeDiv.classList.add("viaje", "col-md-4");
+    const fechasLista = fechasDisponibles
+      .split(",")
+      .map((fecha) => `<li>${fecha.trim()}</li>`)
+      .join("");
 
-        viajeDiv.innerHTML = `
-          <div class="card h-100">
-            <img src="${imagenUrl}" alt="${titulo}" class="card-img-top" style="max-height: 200px; object-fit: cover;">
-            <div class="card-body">
-              <h3 class="card-title">${titulo}</h3>
-              <p class="card-text">${descripcion}</p>
-              <p><strong>Precio:</strong> $${precio}</p>
-              <p><strong>Actividades:</strong></p>
-              <ul>${actividadesLista}</ul>
-              <p><strong>Categoría:</strong> ${categoria}</p>
-              <button class="btn btn-warning btn-sm mt-2" onclick="startEdit('${id}')">Editar</button>
-              <button class="btn btn-danger btn-sm mt-2" onclick="confirmDelete('${id}')">Eliminar</button>
-            </div>
-          </div>
-        `;
+    const viajeDiv = document.createElement("div");
+    viajeDiv.classList.add("viaje", "col-md-4");
 
-        viajesContainer.appendChild(viajeDiv);
-      });
-    } else {
-      console.warn("viajesContainer no está disponible en esta página.");
-    }
+    viajeDiv.innerHTML = `
+      <div class="card h-100">
+        <img src="${imagenUrl}" alt="${titulo}" class="card-img-top" style="max-height: 200px; object-fit: cover;">
+        <div class="card-body">
+          <h3 class="card-title">${titulo}</h3>
+          <p class="card-text">${descripcion}</p>
+          <p><strong>Precio:</strong> $${precio}</p>
+          <p><strong>Actividades:</strong></p>
+          <ul>${actividadesLista}</ul>
+          <p><strong>Fechas Disponibles:</strong></p>
+          <ul>${fechasLista}</ul>
+          <p><strong>Categoría:</strong> ${categoria}</p>
+          <p><strong>Ubicación:</strong> <a href="${ubicacion}" target="_blank">Ver en Google Maps</a></p>
+          <button class="btn btn-warning btn-sm mt-2" onclick="startEdit('${id}')">Editar</button>
+          <button class="btn btn-danger btn-sm mt-2" onclick="deleteViaje('${id}')">Eliminar</button>
+        </div>
+      </div>
+    `;
+
+    viajesContainer.appendChild(viajeDiv);
   });
-}
-
+});
 
 // Función para empezar a editar un viaje
 function startEdit(id) {
@@ -125,7 +137,7 @@ function startEdit(id) {
         return;
       }
 
-      const { titulo, descripcion, precio, actividades, imagenUrl, categoria } = doc.data();
+      const { titulo, descripcion, precio, actividades, imagenUrl, categoria, ubicacion, fechasDisponibles } = doc.data();
 
       // Llenar el formulario con los datos actuales
       viajeForm.titulo.value = titulo;
@@ -133,9 +145,11 @@ function startEdit(id) {
       viajeForm.precio.value = precio;
       viajeForm.actividades.value = actividades;
       viajeForm.imagenUrl.value = imagenUrl;
-      viajeForm.categoria.value = categoria; // Llenar la categoría en el formulario
+      viajeForm.categoria.value = categoria;
+      viajeForm.ubicacion.value = ubicacion;
+      viajeForm.fechasDisponibles.value = fechasDisponibles;
 
-      editingId = id; // Almacenar el ID del viaje que se está editando
+      editingId = id; // Guardar el ID del viaje que se está editando
     })
     .catch((error) => {
       console.error("Error al obtener el viaje:", error);
@@ -143,30 +157,23 @@ function startEdit(id) {
     });
 }
 
-// Función para confirmar y eliminar un viaje
-async function confirmDelete(id) {
-  const confirmation = confirm("¿Estás seguro de que deseas eliminar este viaje?");
-  if (confirmation) {
-    try {
-      await db.collection("viajes").doc(id).delete();
-      alert("Viaje eliminado con éxito.");
-    } catch (error) {
-      console.error("Error al eliminar el viaje:", error);
-      alert("Hubo un error al eliminar el viaje.");
-    }
-  }
-}
-
-// Valida si una URL tiene un formato correcto
-function isValidUrl(string) {
-  try {
-    new URL(string);
-    return true;
-  } catch (_) {
-    return false;
+// Función para eliminar un viaje
+function deleteViaje(id) {
+  if (confirm("¿Estás seguro de que deseas eliminar este viaje?")) {
+    db.collection("viajes")
+      .doc(id)
+      .delete()
+      .then(() => {
+        alert("Viaje eliminado con éxito.");
+      })
+      .catch((error) => {
+        console.error("Error al eliminar el viaje:", error);
+        alert("Hubo un error al eliminar el viaje.");
+      });
   }
 }
 
 // Registrar funciones globales
 window.startEdit = startEdit;
-window.confirmDelete = confirmDelete;
+window.deleteViaje = deleteViaje;
+
