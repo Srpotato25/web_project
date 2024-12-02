@@ -337,14 +337,15 @@ a {
   color: white;
   position: absolute;
   left: 0;
-  bottom: 50px;
+  bottom: 60px;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   transition: transform 0.5s ease;
   transform: translateX(-100%);
   z-index: 3;
-  width: 200px;
+  height: 70px;
+  width: 150px;
   /*align-items: center;
     justify-content: center; REVISAR SI ALINEAMOS TEXTO*/
 }
@@ -498,6 +499,17 @@ a {
   margin-top: 10px;
   z-index: 3;
   margin-left: 25px;
+}
+
+.image-item .location {
+  bottom: 25px;
+  left: 20px; 
+  font-size: 1.2rem; 
+  font-weight: 600; 
+  color: white;
+  text-align: left; 
+  z-index: 3; 
+  width: auto; /* Para evitar que se rompa el flujo */
 }
 
 

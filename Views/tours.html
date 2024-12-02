@@ -13,98 +13,99 @@
     <title>Tours - San José</title>
     <style>
 
-    body {
-        font-family: Arial, sans-serif;
-        margin: 0;
-        padding: 0;
-        text-align: center;
-    }
-    
-    .cards-section {
-        padding: 40px;
-        background-color: #ffffff;
-    }
-    
-    h1 {
-        text-align: center;
-        margin-bottom: 40px;
-        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-        font-size: 50px;
-    }
-    
-    .container {
-        display: flex;
-        justify-content: center;
-        flex-wrap: wrap;
-    }
-    
-    .card-item {
-        list-style: none;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        flex-shrink: 0;
-        position: relative;
-        width: 300px;
-        height: 450px;
-        margin: 10px;
-        overflow: visible;
-        border-radius: 10px;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    }
-    
-    .card-image {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-    }
-    
-    .overlay {
-        position: absolute;
-        bottom: 25px;
-        left: 30px;
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-start;
-        align-items: flex-start;
-        z-index: 2;
-    }
-    
-    .price-box {
-        padding: 5px 20px;
-        background-color: orange;
-        color: white;
-        border-radius: 5px;
-        transition: opacity 0.5s ease, transform 0.5s ease;
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    
-    .card-item:hover .price-box {
-        opacity: 1;
-        transform: translateY(0);
-    }
-    
-    .price-box p {
-        margin: 0;
-        font-size: 15px;
-        font-weight: 600;
-    }
-    
-    .price-box h4 {
-        margin: 0;
-        font-size: 25px;
-        font-weight: 900;
-    }
-    
-    .location {
-        color: white;
-        font-size: 25px;
-        font-weight: 600;
-        text-align: left;
-        margin-top: 10px;
-    }
-</style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+        
+        .cards-section {
+            padding: 40px;
+            background-color: #ffffff;
+        }
+        
+        h1 {
+            text-align: center;
+            margin-bottom: 40px;
+            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+            font-size: 50px;
+        }
+        
+        .container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .card-item {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-shrink: 0;
+            position: relative;
+            width: 300px;
+            height: 450px;
+            margin: 10px;
+            overflow: visible;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .card-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .overlay {
+            position: absolute;
+            bottom: 25px;
+            left: 0px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: flex-start;
+            z-index: 2;
+        }
+        
+        .price-box {
+            padding: 5px 20px;
+            height: 65px;
+            width: 120px;
+            background-color: orange;
+            color: white;
+            transition: opacity 0.5s ease, transform 0.5s ease;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        
+        .card-item:hover .price-box {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .price-box p {
+            margin: 0;
+            font-size: 15px;
+            font-weight: 600;
+        }
+        
+        .price-box h4 {
+            margin: 0;
+            font-size: 25px;
+            font-weight: 900;
+        }
+        
+        .location {
+            color: white;
+            font-size: 25px;
+            font-weight: 600;
+            text-align: left;
+            margin-top: 10px;
+        }
+    </style>
 </head>
 <body>
     <header class="header">
@@ -214,68 +215,10 @@
 
     <section class="cards-section">
         <div class="container">
-            <div class="card-item">
-                <img src="/asset/planetario.jpg" alt="Planetario" class="card-image">
-                <div class="overlay">
-                    <div class="price-box">
-                        <p>From</p>
-                        <h4>$50</h4>
-                    </div>
-                    <h2 class="location">
-                        <a href="/Views/tours.html" style="text-decoration: none; color: inherit;">Museo de los niños</a>
-                    </h2>
-                </div>
-            </div>
-            <div class="card-item">
-                <img src="/asset/planetario.jpg" alt="Planetario" class="card-image">
-                <div class="overlay">
-                    <div class="price-box">
-                        <p>From</p>
-                        <h4>$50</h4>
-                    </div>
-                    <h2 class="location">
-                        <a href="/Views/tours.html" style="text-decoration: none; color: inherit;">Museo de los niños</a>
-                    </h2>
-                </div>
-            </div>
-            <div class="card-item">
-                <img src="/asset/planetario.jpg" alt="Planetario" class="card-image">
-                <div class="overlay">
-                    <div class="price-box">
-                        <p>From</p>
-                        <h4>$50</h4>
-                    </div>
-                    <h2 class="location">
-                        <a href="/Views/tours.html" style="text-decoration: none; color: inherit;">Museo de los niños</a>
-                    </h2>
-                </div>
-            </div>
-            <div class="card-item">
-                <img src="/asset/planetario.jpg" alt="Planetario" class="card-image">
-                <div class="overlay">
-                    <div class="price-box">
-                        <p>From</p>
-                        <h4>$50</h4>
-                    </div>
-                    <h2 class="location">
-                        <a href="/Views/tours.html" style="text-decoration: none; color: inherit;">Museo de los niños</a>
-                    </h2>
-                </div>
-            </div>
-            <div class="card-item">
-                <img src="/asset/planetario.jpg" alt="Planetario" class="card-image">
-                <div class="overlay">
-                    <div class="price-box">
-                        <p>From</p>
-                        <h4>$50</h4>
-                    </div>
-                    <h2 class="location">
-                        <a href="/Views/tours.html" style="text-decoration: none; color: inherit;">Museo de los niños</a>
-                    </h2>
-                </div>
-            </div>
+            <!-- Las tarjetas de los viajes se agregarán dinámicamente aquí -->
         </div>
     </section>
+    
 
     <br>        <br>        <br>
 

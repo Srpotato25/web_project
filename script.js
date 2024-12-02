@@ -1,12 +1,14 @@
 // Importar Firebase
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.0/firebase-app.js";
+import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.14.0/firebase-firestore.js";
+
 import { 
     getAuth, 
     signInWithEmailAndPassword, 
     createUserWithEmailAndPassword,
     signOut 
 } from "https://www.gstatic.com/firebasejs/10.14.0/firebase-auth.js";
-import { getFirestore,setDoc,doc } from "https://www.gstatic.com/firebasejs/10.14.0/firebase-firestore.js";
+
 
 // Configuración de Firebase
 const firebaseConfig = {
@@ -18,6 +20,11 @@ const firebaseConfig = {
     appId: "1:1025383417170:web:51d30811a47a97ae6a268b",
     measurementId: "G-DG1EX6H6PQ"
 };
+
+
+// Inicializar Firebase
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);  // Esta es la instancia de Firestore
 
 // Escuchar cuando el DOM esté completamente cargado
 document.addEventListener('DOMContentLoaded', function() {
@@ -77,78 +84,6 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         });
     }
-
-
-    new Swiper(".swiper", {
-        loop: true, // Activa el bucle infinito
-        spaceBetween: 30,
-        
-        pagination: {
-            el: ".swiper-pagination",
-            clickable: true,
-            dynamicBullets: true,
-        },
-        navigation: {
-            nextEl: ".swiper-button-next",
-            prevEl: ".swiper-button-prev",
-        },
-        autoplay: {
-            delay: 3000, // Tiempo entre desplazamientos (en milisegundos)
-            disableOnInteraction: false, // No detener el autoplay si el usuario interactúa
-        },
-        breakpoints: {
-            0: { slidesPerView: 1 },
-            768: { slidesPerView: 2 },
-            1024: { slidesPerView: 3 },
-        },
-    });
-    
-
-
-//Programacion del carousel 
-
-const btnLeft = document.querySelector(".btn-left"),
-      btnRight = document.querySelector(".btn-right"),
-      slider = document.querySelector("#slider"),
-      sliderSection = document.querySelectorAll(".slider-section");
-
-
-btnLeft.addEventListener("click", e => moveToLeft())
-btnRight.addEventListener("click", e => moveToRigt())
-
-setInterval(() => {
-    moveToRigt()
-}, 6000);
-
-let operacion = 0,
-    counter = 0,
-    widthImg = 100 / sliderSection.length;
-
-function moveToRigt() {
-    if (counter >= sliderSection.length-1) {
-        counter = 0;
-        operacion = 0;
-        slider.style.transform = `translate(-${operacion}%)`;
-        return;
-    } 
-    counter++;
-    operacion = operacion + widthImg
-    slider.style.transform = `translate(-${operacion}%)`
-    slider.style.transition = "all ease .6s"
-}
-
-function moveToLeft() {
-    counter--;
-    if (counter < 0 ) {
-        counter = sliderSection.length-1;
-        operacion = widthImg * (sliderSection.length-1)
-        slider.style.transform = `translate(-${operacion}%)`
-        return;
-    }
-    operacion = operacion - widthImg
-    slider.style.transform = `translate(-${operacion}%)`
-    slider.style.transition = "all ease .6s"
-}
 
 
 
@@ -219,4 +154,177 @@ function makeBooking() {
         alert("Por favor, selecciona una fecha.");
     }
 }
+async function loadTours() {
+    // Obtener la referencia a la colección 'viajes' en Firestore
+    const viajesCollection = collection(db, "viajes");
+    
+    // Obtener los documentos de la colección 'viajes'
+    const querySnapshot = await getDocs(viajesCollection);
 
+    // Crear un array para almacenar los documentos
+    const viajesArray = [];
+    
+    // Llenar el array con los datos de los documentos
+    querySnapshot.forEach((doc) => {
+        viajesArray.push(doc.data());
+    });
+
+    // Seleccionar 7 elementos aleatorios del array
+    const selectedTours = getRandomItems(viajesArray, 7);
+
+    // Obtener el contenedor para los elementos del carrusel
+    const carouselList = document.querySelector('.swiper-wrapper');
+    
+    // Limpiar el contenedor antes de agregar los elementos
+    carouselList.innerHTML = '';
+
+    // Agregar los elementos aleatorios al carrusel
+    selectedTours.forEach((viaje) => {
+        const viajeItem = document.createElement('li');
+        viajeItem.classList.add('image-item', 'swiper-slide');
+
+        viajeItem.innerHTML = `
+            <img src="${viaje.imagenUrl}" alt="${viaje.titulo}" class="carousel-image" >
+            <div class="overlay">
+                <div class="box-galery">
+                    <p>From</p>
+                    <h4>$${viaje.precio}</h4>
+                </div>
+                <h2 class="location">
+                    <a href="/Views/tours.html?title=${encodeURIComponent(viaje.titulo)}&price=${viaje.precio}&image=${encodeURIComponent(viaje.imagenUrl)}&description=${encodeURIComponent(viaje.descripcion)}" style="text-decoration: none; color: inherit;">
+                        ${viaje.titulo}
+                    </a>
+                </h2>
+            </div>
+        `;
+
+        carouselList.appendChild(viajeItem);
+    });
+
+    // Iniciar Swiper después de que los elementos hayan sido añadidos
+    new Swiper(".swiper", {
+        loop: true, 
+        spaceBetween: 30,
+        pagination: {
+            el: ".swiper-pagination",
+            clickable: true,
+            dynamicBullets: true,
+        },
+        navigation: {
+            nextEl: ".swiper-button-next",
+            prevEl: ".swiper-button-prev",
+        },
+        autoplay: {
+            delay: 3000,
+            disableOnInteraction: false,
+        },
+        breakpoints: {
+            0: { slidesPerView: 1 },
+            768: { slidesPerView: 2 },
+            1024: { slidesPerView: 3 },
+        },
+    });
+}
+
+async function loadGallery() {
+    // Obtener la referencia a la colección 'viajes' en Firestore
+    const viajesCollection = collection(db, "viajes");
+    
+    // Obtener los documentos de la colección 'viajes'
+    const querySnapshot = await getDocs(viajesCollection);
+
+    // Crear un array para almacenar los documentos
+    const viajesArray = [];
+    
+    // Llenar el array con los datos de los documentos
+    querySnapshot.forEach((doc) => {
+        viajesArray.push(doc.data());
+    });
+
+    // Seleccionar 7 elementos aleatorios del array
+    const selectedTours = getRandomItems(viajesArray, 7);
+
+    // Obtener el contenedor para los elementos de la galería
+    const gallerySection = document.querySelector('.Gallery');
+
+    // Limpiar el contenedor antes de agregar los elementos
+    gallerySection.innerHTML = '';
+
+    // Agregar los elementos aleatorios a la galería
+    selectedTours.forEach((viaje) => {
+        const eventItem = document.createElement('div');
+        eventItem.classList.add('Event', 'searchable');
+
+        eventItem.innerHTML = `
+            <img src="${viaje.imagenUrl}" alt="${viaje.titulo}">
+            <div class="overlay">
+                <div class="box-galery">
+                    <p>From</p>
+                    <h4>$${viaje.precio}</h4>
+                </div>
+                <h2 class="location">
+                    <a href="/Views/eventDetail.html?title=${encodeURIComponent(viaje.titulo)}&price=${viaje.precio}&image=${encodeURIComponent(viaje.imagenUrl)}&description=${encodeURIComponent(viaje.descripcion)}" style="text-decoration: none; color: inherit;">
+                        ${viaje.titulo}
+                    </a>
+                </h2>
+            </div>
+        `;
+
+        gallerySection.appendChild(eventItem);
+    });
+}
+
+// Función para obtener elementos aleatorios de un array
+function getRandomItems(arr, numItems) {
+    const shuffled = [...arr].sort(() => 0.5 - Math.random()); // Barajar el array
+    return shuffled.slice(0, numItems); // Seleccionar los primeros 'numItems' elementos
+}
+async function loadAllTours() {
+    // Obtener la referencia a la colección 'viajes' en Firestore
+    const viajesCollection = collection(db, "viajes");
+
+    // Obtener los documentos de la colección 'viajes'
+    const querySnapshot = await getDocs(viajesCollection);
+
+    // Crear un array para almacenar los documentos
+    const viajesArray = [];
+
+    // Llenar el array con los datos de los documentos
+    querySnapshot.forEach((doc) => {
+        viajesArray.push(doc.data());
+    });
+
+    // Obtener el contenedor para los elementos de las tarjetas
+    const cardsSection = document.querySelector('.cards-section .container');
+
+    // Limpiar el contenedor antes de agregar los elementos
+    cardsSection.innerHTML = '';
+
+    // Agregar los elementos de los viajes como tarjetas
+    viajesArray.forEach((viaje) => {
+        const cardItem = document.createElement('div');
+        cardItem.classList.add('card-item');
+
+        cardItem.innerHTML = `
+            <img src="${viaje.imagenUrl}" alt="${viaje.titulo}" class="card-image">
+            <div class="overlay">
+                <div class="price-box">
+                    <p>From</p>
+                    <h4>$${viaje.precio}</h4>
+                </div>
+                <h2 class="location">
+                    <a href="/Views/tours.html?title=${encodeURIComponent(viaje.titulo)}&price=${viaje.precio}&image=${encodeURIComponent(viaje.imagenUrl)}&description=${encodeURIComponent(viaje.descripcion)}" style="text-decoration: none; color: inherit;">
+                        ${viaje.titulo}
+                    </a>
+                </h2>
+            </div>
+        `;
+
+        cardsSection.appendChild(cardItem);
+    });
+}
+
+// Llamar a la función para cargar todos los viajes
+loadAllTours();
+loadTours();
+loadGallery();
