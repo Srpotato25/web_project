@@ -1,6 +1,6 @@
 // Importar Firebase
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.0/firebase-app.js";
-import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.14.0/firebase-firestore.js";
+import { getFirestore, collection, getDocs, addDoc, onSnapshot} from "https://www.gstatic.com/firebasejs/10.14.0/firebase-firestore.js";
 import { 
     getAuth, 
     signInWithEmailAndPassword, 
@@ -181,7 +181,7 @@ async function loadGallery() {
     }
 }
 
-// Función para cargar todos los tours con filtro de categoría
+
 // Función para cargar todos los tours con filtro de categoría
 async function loadAllTours(category = "all") {
     const cardsSection = document.querySelector('.cards-section .container');
@@ -253,4 +253,92 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
     }
+});
+
+document.addEventListener("DOMContentLoaded", function () {
+    const reviewForm = document.getElementById("reviewForm");
+  
+    if (reviewForm) {
+      reviewForm.addEventListener("submit", function (event) {
+        event.preventDefault();  // Evita que el formulario se envíe de la manera tradicional
+  
+        // Obtén los valores de los campos del formulario
+        const reviewName = document.getElementById("reviewName").value;
+        const reviewText = document.getElementById("reviewText").value;
+        const reviewStars = document.getElementById("reviewStars").value;
+  
+        // Verifica si hay datos válidos
+        if (reviewName && reviewText && reviewStars) {
+          // Crea una nueva reseña
+          const review = {
+            name: reviewName,
+            text: reviewText,
+            stars: parseInt(reviewStars),
+            date: new Date().toISOString(),  // Fecha y hora actual
+          };
+  
+          // Guarda la reseña en Firestore
+          const db = firebase.firestore();
+          db.collection("reseñas").add(review)
+            .then(() => {
+              alert("¡Reseña enviada correctamente!");
+              reviewForm.reset();  // Limpia el formulario después de enviarlo
+            })
+            .catch((error) => {
+              console.error("Error al guardar la reseña:", error);
+              alert("Hubo un problema al guardar tu reseña.");
+            });
+        } else {
+          alert("Por favor, completa todos los campos.");
+        }
+      });
+    } else {
+      console.error("No se encontró el formulario con id 'reviewForm'.");
+    }
+  });
+  
+  document.addEventListener("DOMContentLoaded", function () {
+  // Referencia a la colección de reseñas en Firebase
+  const db = firebase.firestore();
+
+  // Función para cargar las reseñas
+  function loadReviews() {
+    const reviewsContainer = document.getElementById("reviewsContainer");  // Asegúrate de que este elemento exista en tu HTML
+
+    if (reviewsContainer) {
+      db.collection("reseñas")
+        .orderBy("date", "desc")  // Ordena las reseñas por fecha (más recientes primero)
+        .get()
+        .then((querySnapshot) => {
+          // Limpia el contenedor antes de agregar las reseñas
+          reviewsContainer.innerHTML = "";
+
+          querySnapshot.forEach((doc) => {
+            const review = doc.data();
+
+            // Crea un contenedor para cada reseña
+            const reviewElement = document.createElement("div");
+            reviewElement.classList.add("review");
+
+            // Agrega contenido a la reseña
+            reviewElement.innerHTML = `
+              <h3>${review.name} (${review.stars} Estrellas)</h3>
+              <p>${review.text}</p>
+              <small>${new Date(review.date).toLocaleString()}</small>
+            `;
+
+            // Agrega la reseña al contenedor
+            reviewsContainer.appendChild(reviewElement);
+          });
+        })
+        .catch((error) => {
+          console.error("Error al cargar las reseñas:", error);
+        });
+    } else {
+      console.error("No se encontró el contenedor de reseñas.");
+    }
+  }
+
+  // Llama a la función para cargar las reseñas al cargar la página
+  loadReviews();
 });

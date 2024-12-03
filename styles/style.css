@@ -819,3 +819,17 @@ footer {
 .btn-right {
   right: 10px;
 }
+
+.resenastext {
+  position: absolute;
+  top: 20%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  text-align: left;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+
+

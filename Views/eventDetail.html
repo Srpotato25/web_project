@@ -159,8 +159,12 @@
                         <i class="fas fa-map-signs" style="font-size: 40px; vertical-align: middle;"></i> Open in Waze
                     </a>
                 </div>
+
             </div>
+
         </div>
+
+        
     </section>
     <script>
         // Obtener los parámetros de la URL
@@ -212,9 +216,11 @@
         googleMapLink.href = `https://www.google.com/maps?q=${encodeURIComponent(tourLocation)}`;
         wazeLink.href = `https://waze.com/ul?ll=${encodeURIComponent(tourLocation)}&navigate=yes`;
     
-    </script>
-    
-    
+    </script>    
+    <script src="https://www.gstatic.com/firebasejs/9.17.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.17.2/firebase-database-compat.js"></script>
+<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+<script type="module" src="/script.js"></script>
 </body>
 
 </html>
