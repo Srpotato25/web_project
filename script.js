@@ -67,6 +67,27 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 
+//FUNCIOON BARRA BUSQUEDAAAAA
+document.addEventListener("DOMContentLoaded", function() {
+    let searchBtn = document.getElementById('searchBtn'); // Botón de búsqueda
+    let closeSearch = document.getElementById('closeSearch'); // Botón para cerrar la barra de búsqueda
+    let searchBox = document.getElementById('searchBox'); // Barra de búsqueda
+    let searchInput = searchBox.querySelector("input"); // Campo de entrada de búsqueda
+    let searchableItems = document.querySelectorAll('.searchable'); // Elementos a buscar
+    // Mostrar la barra de búsqueda al hacer clic en el ícono de búsqueda
+    searchBtn.onclick = function() {
+        searchBox.classList.add('active'); // Mostrar la barra de búsqueda
+        searchBtn.style.display = 'none';  // Oculta el botón de búsqueda
+    };
+    // Cerrar la barra de búsqueda al hacer clic en el ícono de cerrar
+    closeSearch.onclick = function() {
+        searchBox.classList.remove('active'); // Oculta la barra de búsqueda
+        searchBtn.style.display = 'block';  // Muestra el botón de búsqueda de nuevo
+        searchInput.value = ""; // Limpia el campo de búsqueda
+        clearHighlights(); // Borra los resaltados de la búsqueda anterior
+    };
+  });
+
 // Función para obtener elementos aleatorios
 function getRandomItems(array, count) {
     const shuffled = [...array].sort(() => 0.5 - Math.random());
