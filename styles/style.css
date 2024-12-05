@@ -200,6 +200,17 @@ a {
   margin-top: -80px;
 }
 
+
+/* Remove o estilo padrão do link dentro do botão */
+.mainButton a {
+  color: inherit; /* Herda a cor do botão */
+  text-decoration: none; /* Remove o sublinhado */
+  display: block; /* Faz com que o link ocupe todo o espaço do botão */
+  width: 100%;
+  height: 100%;
+}
+
+
 .MainImage img {
   width: 100%;
   height: 100%;
