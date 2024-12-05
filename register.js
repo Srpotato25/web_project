@@ -24,7 +24,7 @@ const loginPassword = document.getElementById("login-password");
 const signupEmail = document.getElementById("signup-email");
 const signupPassword = document.getElementById("signup-password");
 const confirmPassword = document.getElementById("confirm-password");
-const signupName = document.getElementById("signup-name"); // Nuevo campo para nombre
+const signupName = document.getElementById("signup-name");
 const userIcon = document.getElementById("form-open");
 const userDropdown = document.getElementById("userDropdown");
 const logoutButton = document.getElementById("logoutButton");
@@ -130,7 +130,7 @@ signupForm.addEventListener("submit", (e) => {
             const user = userCredential.user;
             console.log("User registered:", user);
             updateUserInterface(user);
-            alert(`Signup successful! Welcome, ${name}!`); // Mostrar el nombre en el mensaje
+            alert(`Signup successful! Welcome, ${name}!`);
         })
         .catch((error) => {
             console.error("Signup error:", error.message);
