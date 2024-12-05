@@ -1,3 +1,4 @@
+/* Estilo general para el contenedor del formulario */
 .form_container {
   position: fixed;
   max-width: 300px;
@@ -5,7 +6,7 @@
   height: auto;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);  /* Sin escala inicial */
+  transform: translate(-50%, -50%); /* Sin escala inicial */
   z-index: 101;
   background: #ffffff;
   padding: 25px;
@@ -24,6 +25,29 @@
   border: 2.5px solid orange;
 }
 
+/* Estilo para el formulario de login */
+.login-form {
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
+
+/* Estilo para el formulario de login cuando el usuario está logueado (oculto) */
+.login-form.hidden {
+  opacity: 0;
+  pointer-events: none; /* Evitar la interacción cuando está oculto */
+}
+
+/* Estilo para el formulario de signup */
+.signup_form {
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
+
+/* Estilo para el formulario de signup cuando el usuario está logueado (oculto) */
+.signup_form.hidden {
+  opacity: 0;
+  pointer-events: none; /* Evitar la interacción cuando está oculto */
+}
 
 .form_container h2 {
   font-size: 22px;
@@ -200,31 +224,4 @@
   display: block;
 }
 
-
-/* Estilos para el dropdown de logout */
-.dropdown-logout {
-  position: absolute;
-  top: 50px; /* Ajusta la posición según tu diseño */
-  right: 10px;
-  background-color: #fff;
-  border: 1px solid #ccc;
-  padding: 10px;
-  display: none;
-  border-radius: 5px;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-  z-index: 1000;
-}
-
-.dropdown-logout button {
-  background-color: #f44336;
-  color: white;
-  border: none;
-  padding: 8px 16px;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.dropdown-logout button:hover {
-  background-color: #d32f2f;
-}
 
