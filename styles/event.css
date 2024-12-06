@@ -54,6 +54,8 @@ body {
     line-height: 1;
 }
 
+
+
 /* HEADER ROW */
 .header-row {
     display: flex;
@@ -69,10 +71,11 @@ body {
 }
 
 .text-content h1 {
+    position: absolute;
     font-family: system-ui, sans-serif;
     font-weight: 800; 
     font-style: normal; 
-    font-size: 60px; 
+    font-size: 55px; 
     line-height: 24px; 
     color: #243238; 
     margin-top: 10px;
@@ -81,8 +84,10 @@ body {
 
 
 .text-content p {
-    font-size: 16px;
+    position: relative;
+    font-size: 18px;
     text-align: justify;
+    bottom: -60px;
 }
 
 /* ORDER BOX */
@@ -155,33 +160,42 @@ body {
     font-family: system-ui, sans-serif;
     font-weight: 800; 
     font-style: normal; 
-    font-size: 60px; 
+    font-size: 55px; 
     line-height: 24px; 
     color: #243238; 
     margin-bottom: 30px;
 }
 
 .travel-plan ul {
-    list-style: none;
-    padding-left: 0;
+    list-style: none;  /* Eliminar los puntos predeterminados */
+    padding-left: 0;  /* Eliminar padding extra */
     margin-bottom: 40px;
 }
 
 .travel-plan ul li {
+    font-size: 16px;  /* Aseguramos un tamaño de fuente adecuado */
+    line-height: 1.5;  /* Mejor legibilidad entre líneas */
+    margin-bottom: 15px;  /* Separación entre las actividades */
+    padding-left: 25px;  /* Espacio para los íconos */
     position: relative;
-    padding-left: 25px;
-    margin-bottom: 10px;
-    font-size: 16px;
+    display: block;  /* Aseguramos que el <li> sea un bloque */
 }
 
+/* Aseguramos que cada actividad tenga su propio ícono */
 .travel-plan ul li::before {
-    content: '✔';
+    content: '✔';  /* Agregar el ícono de verificación */
     position: absolute;
     left: 0;
-    color: orange;
-    font-weight: bold;
+    color: orange;  /* Cambiar color al ícono */
     font-size: 18px;
+    font-weight: bold;
 }
+
+/* Garantizar que cada actividad tiene suficiente separación */
+.travel-plan ul li:not(:last-child) {
+    margin-bottom: 15px;  /* Más espacio entre las actividades */
+}
+
 
 /* CALENDAR SECTION */
 .calendar-section {
@@ -213,3 +227,4 @@ margin-left: 250px;
     justify-content: space-between;
     padding: 35px;
 }
+

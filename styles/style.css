@@ -578,6 +578,35 @@ a {
   margin-left: 5px;
 }
 
+.search h2 {
+  padding: 10px;
+  font-family: system-ui, sans-serif;
+  font-weight: 800;
+  font-style: normal;
+  font-size: 40px;
+  line-height: 24px;
+  color: #000000; 
+  margin-top: 10px;
+  margin-bottom: 30px;
+  text-decoration: none; 
+  position: relative;
+}
+
+.search h2 a {
+  color: #000000;
+  text-decoration: none; 
+}
+
+.search h2 a:hover {
+  color: #FFA500; 
+}
+
+.search p{
+  position: relative;
+  left: 30px;
+  top: -20px;
+}
+
 
 
 .mainButton {

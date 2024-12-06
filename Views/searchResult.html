@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/png" href="icon.png">
+    <link rel="icon" type="image/png" href="/icon.png">
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/styles/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -24,7 +24,7 @@
             <a href="" class="logo">Chepe Trips</a>
         </div>
         <nav class="navbar navbar-expand-md">
-            <a href="/index.html">Home</a>
+            <a href="/index.html" >Home</a>
             <div class="dropdown">
                 <a href="/Views/destinations.html" class="dropdown-toggle">Destinations </a>
                 <div class="dropdown-menu">
@@ -41,7 +41,7 @@
                 </div>
             </div>
             <a href="/Views/tours.html">Tours</a>
-            <a href="/Views/contacts.html" class="active">Contact</a>
+            <a href="/Views/contacts.html">Contact</a>
             <i class="fa-solid fa-magnifying-glass nav-icon" id="searchBtn"></i>
             <div id="form-open" class="user-icon" style="margin-left: 20px;">
                 <i class="fa-solid fa-user"></i>
@@ -115,40 +115,14 @@
         </div>
     </section>
 
-    <section>
-        <div class="information">
-            <h1>Contact Us</h1>
-            <p>Contact us to book your perfect journey to the place of your dream easily and quickly.</p>
-    
-            <p><i class="fa fa-envelope"></i> Send a message </p>
-            <p style="font-weight:bold;">Contact our support team</p>
-            <br>
-            <p><i class="fa fa-phone"></i> You can contact our support service by phone 24/7</p>
-            <h4 style="color: orange; font-weight:bold">800 123-45-678</h4>
-            <br>
-            <p><i class="fa fa-location-dot"></i> You can also consult our office.</p>
-            <p style="font-weight:bold;">Ulacit Barrio Amon</p>
-        </div>
-        <div class="contacts">
-            <h1>Write Us</h1>
-            <form class="contactForm" id="contactForm">
-                <div class="formGroup">
-                    <label for="name">Name:</label>
-                    <input type="text" id="name" placeholder="Your name" required>
-                </div>
-                <div class="formGroup">
-                    <label for="email">Email:</label>
-                    <input type="email" id="email" placeholder="Your email" required>
-                </div>
-                <div class="formGroup">
-                    <label for="message">Message:</label>
-                    <textarea id="message" placeholder="How can we help you?" required></textarea>
-                </div>
-                <button type="submit">Send Message</button>
-            </form>
+<br>
+    <section class="result">
+        <div id="searchResults">
+            <div class="search">
+            </div>
         </div>
     </section>
-    <br><br>
+<br><br><br>
     <footer>
         <div class="Div__footer">
             <div class="Div__footer--left">
@@ -197,38 +171,79 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
-        <!-- Script EmailJS -->
-        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-        <script type="text/javascript">
-            (function(){
-                emailjs.init("4536tFSebj3pPWoVA"); // Reemplaza con tu clave pública
-    
-            document.getElementById("contactForm").addEventListener("submit", function(e) {
-                e.preventDefault(); 
-    
-                // Obtén los valores de los campos del formulario
-                const name = document.getElementById("name").value;
-                const email = document.getElementById("email").value;
-                const message = document.getElementById("message").value;
-    
-    
-                const templateParams = {
-                    from_name: name,
-                    from_email: email,
-                    message: message,
-                };
-    
-                emailjs.send('service_118kn3f', 'template_w81l0ys', templateParams)
-                    .then(function(response) {
-                        console.log('Success!', response.status, response.text);
-                        alert('Message sent successfully!');
-                    }, function(error) {
-                        console.log('Failed...', error);
-                        alert('Failed to send message. Please try again later.');
+        <script type="module">
+            import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.0/firebase-app.js";
+            import { getFirestore, collection, getDocs, query, where } from "https://www.gstatic.com/firebasejs/10.14.0/firebase-firestore.js";
+            
+            const firebaseConfig = {
+                apiKey: "AIzaSyAowxVHvpmYoluiKnn_M5NMaku9EqcqPDk",
+                authDomain: "web-project-f0c9c.firebaseapp.com",
+                projectId: "web-project-f0c9c",
+                storageBucket: "web-project-f0c9c.appspot.com",
+                messagingSenderId: "1025383417170",
+                appId: "1:1025383417170:web:51d30811a47a97ae6a268b",
+                measurementId: "G-DG1EX6H6PQ"
+            };
+        
+            // Inicializar Firebase
+            const app = initializeApp(firebaseConfig);
+            const db = getFirestore(app); // Firestore
+        
+            const urlParams = new URLSearchParams(window.location.search);
+            const searchQuery = urlParams.get('searchQuery');
+        
+            const searchInFirebase = async (queryText) => {
+                const viajesRef = collection(db, 'viajes');
+                const searchQuery = query(
+                    viajesRef,
+                    where('titulo', '>=', queryText),
+                    where('titulo', '<=', queryText + '\uf8ff')
+                );
+        
+                const snapshot = await getDocs(searchQuery);
+                console.log("Snapshot data:", snapshot.docs.map(doc => doc.data())); // Debug
+        
+                const resultsContainer = document.getElementById('searchResults');
+                resultsContainer.innerHTML = ''; // Limpiar resultados previos
+        
+                if (!snapshot.empty) {
+                    snapshot.forEach(async (doc) => {
+                        const data = doc.data();
+                        const resultDiv = document.createElement('div');
+                        resultDiv.classList.add('search-result');
+                        
+                        // Si actividades es un string, lo usamos directamente
+                        const actividades = data.actividades || 'No activities available'; // Default si está vacío o indefinido
+                        
+                        // Aquí tomamos la URL directamente desde Firestore
+                        let imagenUrl = data.imagen || '/asset/xd.png'; // Si no existe una imagen, se asigna una predeterminada
+        
+                        // Asegúrate de que la URL de la imagen se pase correctamente al enlace de la página de detalles
+                        const detailPageUrl = `/Views/eventDetail.html?title=${encodeURIComponent(data.titulo)}&description=${encodeURIComponent(data.descripcion)}&price=${encodeURIComponent(data.precio)}&image=${encodeURIComponent(data.imagenUrl)}&category=${encodeURIComponent(data.categoria)}&location=${encodeURIComponent(data.ubicacion || 'San José, Costa Rica')}&activities=${encodeURIComponent(actividades)}`;
+        
+                        resultDiv.innerHTML = `
+                            <div class="search">
+                                <h2><a href="${detailPageUrl}" class="result-link">${data.titulo}</a></h2>
+                                <p>${data.descripcion}</p>
+                            </div>
+                        `;
+                        resultsContainer.appendChild(resultDiv);
                     });
-            });
-        })();
+                } else {
+                    document.getElementById('searchResults').innerHTML = '<div class="search"><h2>No results found, sorry :p</h2></div>';
+                }
+            };
+        
+            if (searchQuery) {
+                searchInFirebase(searchQuery);
+            } else {
+                document.getElementById('searchResults').innerHTML = '<p>Please enter a search term.</p>';
+            }
         </script>
+        
+        
+        
+
 
 </body>
 
