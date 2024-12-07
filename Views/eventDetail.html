@@ -174,13 +174,10 @@
                 </div>
 
                 <div class="map-links">
-                    <h3>Get directions to <span id="tour-location"></span></h3>
+                    <h3>Get directions to</h3>
                     <a id="google-map-link" href="" target="_blank" class="map-link-button">
                         <i class="fas fa-map-marker-alt" style="font-size: 40px; vertical-align: middle;"></i> Open in
                         Google Maps
-                    </a>
-                    <a id="waze-link" href="" target="_blank" class="map-link-button">
-                        <i class="fas fa-map-signs" style="font-size: 40px; vertical-align: middle;"></i> Open in Waze
                     </a>
                 </div>
 
@@ -199,7 +196,8 @@ const price = urlParams.get('price') || 'Precio no disponible';
 const image = urlParams.get('image') || 'default-image.jpg'; // Asegúrate que la URL de la imagen esté correcta
 const description = urlParams.get('description') || 'Descripción no disponible';
 const category = urlParams.get('category') || 'Sin categoría';
-const tourLocation = urlParams.get('location') && urlParams.get('location') !== 'undefined' ? urlParams.get('location') : 'San José, Costa Rica'; // Ubicación predeterminada
+const tourLocation = urlParams.get('location') && urlParams.get('location') !== null && urlParams.get('location') !== '' ? urlParams.get('location') : 'San José, Costa Rica';
+console.log(tourLocation)
 const activities = urlParams.get('activities') 
     ? urlParams.get('activities').split(/[\s,]+/): []; 
 const date = urlParams.get('date'); 
@@ -214,32 +212,26 @@ document.getElementById('tour-location').innerText = tourLocation;
 
 const activitiesList = document.getElementById('tour-activities');
 activities.forEach(activity => {
-    const li = document.createElement('li');  // Crear un elemento de lista <li>
-    li.textContent = activity;  // Establecer el texto de la actividad
-    activitiesList.appendChild(li);  // Agregar el elemento <li> a la lista <ul>
+    const li = document.createElement('li');
+    li.textContent = activity; 
+    activitiesList.appendChild(li);
 });
 
 
 // Asignar la fecha seleccionada
 if (date) {
-    // Si la fecha está presente en la URL, mostrarla
     document.getElementById('tour-date').value = date;
-
-    // Configurar los atributos min y max para que solo se pueda seleccionar esa fecha
     const dateInput = document.getElementById('tour-date');
-    dateInput.setAttribute('min', date);  // Fecha mínima (la misma fecha)
-    dateInput.setAttribute('max', date);  // Fecha máxima (la misma fecha)
+    dateInput.setAttribute('min', date);
+    dateInput.setAttribute('max', date); 
 } else {
-    // Si no hay fecha en la URL, establecer un valor predeterminado
     document.getElementById('tour-date').value = 'Fecha no disponible';
 }
 
-// Configurar enlaces de Google Maps y Waze con la ubicación correcta
 const googleMapLink = document.getElementById('google-map-link');
 const wazeLink = document.getElementById('waze-link');
 
-// Reemplazar 'tourLocation' con una dirección válida
-googleMapLink.href = `https://www.google.com/maps?q=${encodeURIComponent(tourLocation)}`;
+googleMapLink.href =tourLocation;
 wazeLink.href = `https://waze.com/ul?ll=${encodeURIComponent(tourLocation)}&navigate=yes`;
 
 

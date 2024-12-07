@@ -1,4 +1,3 @@
-/* GENERAL RESET */
 * {
     margin: 0;
     padding: 0;
@@ -167,33 +166,31 @@ body {
 }
 
 .travel-plan ul {
-    list-style: none;  /* Eliminar los puntos predeterminados */
-    padding-left: 0;  /* Eliminar padding extra */
+    list-style: none; 
+    padding-left: 0; 
     margin-bottom: 40px;
 }
 
 .travel-plan ul li {
-    font-size: 16px;  /* Aseguramos un tamaño de fuente adecuado */
-    line-height: 1.5;  /* Mejor legibilidad entre líneas */
-    margin-bottom: 15px;  /* Separación entre las actividades */
-    padding-left: 25px;  /* Espacio para los íconos */
+    font-size: 16px; 
+    line-height: 1.5; 
+    margin-bottom: 15px;
+    padding-left: 25px;
     position: relative;
     display: block;  /* Aseguramos que el <li> sea un bloque */
 }
 
-/* Aseguramos que cada actividad tenga su propio ícono */
 .travel-plan ul li::before {
-    content: '✔';  /* Agregar el ícono de verificación */
+    content: '✔'; 
     position: absolute;
     left: 0;
-    color: orange;  /* Cambiar color al ícono */
+    color: orange;
     font-size: 18px;
     font-weight: bold;
 }
 
-/* Garantizar que cada actividad tiene suficiente separación */
 .travel-plan ul li:not(:last-child) {
-    margin-bottom: 15px;  /* Más espacio entre las actividades */
+    margin-bottom: 15px; 
 }
 
 
@@ -221,10 +218,15 @@ body {
 /* MAP SECTION */
 .map-links{
 margin-top: 50px;
-margin-left: 250px;
+margin-left: 340px;
 }
 .map-link-button{
     justify-content: space-between;
     padding: 35px;
+}
+
+.map-links h3{
+    position: relative;
+    margin-left: 25px;
 }
 
