@@ -578,16 +578,31 @@ a {
   margin-left: 5px;
 }
 
+
+.search h1 {
+  padding: 10px;
+  font-family: system-ui, sans-serif;
+  font-weight: 800;
+  font-style: normal;
+  font-size: 50px;
+  line-height: 24px;
+  color: #000000;
+  margin-bottom: 40px;
+  margin-left: 300px;
+  text-decoration: none;
+  position: relative;
+}
+
 .search h2 {
   padding: 10px;
   font-family: system-ui, sans-serif;
   font-weight: 800;
   font-style: normal;
-  font-size: 40px;
+  font-size: 25px;
   line-height: 24px;
   color: #000000; 
   margin-top: 10px;
-  margin-bottom: 30px;
+  margin-bottom: 20px;
   text-decoration: none; 
   position: relative;
 }

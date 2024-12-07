@@ -157,21 +157,6 @@ function startEdit(id) {
     });
 }
 
-// Función para eliminar un viaje
-function deleteViaje(id) {
-  if (confirm("¿Estás seguro de que deseas eliminar este viaje?")) {
-    db.collection("viajes")
-      .doc(id)
-      .delete()
-      .then(() => {
-        alert("Viaje eliminado con éxito.");
-      })
-      .catch((error) => {
-        console.error("Error al eliminar el viaje:", error);
-        alert("Hubo un error al eliminar el viaje.");
-      });
-  }
-}
 
 // Registrar funciones globales
 window.startEdit = startEdit;

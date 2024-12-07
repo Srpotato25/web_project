@@ -64,6 +64,7 @@
         <div class="form_container">
             <i class="fa-solid fa-xmark form_close" id="closeLoginBtn"></i>
     
+            <!-- Login Form -->
             <div class="form login-form active">
                 <form id="login-form" action="#">
                     <h2>Log In</h2>
@@ -83,10 +84,13 @@
                         <a href="#" class="forgot_pw">Forgot your password?</a>
                     </div>
                     <button class="button" type="submit" id="submitBtn">Log In</button>
-                    <div class="login_signup">Don't have an account? <a href="#" id="show-signup-form">Sign Up</a></div>
+                    <div class="login_signup">
+                        Don't have an account? <a href="#" id="show-signup-form">Sign Up</a>
+                    </div>
                 </form>
             </div>
     
+            <!-- Signup Form -->
             <div class="form signup_form">
                 <form id="signup-form">
                     <h2>Register</h2>
@@ -94,7 +98,6 @@
                         <i class="fa-regular fa-user"></i>
                         <input type="text" id="signup-name" placeholder="Enter your name" required>
                     </div>
-                    
                     <div class="input_box">
                         <i class="fa-regular fa-envelope"></i>
                         <input type="email" id="signup-email" placeholder="Add your email" required>
@@ -109,7 +112,25 @@
                     </div>
                     <div id="signup-error-message" class="error-message"></div>
                     <button id="submit" type="submit" class="button">Register</button>
-                    <div class="login_signup">Already have an account? <a href="#" id="show-login-form">Log In</a></div>
+                    <div class="login_signup">
+                        Already have an account? <a href="#" id="show-login-form">Log In</a>
+                    </div>
+                </form>
+            </div>
+    
+            <!-- Reset Password Form -->
+            <div class="form reset-password-form hidden">
+                <form id="reset-password-form">
+                    <h2>Reset Password</h2>
+                    <div class="input_box">
+                        <i class="fa-regular fa-envelope"></i>
+                        <input type="email" id="reset-email" placeholder="Enter your email" required>
+                    </div>
+                    <div id="reset-error-message" class="error-message"></div>
+                    <button type="submit" class="button">Send Reset Email</button>
+                    <div class="login_signup">
+                        Remember your password? <a href="#" id="back-to-login">Log In</a>
+                    </div>
                 </form>
             </div>
         </div>
