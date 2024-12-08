@@ -1,0 +1,232 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    background-color: #fff;
+    color: #333;
+}
+
+.container {
+    max-width: 00px;
+    margin: 20px auto;
+    background: #fff;
+    overflow: hidden;
+}
+
+/* IMAGE SECTION */
+.image-section img {
+    width: 100%;
+    height: 600px;
+    object-fit: cover;
+}
+
+/* CONTENT SECTION */
+.content {
+    position: relative;
+    margin-top: -100px;
+    background-color: #fff;
+    width: 90%;
+    padding: 40px;
+    margin-left: auto;
+    margin-right: auto;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.info .location {
+    width: 150px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: orange;
+    color: #fff;
+    padding: 0 5px;
+    font-size: 14px;
+    font-weight: bold;
+    text-align: center;
+    text-transform: uppercase;
+    line-height: 1;
+}
+
+
+
+/* HEADER ROW */
+.header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 20px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.text-content {
+    max-width: 60%;
+}
+
+.text-content h1 {
+    position: absolute;
+    font-family: system-ui, sans-serif;
+    font-weight: 800; 
+    font-style: normal; 
+    font-size: 55px; 
+    line-height: 24px; 
+    color: #243238; 
+    margin-top: 10px;
+    margin-bottom: 30px; 
+}
+
+
+.text-content p {
+    position: relative;
+    font-size: 18px;
+    text-align: justify;
+    bottom: -60px;
+}
+
+/* ORDER BOX */
+.order-box {
+    position: relative;
+    top: -40px;
+    margin-bottom: 0px;
+    background-color: rgb(57, 68, 76);
+    color: #fff;
+    padding: 20px;
+    width: 30%;
+    height: 250px;
+    text-align: left;
+
+}
+
+.order-box .price-text {
+    font-size: 25px;
+    line-height: 1.4;
+    margin-bottom: 10px;
+    padding-left: 10px;
+}
+#tour-price{
+    position: relative;
+    top: -15px;
+    font-size: 30px;
+    font-weight:800;
+    line-height: 1.4;
+    padding-left: 10px;
+    color: orange;
+}
+
+.order-box .price-text strong {
+    font-size: 30px;
+}
+
+.order-box .commission-text {
+    position: relative;
+    top: -20px;
+    font-size: 20px;
+    margin-bottom: 15px;
+    line-height: 1.2;
+    padding-left: 10px;
+}
+
+/* ORDER BUTTON */
+.order-button {
+    position: relative;
+    top: -20px;
+    margin-left: 70px;
+    background-color: orange;
+    color: #fff;
+    padding: 10px;
+    font-size: 14px;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+    transition: background 0.3s;
+    width: 100px;
+    text-align: center;
+
+}
+
+.order-button:hover {
+    background-color: #e65c00;
+}
+
+/* TRAVEL PLAN SECTION */
+.travel-plan h2 {
+    font-family: system-ui, sans-serif;
+    font-weight: 800; 
+    font-style: normal; 
+    font-size: 55px; 
+    line-height: 24px; 
+    color: #243238; 
+    margin-bottom: 30px;
+}
+
+.travel-plan ul {
+    list-style: none; 
+    padding-left: 0; 
+    margin-bottom: 40px;
+}
+
+.travel-plan ul li {
+    font-size: 16px; 
+    line-height: 1.5; 
+    margin-bottom: 15px;
+    padding-left: 25px;
+    position: relative;
+    display: block;  /* Aseguramos que el <li> sea un bloque */
+}
+
+.travel-plan ul li::before {
+    content: '✔'; 
+    position: absolute;
+    left: 0;
+    color: orange;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.travel-plan ul li:not(:last-child) {
+    margin-bottom: 15px; 
+}
+
+
+/* CALENDAR SECTION */
+.calendar-section {
+    margin-top: 30px;
+    text-align: center;
+    background-color: #f1f1f1;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.calendar-section input[type="date"] {
+    font-size: 16px;
+    padding: 10px;
+    width: 100%;
+    max-width: 300px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    text-align: center;
+    margin-top: 10px;
+}
+
+/* MAP SECTION */
+.map-links{
+margin-top: 50px;
+margin-left: 340px;
+}
+.map-link-button{
+    justify-content: space-between;
+    padding: 35px;
+}
+
+.map-links h3{
+    position: relative;
+    margin-left: 25px;
+}
+
