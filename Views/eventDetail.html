@@ -166,83 +166,69 @@
                     <ul id="tour-activities">
                     </ul>
                 </div>
-                
 
                 <div class="calendar-section">
                     <h3>Select your date</h3>
                     <input type="date" id="tour-date" value="2024-11-30" min="2024-12-01" max="2025-06-30">
                 </div>
-
+                
                 <div class="map-links">
                     <h3>Get directions to</h3>
                     <a id="google-map-link" href="" target="_blank" class="map-link-button">
-                        <i class="fas fa-map-marker-alt" style="font-size: 40px; vertical-align: middle;"></i> Open in
-                        Google Maps
+                        <i class="fas fa-map-marker-alt"></i> Open in Google Maps
                     </a>
                 </div>
 
             </div>
-
         </div>
-
-        
     </section>
-    
+
     <script>
- // Obtener los parámetros de la URL
-const urlParams = new URLSearchParams(window.location.search);
-const title = urlParams.get('title') || 'Sin título';
-const price = urlParams.get('price') || 'Precio no disponible';
-const image = urlParams.get('image') || 'default-image.jpg'; // Asegúrate que la URL de la imagen esté correcta
-const description = urlParams.get('description') || 'Descripción no disponible';
-const category = urlParams.get('category') || 'Sin categoría';
-const tourLocation = urlParams.get('location') && urlParams.get('location') !== null && urlParams.get('location') !== '' ? urlParams.get('location') : 'San José, Costa Rica';
-console.log(tourLocation)
-const activities = urlParams.get('activities') 
-    ? urlParams.get('activities').split(/[\s,]+/): []; 
-const date = urlParams.get('date'); 
+        // Obtener los parámetros de la URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const title = urlParams.get('title') || 'Sin título';
+        const price = urlParams.get('price') || 'Precio no disponible';
+        const image = urlParams.get('image') || 'default-image.jpg';
+        const description = urlParams.get('description') || 'Descripción no disponible';
+        const category = urlParams.get('category') || 'Sin categoría';
+        const tourLocation = urlParams.get('location') || '';
+        const activities = urlParams.get('activities')
+            ? urlParams.get('activities').split('\n') : [];
+        const date = urlParams.get('date');
 
-// Asignar los valores a los elementos correspondientes
-document.getElementById('tour-title').innerText = title;
-document.getElementById('tour-price').innerText = `$${price}`;
-document.getElementById('tour-image').src = image;        
-document.getElementById('tour-description').innerText = description;
-document.getElementById('tour-category').innerText = category;
-document.getElementById('tour-location').innerText = tourLocation;
+        // Asignar valores a los elementos
+        document.getElementById('tour-title').innerText = title;
+        document.getElementById('tour-price').innerText = `$${price}`;
+        document.getElementById('tour-image').src = image;
+        document.getElementById('tour-description').innerText = description;
+        document.getElementById('tour-category').innerText = category;
 
-const activitiesList = document.getElementById('tour-activities');
-activities.forEach(activity => {
-    const li = document.createElement('li');
-    li.textContent = activity; 
-    activitiesList.appendChild(li);
-});
+        const activitiesList = document.getElementById('tour-activities');
+        activities.forEach(activity => {
+            const li = document.createElement('li');
+            li.textContent = activity;
+            activitiesList.appendChild(li);
+        });
 
+        if (date) {
+            const dateInput = document.getElementById('tour-date');
+            dateInput.value = date;
+            dateInput.setAttribute('min', date);
+            dateInput.setAttribute('max', date);
+        }
 
-// Asignar la fecha seleccionada
-if (date) {
-    document.getElementById('tour-date').value = date;
-    const dateInput = document.getElementById('tour-date');
-    dateInput.setAttribute('min', date);
-    dateInput.setAttribute('max', date); 
-} else {
-    document.getElementById('tour-date').value = 'Fecha no disponible';
-}
-
-const googleMapLink = document.getElementById('google-map-link');
-const wazeLink = document.getElementById('waze-link');
-
-googleMapLink.href =tourLocation;
-wazeLink.href = `https://waze.com/ul?ll=${encodeURIComponent(tourLocation)}&navigate=yes`;
-
+        const googleMapLink = document.getElementById('google-map-link');
+        if (tourLocation) {
+            googleMapLink.href = tourLocation;
+        }
 
     </script>
-       
+
     <script src="https://www.gstatic.com/firebasejs/10.3.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.3.1/firebase-auth-compat.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script type="module" src="/script.js" defer></script>
     <script type="module" src="/register.js" defer></script>
-
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
@@ -250,3 +236,4 @@ wazeLink.href = `https://waze.com/ul?ll=${encodeURIComponent(tourLocation)}&navi
 </body>
 
 </html>
+
