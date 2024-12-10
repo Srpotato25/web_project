@@ -1,4 +1,4 @@
-// Importar Firebase
+// firebaseConfig.js
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.0/firebase-app.js";
 import { getAuth } from "https://www.gstatic.com/firebasejs/10.14.0/firebase-auth.js";
 import { getFirestore } from "https://www.gstatic.com/firebasejs/10.14.0/firebase-firestore.js";
@@ -20,6 +20,7 @@ const auth = getAuth(app);
 const db = getFirestore(app);
 
 // Exportar para usar en otros archivos
-export { auth, db,app };
+export { auth, db, app };
+
 
 

@@ -72,7 +72,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
-
 // Función para obtener elementos aleatorios
 function getRandomItems(array, count) {
     const shuffled = [...array].sort(() => 0.5 - Math.random());
@@ -138,8 +137,6 @@ async function loadTours() {
     });
 }
 
-
-// Función para cargar la galería de tours
 async function loadGallery() {
     const gallerySection = document.querySelector('.Gallery');
     if (!gallerySection) return;
@@ -192,8 +189,6 @@ async function loadGallery() {
     }
 }
 
-
-// Función para cargar todos los tours con filtro de categoría
 async function loadAllTours(category = "all") {
     const cardsSection = document.querySelector('.cards-section .container');
     if (!cardsSection) return;
@@ -266,25 +261,41 @@ async function loadDestinations(category = "Destino") {
             </div>
         `;
 
+        // Agregar evento de clic al botón "View Tours"
+        const viewToursButton = destinationItem.querySelector('#view-tours');
+        viewToursButton.addEventListener('click', () => {
+            // Asegurarse de que viaje.actividades sea un array antes de usar join
+            let activities = '';
+            if (Array.isArray(viaje.actividades)) {
+                activities = encodeURIComponent(viaje.actividades.join(','));
+            } else if (viaje.actividades && typeof viaje.actividades === 'string') {
+                activities = encodeURIComponent([viaje.actividades].join(','));
+            }
+
+            const fechasDisponibles = viaje.fechasDisponibles ? viaje.fechasDisponibles : '';
+
+            const url = `/Views/eventDetail.html?title=${encodeURIComponent(viaje.titulo)}&price=${viaje.precio}&image=${encodeURIComponent(viaje.imagenUrl)}&description=${encodeURIComponent(viaje.descripcion)}&category=${encodeURIComponent(viaje.categoria)}&location=${encodeURIComponent(viaje.ubicacion)}&activities=${activities}&fechasDisponibles=${encodeURIComponent(fechasDisponibles)}`;
+
+            // Redirigir al usuario a la nueva URL
+            window.location.href = url;
+        });
+
         destinationsSection.appendChild(destinationItem);
     });
 }
-
-
 
 document.addEventListener('DOMContentLoaded', () => {
     const galleryExists = document.querySelector('.Gallery');
     const carouselExists = document.querySelector('.swiper-wrapper');
     const cardsSectionExists = document.querySelector('.cards-section .container');
-    const destinationsSectionExists = document.querySelector('.Destinations');  // Agregado para verificar Destinations
+    const destinationsSectionExists = document.querySelector('.Destinations'); 
 
-    // Si existe la galería o el carrusel, cargar tours y galería
+
     if (galleryExists || carouselExists) {
         loadTours();
         loadGallery();
     }
 
-    // Si existe la sección de tarjetas, cargar todos los tours
     if (cardsSectionExists) {
         loadAllTours();
 
@@ -296,10 +307,86 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
     }
-
-    // Si existe la sección Destinations, cargar los destinos
     if (destinationsSectionExists) {
         loadDestinations(); 
     }
 });
+
+document.addEventListener("DOMContentLoaded", async () => {
+    const calendarEl = document.getElementById("calendar");
+
+
+    const modal = document.getElementById("eventModal");
+    const span = document.getElementsByClassName("close")[0];
+
+    async function fetchEvents() {
+        const events = [];
+        const querySnapshot = await getDocs(collection(db, "eventoLocal"));
+        querySnapshot.forEach((doc) => {
+            const data = doc.data();
+            if (data.fecha) {
+                events.push({
+                    title: data.titulo,
+                    start: data.fecha, 
+                    description: data.descripcion, 
+                    location: data.ubicacion || null,
+                    locationUrl: data.ubicacionUrl || null 
+                });
+            }
+        });
+        return events;
+    }
+
+    const events = await fetchEvents();
+
+    const calendar = new FullCalendar.Calendar(calendarEl, {
+        initialView: "dayGridMonth",
+        headerToolbar: {
+            left: "prev,next today",
+            center: "title",
+            right: "dayGridMonth,timeGridWeek,timeGridDay"
+        },
+        events: events,
+        eventClick: function (info) {
+            const event = info.event;
+            const location = event.extendedProps.location;
+            const locationUrl = event.extendedProps.locationUrl;
+
+            document.getElementById("eventTitle").innerText = event.title;
+            document.getElementById("eventDescription").innerText = event.extendedProps.description;
+
+            let locationText = "";
+
+
+            if (location && locationUrl) {
+                locationText = `<a href="${locationUrl}" target="_blank"><strong>Ubicación</strong></a>`;
+            } else if (location) {
+                locationText = `<strong>Ubicación:</strong> ${location}`;
+            }
+
+            document.getElementById("eventLocation").innerHTML = locationText;
+
+            // Mostrar el modal
+            modal.style.display = "block";
+        }
+    });
+
+    calendar.render();
+    span.onclick = function () {
+        modal.style.display = "none";
+    }
+
+    window.onclick = function (event) {
+        if (event.target === modal) {
+            modal.style.display = "none";
+        }
+    }
+});
+
+
+
+
+
+
+
 
