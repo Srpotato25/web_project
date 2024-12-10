@@ -79,30 +79,36 @@ function getRandomItems(array, count) {
     return shuffled.slice(0, count);
 }
 
-// Función para cargar los tours en el carousel
+// Función para cargar los tours con categoría "descuento" en el carousel
 async function loadTours() {
     const carouselList = document.querySelector('.swiper-wrapper');
     if (!carouselList) return;
 
+    // Obtener los viajes desde la colección "viajes"
     const viajesCollection = collection(db, "viajes");
+
+    // Filtrar los viajes por categoría "descuento"
     const querySnapshot = await getDocs(viajesCollection);
-    const viajesArray = querySnapshot.docs.map((doc) => doc.data());
+    const viajesArray = querySnapshot.docs
+        .map((doc) => doc.data())
+        .filter((viaje) => viaje.categoria === "Descuento"); 
 
-    console.log(viajesArray);  // Verificar que los datos están llegando correctamente.
+    console.log(viajesArray);
 
+    // Seleccionar 7 tours aleatorios
     const selectedTours = getRandomItems(viajesArray, 7);
-    console.log(selectedTours);  // Verificar que los tours seleccionados están correctos.
+    console.log(selectedTours); 
 
-    carouselList.innerHTML = '';  // Limpiar el contenido anterior.
+    // Limpiar el contenido anterior
+    carouselList.innerHTML = '';
 
     selectedTours.forEach((viaje) => {
         const viajeItem = document.createElement('li');
         viajeItem.classList.add('image-item', 'swiper-slide');
 
-        // Verificar si viaje.actividades es un array o no
         const activities = Array.isArray(viaje.actividades) ? viaje.actividades.join(', ') : viaje.actividades || '';
 
-        const fechasDisponibles = viaje.fechasDisponibles ? viaje.fechasDisponibles : '';  // Puede ser un array o cadena vacía
+        const fechasDisponibles = viaje.fechasDisponibles ? viaje.fechasDisponibles : ''; 
 
         viajeItem.innerHTML = `
             <img src="${viaje.imagenUrl}" alt="${viaje.titulo}" class="carousel-image">
@@ -132,6 +138,7 @@ async function loadTours() {
     });
 }
 
+
 // Función para cargar la galería de tours
 async function loadGallery() {
     const gallerySection = document.querySelector('.Gallery');
@@ -142,20 +149,23 @@ async function loadGallery() {
         const querySnapshot = await getDocs(viajesCollection);
         const viajesArray = querySnapshot.docs.map((doc) => doc.data());
 
-        console.log(viajesArray); // Verifica los datos obtenidos
+        console.log(viajesArray);
 
-        const selectedTours = getRandomItems(viajesArray, 7);
+
+        const filteredTours = viajesArray.filter(viaje => viaje.categoria !== "Descuento" && viaje.categoria !== "Destino");
+
+        const selectedTours = getRandomItems(filteredTours, 7);
 
         if (selectedTours.length === 0) {
             console.log('No tours selected');
-            return; // Si no hay tours seleccionados, salir de la función
+            return;
         }
 
-        gallerySection.innerHTML = ''; // Limpiar el contenido anterior
+        gallerySection.innerHTML = ''; 
 
         selectedTours.forEach((viaje) => {
             const activities = Array.isArray(viaje.actividades) ? viaje.actividades.join(', ') : viaje.actividades ? String(viaje.actividades) : '';
-            const fechasDisponibles = viaje.fechasDisponibles ? viaje.fechasDisponibles : '';  // Puede ser un array o cadena vacía
+            const fechasDisponibles = viaje.fechasDisponibles ? viaje.fechasDisponibles : '';  
 
             const eventItem = document.createElement('div');
             eventItem.classList.add('Event', 'searchable');
@@ -182,6 +192,7 @@ async function loadGallery() {
     }
 }
 
+
 // Función para cargar todos los tours con filtro de categoría
 async function loadAllTours(category = "all") {
     const cardsSection = document.querySelector('.cards-section .container');
@@ -191,13 +202,15 @@ async function loadAllTours(category = "all") {
     const querySnapshot = await getDocs(viajesCollection);
     const viajesArray = querySnapshot.docs.map((doc) => doc.data());
 
-    const filteredTours = category === "all" 
-        ? viajesArray 
-        : viajesArray.filter((viaje) => viaje.categoria === category);
+    const filteredTours = viajesArray.filter(viaje => viaje.categoria !== "Destino");
+
+    const finalTours = category === "all" 
+        ? filteredTours 
+        : filteredTours.filter((viaje) => viaje.categoria === category);
 
     cardsSection.innerHTML = '';
 
-    filteredTours.forEach((viaje) => {
+    finalTours.forEach((viaje) => {
         const cardItem = document.createElement('div');
         cardItem.classList.add('card-item');
 
@@ -208,8 +221,7 @@ async function loadAllTours(category = "all") {
             activities = encodeURIComponent([viaje.actividades].join(','));
         }
 
-        const fechasDisponibles = viaje.fechasDisponibles ? viaje.fechasDisponibles : '';  // Puede ser un array o cadena vacía
-
+        const fechasDisponibles = viaje.fechasDisponibles ? viaje.fechasDisponibles : '';  
         cardItem.innerHTML = `
             <img src="${viaje.imagenUrl}" alt="${viaje.titulo}" class="card-image">
             <div class="overlay">
@@ -229,16 +241,52 @@ async function loadAllTours(category = "all") {
     });
 }
 
-// Detectar la vista actual y ejecutar las funciones correspondientes
+async function loadDestinations(category = "Destino") {
+    const destinationsSection = document.querySelector('.Destinations');
+    if (!destinationsSection) return;
+
+    const viajesCollection = collection(db, "viajes");
+    const querySnapshot = await getDocs(viajesCollection);
+    const viajesArray = querySnapshot.docs.map((doc) => doc.data());
+
+    // Filtrar solo los viajes con la categoría "Destino"
+    const filteredDestinations = viajesArray.filter(viaje => viaje.categoria === category);
+
+    destinationsSection.innerHTML = '';  // Limpiar la sección antes de agregar nuevos destinos
+
+    filteredDestinations.forEach((viaje) => {
+        // Crear un nuevo div para cada destino
+        const destinationItem = document.createElement('div');
+        destinationItem.classList.add('Destination');
+
+        destinationItem.innerHTML = `
+            <img src="${viaje.imagenUrl}" alt="${viaje.titulo}"> 
+            <div class="location-static">${viaje.titulo}</div>
+            <div class="overlay">
+                <h2 class="location-overlay">${viaje.titulo}</h2>
+                <button id="view-tours">View Tours</button>
+            </div>
+        `;
+
+        destinationsSection.appendChild(destinationItem);
+    });
+}
+
+
+
 document.addEventListener('DOMContentLoaded', () => {
     const galleryExists = document.querySelector('.Gallery');
     const carouselExists = document.querySelector('.swiper-wrapper');
     const cardsSectionExists = document.querySelector('.cards-section .container');
+    const destinationsSectionExists = document.querySelector('.Destinations');  // Agregado para verificar Destinations
 
+    // Si existe la galería o el carrusel, cargar tours y galería
     if (galleryExists || carouselExists) {
         loadTours();
         loadGallery();
     }
+
+    // Si existe la sección de tarjetas, cargar todos los tours
     if (cardsSectionExists) {
         loadAllTours();
 
@@ -250,4 +298,10 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
     }
+
+    // Si existe la sección Destinations, cargar los destinos
+    if (destinationsSectionExists) {
+        loadDestinations(); 
+    }
 });
+

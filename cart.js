@@ -26,7 +26,6 @@ async function cargarCarrito(userId) {
         let total = 0;
 
         if (querySnapshot.empty) {
-            productList.innerHTML = "<p>No hay productos en tu carrito.</p>";
             cartCount.innerText = "You have 0 items in your cart";
         } else {
             let products = [];
