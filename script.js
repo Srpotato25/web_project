@@ -248,11 +248,9 @@ async function loadDestinations(category = "Destino") {
     const viajesCollection = collection(db, "viajes");
     const querySnapshot = await getDocs(viajesCollection);
     const viajesArray = querySnapshot.docs.map((doc) => doc.data());
-
-    // Filtrar solo los viajes con la categoría "Destino"
     const filteredDestinations = viajesArray.filter(viaje => viaje.categoria === category);
 
-    destinationsSection.innerHTML = '';  // Limpiar la sección antes de agregar nuevos destinos
+    destinationsSection.innerHTML = '';  
 
     filteredDestinations.forEach((viaje) => {
         // Crear un nuevo div para cada destino
