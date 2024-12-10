@@ -1,53 +1,32 @@
-// Importar Firebase
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.0/firebase-app.js";
-import { getFirestore, collection, getDocs, addDoc, onSnapshot, query} from "https://www.gstatic.com/firebasejs/10.14.0/firebase-firestore.js";
-import { 
-    getAuth, 
-    signInWithEmailAndPassword, 
-    createUserWithEmailAndPassword,
-    signOut 
-} from "https://www.gstatic.com/firebasejs/10.14.0/firebase-auth.js";
+import { db, auth } from './firebaseConfig.js';
+import { collection, getDocs } from "https://www.gstatic.com/firebasejs/10.14.0/firebase-firestore.js";
 
-// Configuración de Firebase
-const firebaseConfig = {
-    apiKey: "AIzaSyAowxVHvpmYoluiKnn_M5NMaku9EqcqPDk",
-    authDomain: "web-project-f0c9c.firebaseapp.com",
-    projectId: "web-project-f0c9c",
-    storageBucket: "web-project-f0c9c.appspot.com",
-    messagingSenderId: "1025383417170",
-    appId: "1:1025383417170:web:51d30811a47a97ae6a268b",
-    measurementId: "G-DG1EX6H6PQ"
-};
-
-// Inicializar Firebase
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
 
 document.addEventListener('DOMContentLoaded', function() {
-
-    // Selección de elementos para la navegación del formulario
     const formOpenBtn = document.querySelector("#form-open"),
           home = document.querySelector(".home"),
           formContainer = document.querySelector(".form_container"),
           formCloseBtn = document.querySelector(".form_close"),
-          signupBtn = document.querySelector("#show-signup-form"),  // Botón para mostrar el formulario de registro
-          loginBtn = document.querySelector("#show-login-form");    // Botón para mostrar el formulario de login
+          signupBtn = document.querySelector("#show-signup-form"),
+          loginBtn = document.querySelector("#show-login-form"),
+          searchBtn = document.querySelector("#searchBtn"),
+          searchBox = document.querySelector("#searchBox"),
+          closeSearchBtn = document.querySelector("#closeSearch"),
+          searchInput = document.querySelector("#searchInput");
 
-    // Mostrar el formulario al hacer clic en el ícono de usuario
+    // Mostrar formulario de login o signup
     if (formOpenBtn) {
         formOpenBtn.addEventListener("click", () => {
             home.classList.add("show");
         });
     }
 
-    // Cerrar el formulario al hacer clic en el ícono de cerrar
     if (formCloseBtn) {
         formCloseBtn.addEventListener("click", () => {
             home.classList.remove("show");
         });
     }
 
-    // Cambiar a registro cuando se hace clic en "Sign Up"
     if (signupBtn && formContainer) {
         signupBtn.addEventListener("click", (e) => {
             e.preventDefault();
@@ -56,7 +35,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Cambiar a login cuando se hace clic en "Log In"
     if (loginBtn && formContainer) {
         loginBtn.addEventListener("click", (e) => {
             e.preventDefault();
@@ -64,39 +42,36 @@ document.addEventListener('DOMContentLoaded', function() {
             formContainer.querySelector('.login-form').classList.add('active'); // Mostrar login
         });
     }
-});
 
+    // Mostrar/ocultar el cuadro de búsqueda
+    if (searchBtn) {
+        searchBtn.addEventListener("click", () => {
+            searchBox.classList.toggle("active");  // Alternar visibilidad del cuadro de búsqueda
+        });
+    }
 
-//FUNCIOON BARRA BUSQUEDAAAAA
-document.addEventListener("DOMContentLoaded", function() {
-    let searchBtn = document.getElementById('searchBtn'); // Botón de búsqueda
-    let closeSearch = document.getElementById('closeSearch'); // Botón para cerrar la barra de búsqueda
-    let searchBox = document.getElementById('searchBox'); // Barra de búsqueda
-    let searchInput = searchBox.querySelector("input"); // Campo de entrada de búsqueda
-    // Mostrar la barra de búsqueda al hacer clic en el ícono de búsqueda
-    searchBtn.onclick = function() {
-        searchBox.classList.add('active'); // Mostrar la barra de búsqueda
-        searchBtn.style.display = 'none';  // Oculta el botón de búsqueda
-    };
-    // Cerrar la barra de búsqueda al hacer clic en el ícono de cerrar
-    closeSearch.onclick = function() {
-        searchBox.classList.remove('active'); // Oculta la barra de búsqueda
-        searchBtn.style.display = 'block';  // Muestra el botón de búsqueda de nuevo
-        searchInput.value = ""; // Limpia el campo de búsqueda
-    
-    };
-  });
+    // Cerrar el cuadro de búsqueda al hacer clic en el ícono de cerrar
+    if (closeSearchBtn) {
+        closeSearchBtn.addEventListener("click", () => {
+            searchBox.classList.remove("active");  // Ocultar el cuadro de búsqueda
+        });
+    }
 
-  document.getElementById("searchInput").addEventListener("keypress", (event) => {
-    if (event.key === "Enter") {
-        const searchQuery = event.target.value.trim();
-        if (searchQuery) {
-            window.location.href=`/Views/searchResult.html?searchQuery=${encodeURIComponent(searchQuery)}`;
-        } else {
-            alert("Por favor, ingresa un término de búsqueda.");
-        }
+    // Función de búsqueda
+    if (searchInput) {
+        searchInput.addEventListener("keypress", (event) => {
+            if (event.key === "Enter") {
+                const searchQuery = event.target.value.trim();
+                if (searchQuery) {
+                    window.location.href = `/Views/searchResult.html?searchQuery=${encodeURIComponent(searchQuery)}`;
+                } else {
+                    alert("Por favor, ingresa un término de búsqueda.");
+                }
+            }
+        });
     }
 });
+
 
 // Función para obtener elementos aleatorios
 function getRandomItems(array, count) {
@@ -104,6 +79,7 @@ function getRandomItems(array, count) {
     return shuffled.slice(0, count);
 }
 
+// Función para cargar los tours en el carousel
 async function loadTours() {
     const carouselList = document.querySelector('.swiper-wrapper');
     if (!carouselList) return;
@@ -112,10 +88,10 @@ async function loadTours() {
     const querySnapshot = await getDocs(viajesCollection);
     const viajesArray = querySnapshot.docs.map((doc) => doc.data());
 
-    console.log(viajesArray);  // Agrega este log para verificar que los datos están llegando correctamente.
+    console.log(viajesArray);  // Verificar que los datos están llegando correctamente.
 
     const selectedTours = getRandomItems(viajesArray, 7);
-    console.log(selectedTours);  // Verifica que los tours seleccionados están bien formados.
+    console.log(selectedTours);  // Verificar que los tours seleccionados están correctos.
 
     carouselList.innerHTML = '';  // Limpiar el contenido anterior.
 
@@ -126,7 +102,6 @@ async function loadTours() {
         // Verificar si viaje.actividades es un array o no
         const activities = Array.isArray(viaje.actividades) ? viaje.actividades.join(', ') : viaje.actividades || '';
 
-        // Asegurarse de que 'fechasDisponibles' esté presente
         const fechasDisponibles = viaje.fechasDisponibles ? viaje.fechasDisponibles : '';  // Puede ser un array o cadena vacía
 
         viajeItem.innerHTML = `
@@ -157,7 +132,7 @@ async function loadTours() {
     });
 }
 
-
+// Función para cargar la galería de tours
 async function loadGallery() {
     const gallerySection = document.querySelector('.Gallery');
     if (!gallerySection) return;
@@ -167,8 +142,7 @@ async function loadGallery() {
         const querySnapshot = await getDocs(viajesCollection);
         const viajesArray = querySnapshot.docs.map((doc) => doc.data());
 
-        // Verifica los datos obtenidos
-        console.log(viajesArray);
+        console.log(viajesArray); // Verifica los datos obtenidos
 
         const selectedTours = getRandomItems(viajesArray, 7);
 
@@ -180,10 +154,7 @@ async function loadGallery() {
         gallerySection.innerHTML = ''; // Limpiar el contenido anterior
 
         selectedTours.forEach((viaje) => {
-            // Asegurarse de que "actividades" sea un array antes de usar join()
-            const activities = Array.isArray(viaje.actividades) ? viaje.actividades.join(',') : viaje.actividades ? String(viaje.actividades) : '';
-            
-            // Asegurarse de que 'fechasDisponibles' esté presente y sea un array
+            const activities = Array.isArray(viaje.actividades) ? viaje.actividades.join(', ') : viaje.actividades ? String(viaje.actividades) : '';
             const fechasDisponibles = viaje.fechasDisponibles ? viaje.fechasDisponibles : '';  // Puede ser un array o cadena vacía
 
             const eventItem = document.createElement('div');
@@ -211,7 +182,6 @@ async function loadGallery() {
     }
 }
 
-
 // Función para cargar todos los tours con filtro de categoría
 async function loadAllTours(category = "all") {
     const cardsSection = document.querySelector('.cards-section .container');
@@ -231,16 +201,13 @@ async function loadAllTours(category = "all") {
         const cardItem = document.createElement('div');
         cardItem.classList.add('card-item');
 
-        // Asegurarnos de que 'actividades' es un array antes de llamar a .join()
         let activities = '';
         if (Array.isArray(viaje.actividades)) {
             activities = encodeURIComponent(viaje.actividades.join(','));
         } else if (viaje.actividades) {
-            // Si 'actividades' es un string o algún otro valor, convertirlo a array
             activities = encodeURIComponent([viaje.actividades].join(','));
         }
 
-        // Asegurarse de que 'fechasDisponibles' esté presente
         const fechasDisponibles = viaje.fechasDisponibles ? viaje.fechasDisponibles : '';  // Puede ser un array o cadena vacía
 
         cardItem.innerHTML = `
@@ -284,5 +251,3 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 });
-
-
