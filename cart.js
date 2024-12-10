@@ -1,15 +1,15 @@
 import { auth, db } from './firebaseConfig.js';
 import { collection, getDocs, doc, deleteDoc } from 'https://www.gstatic.com/firebasejs/10.14.0/firebase-firestore.js';
 
-
 let pagoRealizado = false;
-
 
 auth.onAuthStateChanged((user) => {
     if (user) {
         console.log("Usuario autenticado:", user);
         if (!pagoRealizado) { 
             cargarCarrito(user.uid);
+        } else {
+            mostrarHistorialDeCompras(user.uid);  // Mostrar historial si el pago fue realizado
         }
     } else {
         console.log("No hay usuario autenticado.");
@@ -109,5 +109,39 @@ document.getElementById('sort-price').addEventListener('change', (event) => {
 export function marcarPagoRealizado() {
     pagoRealizado = true; 
 }
+
+// Función para mostrar el historial de compras
+async function mostrarHistorialDeCompras(userId) {
+    try {
+        const comprasRef = collection(db, 'compras', userId, 'comprados');
+        const querySnapshot = await getDocs(comprasRef);
+        const historialElement = document.getElementById('historial-compras');
+        historialElement.innerHTML = '';  // Limpiar historial anterior
+
+        if (querySnapshot.empty) {
+            historialElement.innerHTML = '<p>No has comprado nada aún.</p>';
+        } else {
+            querySnapshot.forEach((doc) => {
+                const producto = doc.data();
+                const itemHtml = `
+                    <div class="col-md-4 mb-3">
+                        <div class="card">
+                            <img src="${producto.image}" class="card-img-top" alt="${producto.title}">
+                            <div class="card-body">
+                                <h5 class="card-title">${producto.title}</h5>
+                                <p><strong>Precio:</strong> ${producto.price}</p>
+                                <p><strong>Fecha:</strong> ${producto.date}</p>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                historialElement.innerHTML += itemHtml;
+            });
+        }
+    } catch (error) {
+        console.error('Error al recuperar historial de compras:', error);
+    }
+}
+
 
 
