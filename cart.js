@@ -1,13 +1,16 @@
-// cart.js
-
 import { auth, db } from './firebaseConfig.js';
 import { collection, getDocs, doc, deleteDoc } from 'https://www.gstatic.com/firebasejs/10.14.0/firebase-firestore.js';
 
-// Escuchar el cambio de estado de autenticación
+
+let pagoRealizado = false;
+
+
 auth.onAuthStateChanged((user) => {
     if (user) {
         console.log("Usuario autenticado:", user);
-        cargarCarrito(user.uid);
+        if (!pagoRealizado) { 
+            cargarCarrito(user.uid);
+        }
     } else {
         console.log("No hay usuario autenticado.");
         alert("Por favor, inicia sesión para ver tu carrito.");
@@ -17,7 +20,7 @@ auth.onAuthStateChanged((user) => {
 // Cargar el carrito
 async function cargarCarrito(userId) {
     try {
-        const cartRef = collection(db, 'carrito', userId, 'tours')
+        const cartRef = collection(db, 'carrito', userId, 'tours');
         const querySnapshot = await getDocs(cartRef);
 
         const productList = document.getElementById('product-list');
@@ -71,7 +74,7 @@ async function cargarCarrito(userId) {
 
             // Actualizar el total
             document.getElementById('subtotal').innerText = `$${total.toFixed(2)}`;
-            document.getElementById('total').innerText = `$${(total + 10).toFixed(2)}`;  // Incluyendo el costo de envío de $20
+            document.getElementById('total').innerText = `$${(total + 10).toFixed(2)}`;  // Incluyendo el costo de envío de $10
 
             // Actualizar el botón de checkout
             document.getElementById('checkout-amount').innerText = `$${(total + 10).toFixed(2)}`;
@@ -82,15 +85,11 @@ async function cargarCarrito(userId) {
 }
 
 // Función para eliminar un producto del carrito
-// Función para eliminar un producto del carrito
 async function eliminarProducto(productId) {
     try {
         const productRef = doc(db, 'carrito', auth.currentUser.uid, 'tours', productId);
-        
-        // Eliminar el producto de Firestore
-        await deleteDoc(productRef);
 
-        // Recargar el carrito para reflejar el cambio
+        await deleteDoc(productRef);
         cargarCarrito(auth.currentUser.uid);
 
         console.log(`Producto ${productId} eliminado del carrito.`);
@@ -101,11 +100,14 @@ async function eliminarProducto(productId) {
 
 // Hacer que la función sea global
 window.eliminarProducto = eliminarProducto;
-
-// Escuchar cambios en el select de ordenación
 document.getElementById('sort-price').addEventListener('change', (event) => {
     const sortOrder = event.target.value;
-    cargarCarrito(auth.currentUser.uid);  // Recargar el carrito con el nuevo orden
+    cargarCarrito(auth.currentUser.uid);
 });
+
+// Función para marcar que el pago fue realizado
+export function marcarPagoRealizado() {
+    pagoRealizado = true; 
+}
 
 
