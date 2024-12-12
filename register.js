@@ -1,20 +1,6 @@
-// Firebase configuration
-const firebaseConfig = {
-    apiKey: "AIzaSyAowxVHvpmYoluiKnn_M5NMaku9EqcqPDk",
-    authDomain: "web-project-f0c9c.firebaseapp.com",
-    projectId: "web-project-f0c9c",
-    storageBucket: "web-project-f0c9c.appspot.com",
-    messagingSenderId: "1025383417170",
-    appId: "1:1025383417170:web:51d30811a47a97ae6a268b",
-    measurementId: "G-DG1EX6H6PQ"
-};
-
-// Initialize Firebase
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.3.1/firebase-app.js";
-import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/10.3.1/firebase-auth.js";
-
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
+// Importar Firebase y la configuración de Firebase
+import { auth } from './firebaseConfig.js';
+import { signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.14.0/firebase-auth.js";
 
 // DOM elements
 const loginForm = document.getElementById("login-form");
@@ -34,7 +20,7 @@ const closeLoginBtn = document.getElementById("closeLoginBtn");
 const showSignupFormBtn = document.getElementById("show-signup-form");
 const showLoginFormBtn = document.getElementById("show-login-form");
 
-
+// Función para mostrar/ocultar el modal de inicio de sesión
 function toggleModal(show) {
     const homeSection = document.querySelector(".home");
     if (show) {
@@ -44,7 +30,7 @@ function toggleModal(show) {
     }
 }
 
-
+// Función para actualizar la interfaz de usuario dependiendo del estado de autenticación
 function updateUserInterface(user) {
     if (user) {
         userIcon.classList.add("authenticated");
@@ -61,12 +47,12 @@ function updateUserInterface(user) {
     }
 }
 
+// Mouseover para mostrar el dropdown del usuario
 userIcon.addEventListener("mouseover", () => {
     if (auth.currentUser) {
         userDropdown.classList.add("visible");
     }
 });
-
 
 userDropdown.addEventListener("mouseover", () => {
     userDropdown.classList.add("visible");
@@ -76,25 +62,26 @@ userDropdown.addEventListener("mouseout", () => {
     userDropdown.classList.remove("visible");
 });
 
-
+// Cerrar el modal de inicio de sesión
 closeLoginBtn.addEventListener("click", () => {
     toggleModal(false);
 });
 
+// Mostrar el formulario de registro
 showSignupFormBtn.addEventListener("click", (e) => {
     e.preventDefault();
     document.querySelector(".login-form").classList.remove("active");
     document.querySelector(".signup_form").classList.add("active");
 });
 
-// Switch to Login Form
+// Mostrar el formulario de inicio de sesión
 showLoginFormBtn.addEventListener("click", (e) => {
     e.preventDefault();
     document.querySelector(".signup_form").classList.remove("active");
     document.querySelector(".login-form").classList.add("active");
 });
 
-// Login form submission
+// Enviar el formulario de inicio de sesión
 loginForm.addEventListener("submit", (e) => {
     e.preventDefault();
     const email = loginEmail.value;
@@ -113,13 +100,14 @@ loginForm.addEventListener("submit", (e) => {
         });
 });
 
-
+// Enviar el formulario de registro
 signupForm.addEventListener("submit", (e) => {
     e.preventDefault();
     const email = signupEmail.value;
     const password = signupPassword.value;
     const confirmPass = confirmPassword.value;
     const name = signupName.value;
+
     if (password !== confirmPass) {
         signupErrorMessage.textContent = "Passwords do not match.";
         return;
@@ -138,7 +126,7 @@ signupForm.addEventListener("submit", (e) => {
         });
 });
 
-
+// Cerrar sesión
 logoutButton.addEventListener("click", () => {
     signOut(auth)
         .then(() => {
@@ -150,15 +138,17 @@ logoutButton.addEventListener("click", () => {
         });
 });
 
-
+// Cambiar el estado de la autenticación
 onAuthStateChanged(auth, (user) => {
     updateUserInterface(user);
     if (user) {
-        toggleModal(false); 
+        toggleModal(false);
     } else {
         toggleModal(true);
     }
 });
+
+
 
 
 

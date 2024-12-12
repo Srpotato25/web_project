@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="/icon.png">
+    <title>Chepe Trips</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="d-flex">
+        <!-- Sidebar -->
+        <div class="bg-dark text-white p-3" style="width: 250px; height: 100vh;">
+            <div class="d-flex align-items-center mb-4">
+                <h4 class="mb-0">Administración</h4>
+                <img src="/icon.png" alt="Icon" style="width: 30px; height: 30px; margin-top:5px; margin-left:10px;" class="me-2">
+            </div>
+            <ul class="nav flex-column">
+                <li class="nav-item mb-2">
+                    <a href="/Admin/adminEventLocal.html" class="nav-link text-white">Agregar Tour Local</a>
+                </li>
+                <li class="nav-item mb-2">
+                    <a href="/Admin/adminDestination.html" class="nav-link text-white">Agregar Tour</a>
+                </li>
+                <li class="nav-item mb-2">
+                    <a href="/Admin/adminTours.html" class="nav-link text-white">Mis Tours</a>
+                </li>
+                <li class="nav-item mb-2">
+                    <a href="#" class="nav-link text-white">Reportes</a>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Main content -->
+        <div class="flex-grow-1">
+            <!-- Navbar -->
+            <nav class="navbar navbar-expand-lg navbar-light bg-light px-3">
+                <div class="container-fluid">
+                    <a class="navbar-brand" href="/index.html">ChepeTrips</a>
+                    <div class="dropdown ms-auto">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownUser" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="bi bi-person-circle"></i> Usuario
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownUser">
+                            <li><a class="dropdown-item" href="#">Configuración</a></li>
+                            <li><a class="dropdown-item" href="#">Perfil</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="#">Cerrar Sesión</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+
+            <!-- Content -->
+            <div class="container py-2">
+                <h1 class="text-center mb-3 fs-5">Planifica tu Viaje</h1>
+
+                <form id="viajeForm" class="bg-light p-3 rounded shadow-sm">
+                    <!-- Título -->
+                    <div class="mb-2">
+                        <label for="titulo" class="form-label fs-6">Título</label>
+                        <input type="text" id="titulo" name="titulo" class="form-control form-control-sm" required>
+                    </div>
+
+                    <!-- Descripción -->
+                    <div class="mb-2">
+                        <label for="descripcion" class="form-label fs-6">Descripción</label>
+                        <textarea id="descripcion" name="descripcion" class="form-control form-control-sm" rows="3" required></textarea>
+                    </div>
+
+                    <!-- Actividades -->
+                    <div class="mb-2">
+                        <label for="actividades" class="form-label fs-6">Actividades</label>
+                        <textarea id="actividades" name="actividades" class="form-control form-control-sm" rows="3" required></textarea>
+                    </div>
+
+                    <!-- Categoría (siempre "Gratis") -->
+                    <div class="mb-2">
+                        <label for="categoria" class="form-label fs-6">Categoría</label>
+                        <select id="categoria" name="categoria" class="form-select form-select-sm" required>
+                            <option value="Gratis" selected>Gratis</option>
+                        </select>
+                    </div>
+
+                    <!-- URL de Ubicación -->
+                    <div class="mb-2">
+                        <label for="ubicacion" class="form-label fs-6">Ubicación (URL de Google Maps)</label>
+                        <input type="url" id="ubicacion" name="ubicacion" class="form-control form-control-sm" placeholder="https://maps.google.com/?q=latitude,longitude" required>
+                    </div>
+
+                    <!-- Campo de Fechas -->
+                    <div class="mb-2">
+                        <label for="fecha" class="form-label fs-6">Fecha del Viaje</label>
+                        <input type="date" id="fecha" name="fecha" class="form-control form-control-sm" required>
+                    </div>
+
+                    <!-- Botón para guardar -->
+                    <div class="text-center mt-3">
+                        <button type="submit" class="btn btn-primary btn-sm" style="width: 40%;">Guardar Viaje</button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Scripts de Bootstrap -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Firebase SDK -->
+    <script type="module" src="https://www.gstatic.com/firebasejs/10.3.1/firebase-app.js"></script>
+    <script type="module" src="https://www.gstatic.com/firebasejs/10.3.1/firebase-firestore.js"></script>
+    <script type="module" src="/Admin/eventlocal.js"></script>
+</body>
+
+</html>

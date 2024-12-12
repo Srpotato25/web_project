@@ -67,7 +67,6 @@ onAuthStateChanged(auth, (user) => {
     }
 });
 
-// Logout button handler
 if (logoutButton) {
     logoutButton.addEventListener("click", () => {
         signOut(auth)
@@ -81,3 +80,4 @@ if (logoutButton) {
             });
     });
 }
+

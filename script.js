@@ -1,53 +1,32 @@
-// Importar Firebase
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.0/firebase-app.js";
-import { getFirestore, collection, getDocs, addDoc, onSnapshot, query} from "https://www.gstatic.com/firebasejs/10.14.0/firebase-firestore.js";
-import { 
-    getAuth, 
-    signInWithEmailAndPassword, 
-    createUserWithEmailAndPassword,
-    signOut 
-} from "https://www.gstatic.com/firebasejs/10.14.0/firebase-auth.js";
+import { db, auth } from './firebaseConfig.js';
+import { collection, getDocs } from "https://www.gstatic.com/firebasejs/10.14.0/firebase-firestore.js";
 
-// Configuración de Firebase
-const firebaseConfig = {
-    apiKey: "AIzaSyAowxVHvpmYoluiKnn_M5NMaku9EqcqPDk",
-    authDomain: "web-project-f0c9c.firebaseapp.com",
-    projectId: "web-project-f0c9c",
-    storageBucket: "web-project-f0c9c.appspot.com",
-    messagingSenderId: "1025383417170",
-    appId: "1:1025383417170:web:51d30811a47a97ae6a268b",
-    measurementId: "G-DG1EX6H6PQ"
-};
-
-// Inicializar Firebase
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
 
 document.addEventListener('DOMContentLoaded', function() {
-
-    // Selección de elementos para la navegación del formulario
     const formOpenBtn = document.querySelector("#form-open"),
           home = document.querySelector(".home"),
           formContainer = document.querySelector(".form_container"),
           formCloseBtn = document.querySelector(".form_close"),
-          signupBtn = document.querySelector("#show-signup-form"),  // Botón para mostrar el formulario de registro
-          loginBtn = document.querySelector("#show-login-form");    // Botón para mostrar el formulario de login
+          signupBtn = document.querySelector("#show-signup-form"),
+          loginBtn = document.querySelector("#show-login-form"),
+          searchBtn = document.querySelector("#searchBtn"),
+          searchBox = document.querySelector("#searchBox"),
+          closeSearchBtn = document.querySelector("#closeSearch"),
+          searchInput = document.querySelector("#searchInput");
 
-    // Mostrar el formulario al hacer clic en el ícono de usuario
+    // Mostrar formulario de login o signup
     if (formOpenBtn) {
         formOpenBtn.addEventListener("click", () => {
             home.classList.add("show");
         });
     }
 
-    // Cerrar el formulario al hacer clic en el ícono de cerrar
     if (formCloseBtn) {
         formCloseBtn.addEventListener("click", () => {
             home.classList.remove("show");
         });
     }
 
-    // Cambiar a registro cuando se hace clic en "Sign Up"
     if (signupBtn && formContainer) {
         signupBtn.addEventListener("click", (e) => {
             e.preventDefault();
@@ -56,7 +35,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Cambiar a login cuando se hace clic en "Log In"
     if (loginBtn && formContainer) {
         loginBtn.addEventListener("click", (e) => {
             e.preventDefault();
@@ -64,37 +42,33 @@ document.addEventListener('DOMContentLoaded', function() {
             formContainer.querySelector('.login-form').classList.add('active'); // Mostrar login
         });
     }
-});
 
+    // Mostrar/ocultar el cuadro de búsqueda
+    if (searchBtn) {
+        searchBtn.addEventListener("click", () => {
+            searchBox.classList.toggle("active");  // Alternar visibilidad del cuadro de búsqueda
+        });
+    }
 
-//FUNCIOON BARRA BUSQUEDAAAAA
-document.addEventListener("DOMContentLoaded", function() {
-    let searchBtn = document.getElementById('searchBtn'); // Botón de búsqueda
-    let closeSearch = document.getElementById('closeSearch'); // Botón para cerrar la barra de búsqueda
-    let searchBox = document.getElementById('searchBox'); // Barra de búsqueda
-    let searchInput = searchBox.querySelector("input"); // Campo de entrada de búsqueda
-    // Mostrar la barra de búsqueda al hacer clic en el ícono de búsqueda
-    searchBtn.onclick = function() {
-        searchBox.classList.add('active'); // Mostrar la barra de búsqueda
-        searchBtn.style.display = 'none';  // Oculta el botón de búsqueda
-    };
-    // Cerrar la barra de búsqueda al hacer clic en el ícono de cerrar
-    closeSearch.onclick = function() {
-        searchBox.classList.remove('active'); // Oculta la barra de búsqueda
-        searchBtn.style.display = 'block';  // Muestra el botón de búsqueda de nuevo
-        searchInput.value = ""; // Limpia el campo de búsqueda
-    
-    };
-  });
+    // Cerrar el cuadro de búsqueda al hacer clic en el ícono de cerrar
+    if (closeSearchBtn) {
+        closeSearchBtn.addEventListener("click", () => {
+            searchBox.classList.remove("active");  // Ocultar el cuadro de búsqueda
+        });
+    }
 
-  document.getElementById("searchInput").addEventListener("keypress", (event) => {
-    if (event.key === "Enter") {
-        const searchQuery = event.target.value.trim();
-        if (searchQuery) {
-            window.location.href=`/Views/searchResult.html?searchQuery=${encodeURIComponent(searchQuery)}`;
-        } else {
-            alert("Por favor, ingresa un término de búsqueda.");
-        }
+    // Función de búsqueda
+    if (searchInput) {
+        searchInput.addEventListener("keypress", (event) => {
+            if (event.key === "Enter") {
+                const searchQuery = event.target.value.trim();
+                if (searchQuery) {
+                    window.location.href = `/Views/searchResult.html?searchQuery=${encodeURIComponent(searchQuery)}`;
+                } else {
+                    alert("Por favor, ingresa un término de búsqueda.");
+                }
+            }
+        });
     }
 });
 
@@ -104,30 +78,36 @@ function getRandomItems(array, count) {
     return shuffled.slice(0, count);
 }
 
+// Función para cargar los tours con categoría "descuento" en el carousel
 async function loadTours() {
     const carouselList = document.querySelector('.swiper-wrapper');
     if (!carouselList) return;
 
+    // Obtener los viajes desde la colección "viajes"
     const viajesCollection = collection(db, "viajes");
+
+    // Filtrar los viajes por categoría "descuento"
     const querySnapshot = await getDocs(viajesCollection);
-    const viajesArray = querySnapshot.docs.map((doc) => doc.data());
+    const viajesArray = querySnapshot.docs
+        .map((doc) => doc.data())
+        .filter((viaje) => viaje.categoria === "Descuento"); 
 
-    console.log(viajesArray);  // Agrega este log para verificar que los datos están llegando correctamente.
+    console.log(viajesArray);
 
+    // Seleccionar 7 tours aleatorios
     const selectedTours = getRandomItems(viajesArray, 7);
-    console.log(selectedTours);  // Verifica que los tours seleccionados están bien formados.
+    console.log(selectedTours); 
 
-    carouselList.innerHTML = '';  // Limpiar el contenido anterior.
+    // Limpiar el contenido anterior
+    carouselList.innerHTML = '';
 
     selectedTours.forEach((viaje) => {
         const viajeItem = document.createElement('li');
         viajeItem.classList.add('image-item', 'swiper-slide');
 
-        // Verificar si viaje.actividades es un array o no
         const activities = Array.isArray(viaje.actividades) ? viaje.actividades.join(', ') : viaje.actividades || '';
 
-        // Asegurarse de que 'fechasDisponibles' esté presente
-        const fechasDisponibles = viaje.fechasDisponibles ? viaje.fechasDisponibles : '';  // Puede ser un array o cadena vacía
+        const fechasDisponibles = viaje.fechasDisponibles ? viaje.fechasDisponibles : ''; 
 
         viajeItem.innerHTML = `
             <img src="${viaje.imagenUrl}" alt="${viaje.titulo}" class="carousel-image">
@@ -157,7 +137,6 @@ async function loadTours() {
     });
 }
 
-
 async function loadGallery() {
     const gallerySection = document.querySelector('.Gallery');
     if (!gallerySection) return;
@@ -167,24 +146,23 @@ async function loadGallery() {
         const querySnapshot = await getDocs(viajesCollection);
         const viajesArray = querySnapshot.docs.map((doc) => doc.data());
 
-        // Verifica los datos obtenidos
         console.log(viajesArray);
 
-        const selectedTours = getRandomItems(viajesArray, 7);
+
+        const filteredTours = viajesArray.filter(viaje => viaje.categoria !== "Descuento" && viaje.categoria !== "Destino");
+
+        const selectedTours = getRandomItems(filteredTours, 7);
 
         if (selectedTours.length === 0) {
             console.log('No tours selected');
-            return; // Si no hay tours seleccionados, salir de la función
+            return;
         }
 
-        gallerySection.innerHTML = ''; // Limpiar el contenido anterior
+        gallerySection.innerHTML = ''; 
 
         selectedTours.forEach((viaje) => {
-            // Asegurarse de que "actividades" sea un array antes de usar join()
-            const activities = Array.isArray(viaje.actividades) ? viaje.actividades.join(',') : viaje.actividades ? String(viaje.actividades) : '';
-            
-            // Asegurarse de que 'fechasDisponibles' esté presente y sea un array
-            const fechasDisponibles = viaje.fechasDisponibles ? viaje.fechasDisponibles : '';  // Puede ser un array o cadena vacía
+            const activities = Array.isArray(viaje.actividades) ? viaje.actividades.join(', ') : viaje.actividades ? String(viaje.actividades) : '';
+            const fechasDisponibles = viaje.fechasDisponibles ? viaje.fechasDisponibles : '';  
 
             const eventItem = document.createElement('div');
             eventItem.classList.add('Event', 'searchable');
@@ -211,8 +189,6 @@ async function loadGallery() {
     }
 }
 
-
-// Función para cargar todos los tours con filtro de categoría
 async function loadAllTours(category = "all") {
     const cardsSection = document.querySelector('.cards-section .container');
     if (!cardsSection) return;
@@ -221,28 +197,26 @@ async function loadAllTours(category = "all") {
     const querySnapshot = await getDocs(viajesCollection);
     const viajesArray = querySnapshot.docs.map((doc) => doc.data());
 
-    const filteredTours = category === "all" 
-        ? viajesArray 
-        : viajesArray.filter((viaje) => viaje.categoria === category);
+    const filteredTours = viajesArray.filter(viaje => viaje.categoria !== "Destino");
+
+    const finalTours = category === "all" 
+        ? filteredTours 
+        : filteredTours.filter((viaje) => viaje.categoria === category);
 
     cardsSection.innerHTML = '';
 
-    filteredTours.forEach((viaje) => {
+    finalTours.forEach((viaje) => {
         const cardItem = document.createElement('div');
         cardItem.classList.add('card-item');
 
-        // Asegurarnos de que 'actividades' es un array antes de llamar a .join()
         let activities = '';
         if (Array.isArray(viaje.actividades)) {
             activities = encodeURIComponent(viaje.actividades.join(','));
         } else if (viaje.actividades) {
-            // Si 'actividades' es un string o algún otro valor, convertirlo a array
             activities = encodeURIComponent([viaje.actividades].join(','));
         }
 
-        // Asegurarse de que 'fechasDisponibles' esté presente
-        const fechasDisponibles = viaje.fechasDisponibles ? viaje.fechasDisponibles : '';  // Puede ser un array o cadena vacía
-
+        const fechasDisponibles = viaje.fechasDisponibles ? viaje.fechasDisponibles : '';  
         cardItem.innerHTML = `
             <img src="${viaje.imagenUrl}" alt="${viaje.titulo}" class="card-image">
             <div class="overlay">
@@ -262,16 +236,66 @@ async function loadAllTours(category = "all") {
     });
 }
 
-// Detectar la vista actual y ejecutar las funciones correspondientes
+async function loadDestinations(category = "Destino") {
+    const destinationsSection = document.querySelector('.Destinations');
+    if (!destinationsSection) return;
+
+    const viajesCollection = collection(db, "viajes");
+    const querySnapshot = await getDocs(viajesCollection);
+    const viajesArray = querySnapshot.docs.map((doc) => doc.data());
+    const filteredDestinations = viajesArray.filter(viaje => viaje.categoria === category);
+
+    destinationsSection.innerHTML = '';  
+
+    filteredDestinations.forEach((viaje) => {
+        // Crear un nuevo div para cada destino
+        const destinationItem = document.createElement('div');
+        destinationItem.classList.add('Destination');
+
+        destinationItem.innerHTML = `
+            <img src="${viaje.imagenUrl}" alt="${viaje.titulo}"> 
+            <div class="location-static">${viaje.titulo}</div>
+            <div class="overlay">
+                <h2 class="location-overlay">${viaje.titulo}</h2>
+                <button id="view-tours">View Tours</button>
+            </div>
+        `;
+
+        // Agregar evento de clic al botón "View Tours"
+        const viewToursButton = destinationItem.querySelector('#view-tours');
+        viewToursButton.addEventListener('click', () => {
+            // Asegurarse de que viaje.actividades sea un array antes de usar join
+            let activities = '';
+            if (Array.isArray(viaje.actividades)) {
+                activities = encodeURIComponent(viaje.actividades.join(','));
+            } else if (viaje.actividades && typeof viaje.actividades === 'string') {
+                activities = encodeURIComponent([viaje.actividades].join(','));
+            }
+
+            const fechasDisponibles = viaje.fechasDisponibles ? viaje.fechasDisponibles : '';
+
+            const url = `/Views/eventDetail.html?title=${encodeURIComponent(viaje.titulo)}&price=${viaje.precio}&image=${encodeURIComponent(viaje.imagenUrl)}&description=${encodeURIComponent(viaje.descripcion)}&category=${encodeURIComponent(viaje.categoria)}&location=${encodeURIComponent(viaje.ubicacion)}&activities=${activities}&fechasDisponibles=${encodeURIComponent(fechasDisponibles)}`;
+
+            // Redirigir al usuario a la nueva URL
+            window.location.href = url;
+        });
+
+        destinationsSection.appendChild(destinationItem);
+    });
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     const galleryExists = document.querySelector('.Gallery');
     const carouselExists = document.querySelector('.swiper-wrapper');
     const cardsSectionExists = document.querySelector('.cards-section .container');
+    const destinationsSectionExists = document.querySelector('.Destinations'); 
+
 
     if (galleryExists || carouselExists) {
         loadTours();
         loadGallery();
     }
+
     if (cardsSectionExists) {
         loadAllTours();
 
@@ -283,6 +307,86 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
     }
+    if (destinationsSectionExists) {
+        loadDestinations(); 
+    }
 });
+
+document.addEventListener("DOMContentLoaded", async () => {
+    const calendarEl = document.getElementById("calendar");
+
+
+    const modal = document.getElementById("eventModal");
+    const span = document.getElementsByClassName("close")[0];
+
+    async function fetchEvents() {
+        const events = [];
+        const querySnapshot = await getDocs(collection(db, "eventoLocal"));
+        querySnapshot.forEach((doc) => {
+            const data = doc.data();
+            if (data.fecha) {
+                events.push({
+                    title: data.titulo,
+                    start: data.fecha, 
+                    description: data.descripcion, 
+                    location: data.ubicacion || null,
+                    locationUrl: data.ubicacionUrl || null 
+                });
+            }
+        });
+        return events;
+    }
+
+    const events = await fetchEvents();
+
+    const calendar = new FullCalendar.Calendar(calendarEl, {
+        initialView: "dayGridMonth",
+        headerToolbar: {
+            left: "prev,next today",
+            center: "title",
+            right: "dayGridMonth,timeGridWeek,timeGridDay"
+        },
+        events: events,
+        eventClick: function (info) {
+            const event = info.event;
+            const location = event.extendedProps.location;
+            const locationUrl = event.extendedProps.locationUrl;
+
+            document.getElementById("eventTitle").innerText = event.title;
+            document.getElementById("eventDescription").innerText = event.extendedProps.description;
+
+            let locationText = "";
+
+
+            if (location && locationUrl) {
+                locationText = `<a href="${locationUrl}" target="_blank"><strong>Ubicación</strong></a>`;
+            } else if (location) {
+                locationText = `<strong>Ubicación:</strong> ${location}`;
+            }
+
+            document.getElementById("eventLocation").innerHTML = locationText;
+
+            // Mostrar el modal
+            modal.style.display = "block";
+        }
+    });
+
+    calendar.render();
+    span.onclick = function () {
+        modal.style.display = "none";
+    }
+
+    window.onclick = function (event) {
+        if (event.target === modal) {
+            modal.style.display = "none";
+        }
+    }
+});
+
+
+
+
+
+
 
 
